@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiffany Pham Nguyen — AI Project Portfolio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjZGNUYxIi8+PHBhdGggZD0iTTEzIDYgTDYgNiBMNiAzNCBMMTMgMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI0NTFCMyIgc3Ryb2tlLXdpZHRoPSIyLjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxwYXRoIGQ9Ik0yNyA2IEwzNCA2IEwzNCAzNCBMMjcgMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI0NTFCMyIgc3Ryb2tlLXdpZHRoPSIyLjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjx0ZXh0IHg9IjIwIiB5PSIyNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjE3IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMTYxODFEIj5QPC90ZXh0Pjwvc3ZnPgo=">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F5F1; --paper-raised:#FBFAF7; --ink:#16181D; --ink-soft:#3A3D42;
+  --gray:#706C63; --hairline:#DBD7CC; --accent:#2451B3; --accent-soft:#EAEFFA;
+  --wip:#B9862E; --radius:2px; --max:1040px; --max-narrow:760px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;}
+::selection{background:var(--accent-soft); color:var(--accent);}
+a{color:inherit;}
+a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+.wrap{max-width:var(--max); margin:0 auto; padding:0 32px;}
+.wrap-narrow{max-width:var(--max-narrow); margin:0 auto; padding:0 32px;}
+.eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray);}
+h1,h2,h3{font-family:'Fraunces',serif; font-weight:500; color:var(--ink); margin:0;}
+
+/* header/nav */
+header{position:sticky; top:0; z-index:50; background:rgba(246,245,241,0.88); backdrop-filter:blur(6px); border-bottom:1px solid var(--hairline);}
+.nav{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; max-width:var(--max); margin:0 auto;}
+.nav-mark{background:none; border:none; cursor:pointer; padding:0; display:flex; align-items:center; transition:opacity .2s ease;}
+.nav-mark:hover{ opacity:0.75; }
+.nav-mark svg{ display:block; }
+.nav-right{ display:flex; align-items:center; gap:26px; }
+.nav-email-btn{
+  font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.03em;
+  padding:9px 16px; border-radius:20px; background:var(--accent); color:var(--paper);
+  text-decoration:none; white-space:nowrap; transition:opacity .2s ease;
+}
+.nav-email-btn:hover{ opacity:0.85; }
+
+/* ---------- EMAIL MODAL ---------- */
+.modal-overlay{
+  display:none; position:fixed; inset:0; z-index:200;
+  background:rgba(22,24,29,0.5);
+  align-items:center; justify-content:center;
+  padding:24px;
+}
+.modal-overlay.active{ display:flex; }
+.modal-card{
+  background:var(--paper-raised); border:1px solid var(--hairline); border-radius:var(--radius);
+  max-width:480px; width:100%; padding:36px 32px 32px;
+  max-height:90vh; overflow-y:auto;
+}
+.modal-head{ display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:24px; }
+.modal-title{ font-size:22px; }
+.modal-close{
+  background:none; border:1px solid var(--hairline); border-radius:50%;
+  width:30px; height:30px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:var(--gray); font-size:15px; line-height:1; flex-shrink:0;
+  transition:border-color .2s ease, color .2s ease;
+}
+.modal-close:hover{ border-color:var(--accent); color:var(--accent); }
+.form-field{ margin-bottom:18px; }
+.form-field label{
+  display:block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em;
+  text-transform:uppercase; color:var(--gray); margin-bottom:7px;
+}
+.form-field input, .form-field textarea{
+  width:100%; font-family:'Inter',sans-serif; font-size:14.5px; color:var(--ink);
+  background:var(--paper); border:1px solid var(--hairline); border-radius:var(--radius);
+  padding:11px 13px; transition:border-color .2s ease;
+}
+.form-field input:focus, .form-field textarea:focus{
+  outline:none; border-color:var(--accent);
+}
+.form-field input[readonly]{ color:var(--gray); background:var(--paper-raised); cursor:default; }
+.form-field textarea{ min-height:110px; resize:vertical; font-family:'Inter',sans-serif; line-height:1.5; }
+.modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:8px; }
+.modal-btn{
+  font-family:'IBM Plex Mono',monospace; font-size:12.5px; padding:11px 20px;
+  border-radius:20px; cursor:pointer; transition:opacity .2s ease, border-color .2s ease;
+}
+.modal-btn.secondary{ background:none; border:1px solid var(--hairline); color:var(--ink-soft); }
+.modal-btn.secondary:hover{ border-color:var(--accent); color:var(--accent); }
+.modal-btn.primary{ background:var(--accent); border:1px solid var(--accent); color:var(--paper); }
+.modal-btn.primary:hover{ opacity:0.88; }
+.nav-links{display:flex; gap:28px; list-style:none; margin:0; padding:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.04em; text-transform:uppercase;}
+.nav-links a{text-decoration:none; color:var(--ink-soft); padding-bottom:2px; border-bottom:1px solid transparent; transition:border-color .2s ease, color .2s ease; cursor:pointer;}
+.nav-links a:hover{color:var(--accent); border-color:var(--accent);}
+.back-link{display:inline-flex; align-items:center; gap:6px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.04em; text-transform:uppercase; text-decoration:none; color:var(--ink-soft); border-bottom:1px solid transparent; transition:border-color .2s ease, color .2s ease; cursor:pointer; background:none; border-top:none; border-left:none; border-right:none; padding:0;}
+.back-link:hover{color:var(--accent); border-color:var(--accent);}
+
+/* hero */
+.hero{padding:96px 0 64px; border-bottom:1px solid var(--hairline);}
+.hero-title{font-size:clamp(38px,5.4vw,64px); line-height:1.08; max-width:760px; letter-spacing:-0.01em;}
+.hero-title em{font-style:italic; color:var(--accent);}
+.hero-sub{margin-top:22px; max-width:560px; font-size:17px; color:var(--ink-soft);}
+.hero-flex{display:flex; gap:40px; align-items:flex-start;}
+.hero-photo{
+  width:136px; height:136px; border-radius:50%; flex-shrink:0;
+  border:1.5px dashed var(--hairline); background:var(--paper-raised);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  color:var(--gray); font-family:'IBM Plex Mono',monospace; font-size:11px;
+  letter-spacing:0.04em; text-transform:uppercase; text-align:center; line-height:1.5;
+}
+.hero-photo-plus{font-size:22px; line-height:1; margin-bottom:6px; color:var(--gray);}
+.hero-name{
+  font-family:'Fraunces',serif; font-weight:500; font-size:22px; color:var(--ink);
+  margin-top:10px;
+}
+.contact-row{margin-top:26px; display:flex; flex-wrap:wrap; gap:12px; align-items:center;}
+.contact-chip{
+  font-family:'IBM Plex Mono',monospace; font-size:14px; font-weight:500; padding:12px 20px;
+  border-radius:24px; border:1.5px solid var(--hairline);
+  text-decoration:none; color:var(--ink-soft);
+  transition:border-color .2s ease, color .2s ease, background-color .2s ease, transform .2s ease;
+}
+.contact-chip:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-1px); }
+.contact-chip.primary{ border-color:var(--accent); color:var(--paper); background:var(--accent); }
+.contact-chip.primary:hover{ opacity:0.88; color:var(--paper); }
+.contact-chip.static{ cursor:default; color:var(--gray); font-weight:400; }
+.contact-chip.static:hover{ border-color:var(--hairline); color:var(--gray); transform:none; }
+@media (max-width:640px){
+  .hero-flex{ flex-direction:column; align-items:flex-start; gap:24px; }
+}
+
+/* sections */
+section{padding:80px 0; border-bottom:1px solid var(--hairline);}
+section:last-of-type{border-bottom:none;}
+.section-head{display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:44px; flex-wrap:wrap;}
+.section-head h2{font-size:30px;}
+
+/* project grid/cards */
+.project-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:22px;}
+.project-card{border:1px solid var(--hairline); border-radius:var(--radius); padding:28px 24px; min-height:200px; display:flex; flex-direction:column; justify-content:space-between; background:var(--paper-raised); text-decoration:none; transition:border-color .2s ease, transform .2s ease; cursor:pointer;}
+.project-card:hover{border-color:var(--accent); transform:translateY(-2px);}
+.project-card.placeholder{border-style:dashed; cursor:default;}
+.project-card.placeholder:hover{transform:none; border-color:var(--hairline);}
+.status-row{display:flex; align-items:center; gap:7px;}
+.status-dot{width:7px; height:7px; border-radius:50%; flex-shrink:0;}
+.status-dot.live{background:var(--accent);}
+.status-dot.completed{background:var(--gray);}
+.status-dot.wip{background:var(--wip);}
+.status-text{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray);}
+.project-card-top h3{font-size:19px; font-weight:500; margin-top:12px; color:var(--ink);}
+.project-card-desc{font-size:14px; color:var(--ink-soft); margin-top:8px; line-height:1.55;}
+.project-card-tools{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--gray); margin-top:12px; letter-spacing:0.02em;}
+.project-card-tools em{font-style:normal; color:var(--gray); opacity:0.7;}
+.project-card-bottom{font-size:13px; color:var(--gray); display:flex; align-items:center; gap:8px; margin-top:20px; font-family:'IBM Plex Mono',monospace;}
+.project-card-bottom.link-out{color:var(--accent);}
+.plus-mark{width:20px; height:20px; border:1px solid var(--hairline); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--gray);}
+.slot-tag{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);}
+
+/* project detail */
+.proj-hero{padding:64px 0 48px; border-bottom:1px solid var(--hairline);}
+.proj-meta-row{display:flex; align-items:center; gap:14px; margin-bottom:18px; flex-wrap:wrap;}
+.proj-timeframe{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--gray);}
+.proj-title{font-size:clamp(32px,4.6vw,48px); line-height:1.1; letter-spacing:-0.01em;}
+.proj-sub{margin-top:16px; max-width:640px; font-size:17px; color:var(--ink-soft);}
+.proj-stack{margin-top:20px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--gray);}
+.proj-stack strong{color:var(--ink-soft); font-weight:500;}
+.resource-row{margin-top:26px; display:flex; flex-wrap:wrap; gap:10px;}
+.resource-chip{font-family:'IBM Plex Mono',monospace; font-size:12px; padding:8px 14px; border-radius:20px; border:1px solid var(--hairline); text-decoration:none; color:var(--ink-soft); transition:border-color .2s ease, color .2s ease;}
+.resource-chip:hover{border-color:var(--accent); color:var(--accent);}
+.resource-chip.disabled{border-style:dashed; color:var(--gray); cursor:default;}
+.resource-chip.disabled:hover{border-color:var(--hairline); color:var(--gray);}
+.proj-body{padding:64px 0;}
+.proj-block{padding:44px 0; border-top:1px solid var(--hairline);}
+.proj-block:first-child{padding-top:0; border-top:none;}
+.proj-block h2{font-size:24px; margin-bottom:18px;}
+.proj-block p{font-size:15.5px; color:var(--ink-soft); margin:0 0 14px;}
+.proj-block p:last-child{margin-bottom:0;}
+.approach-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+.approach-card{border:1px solid var(--hairline); border-radius:var(--radius); padding:22px; background:var(--paper-raised);}
+.approach-card .approach-label{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent); margin-bottom:10px; display:block;}
+.approach-card p{font-size:14.5px; margin:0;}
+.fillin{border:1.5px dashed var(--hairline); border-radius:var(--radius); padding:16px 18px; color:var(--gray); font-size:14px; font-style:italic; background:var(--paper-raised);}
+.wip-tag{font-family:'IBM Plex Mono',monospace; font-size:12px; text-transform:uppercase; color:var(--wip); letter-spacing:0.06em;}
+
+/* footer */
+footer{padding:52px 0 64px;}
+.footer-grid{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;}
+.footer-left h2{font-size:28px; max-width:420px;}
+.footer-links{display:flex; flex-direction:column; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:13px;}
+.footer-links a{text-decoration:none; color:var(--ink-soft);}
+.footer-links a:hover{color:var(--accent);}
+.footer-bottom{margin-top:48px; padding-top:20px; border-top:1px solid var(--hairline); font-size:12px; color:var(--gray); font-family:'IBM Plex Mono',monospace;}
+
+/* reveal */
+.reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+.reveal.in{opacity:1; transform:translateY(0);}
+@media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none;} html{scroll-behavior:auto;} }
+
+/* view switching */
+.view{display:none;}
+.view.active{display:block;}
+
+@media (max-width:800px){ .approach-grid{grid-template-columns:1fr;} }
+@media (max-width:560px){
+  .wrap,.wrap-narrow{padding:0 20px;}
+  .nav{padding:16px 20px;}
+  .hero,.proj-hero{padding:56px 0 40px;}
+  section,.proj-body{padding:48px 0;}
+  .footer-left h2{font-size:24px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <button class="nav-mark" onclick="goTo('home')" aria-label="Tiffany Pham Nguyen — home">
+      <svg width="62" height="32" viewBox="0 0 70 36" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4 L8 4 L8 32 L20 32" fill="none" stroke="#2451B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M50 4 L62 4 L62 32 L50 32" fill="none" stroke="#2451B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="35" y="23" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="500" letter-spacing="1" fill="#16181D">TPN</text>
+      </svg>
+    </button>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a onclick="goTo('home'); scrollToProjects();">Projects</a></li>
+      </ul>
+      <a class="nav-email-btn" href="#" onclick="openEmailModal(); return false;">Email me</a>
+    </div>
+  </div>
+</header>
+
+<div class="modal-overlay" id="email-modal" onclick="if(event.target === this) closeEmailModal();">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2 class="modal-title">Send a message</h2>
+      <button class="modal-close" onclick="closeEmailModal()" aria-label="Close">✕</button>
+    </div>
+    <form id="email-form" onsubmit="return sendEmail(event);">
+      <div class="form-field">
+        <label for="ef-from">From (your email)</label>
+        <input type="email" id="ef-from" placeholder="you@example.com" required>
+      </div>
+      <div class="form-field">
+        <label for="ef-to">To</label>
+        <input type="text" id="ef-to" value="phtn.pro@gmail.com" readonly>
+      </div>
+      <div class="form-field">
+        <label for="ef-subject">Subject</label>
+        <input type="text" id="ef-subject" placeholder="What's this about?" required>
+      </div>
+      <div class="form-field">
+        <label for="ef-body">Message</label>
+        <textarea id="ef-body" placeholder="Write your message here..." required></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="modal-btn secondary" onclick="closeEmailModal()">Cancel</button>
+        <button type="submit" class="modal-btn primary">Open in email app</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<main>
+
+<!-- ============ HOME VIEW ============ -->
+<div id="view-home" class="view active">
+  <section class="hero wrap">
+    <div class="hero-flex reveal">
+      <div class="hero-photo">
+        <span class="hero-photo-plus">+</span>
+        Add photo
+      </div>
+      <div class="hero-text">
+        <p class="eyebrow">AI Project Portfolio</p>
+        <p class="hero-name">Tiffany Pham Nguyen</p>
+        <h1 class="hero-title">Things I've <em>built</em> with AI.</h1>
+        <p class="hero-sub">
+          Hands-on AI projects — shipped products and coursework — designed, prototyped, and
+          built using generative AI as the primary development tool.
+        </p>
+        <div class="contact-row">
+          <span class="contact-chip static">Austin, TX · Remote</span>
+          <a class="contact-chip primary" href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a>
+          <a class="contact-chip" href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="wrap">
+    <div class="section-head reveal">
+      <h2>Projects</h2>
+      <span class="eyebrow">5 projects</span>
+    </div>
+
+    <div class="project-grid reveal">
+
+      <div class="project-card" onclick="goTo('kskinluxe')">
+        <div class="project-card-top">
+          <div class="status-row"><span class="status-dot live"></span><span class="status-text">Live</span></div>
+          <h3>Kskinluxe — Website</h3>
+          <p class="project-card-desc">Consumer skincare site designed and built end-to-end with Claude, no-code, zero traditional engineering.</p>
+          <p class="project-card-tools">Tools: Claude · No-code build</p>
+        </div>
+        <div class="project-card-bottom link-out"><span>View project →</span></div>
+      </div>
+
+      <div class="project-card" onclick="goTo('skin-analysis')">
+        <div class="project-card-top">
+          <div class="status-row"><span class="status-dot live"></span><span class="status-text">Live · Embedded in Kskinluxe</span></div>
+          <h3>AI Skin Analysis</h3>
+          <p class="project-card-desc">Photo-based tool that generates personalized skincare product recommendations.</p>
+          <p class="project-card-tools">Tools: Claude · Claude API</p>
+        </div>
+        <div class="project-card-bottom link-out"><span>View project →</span></div>
+      </div>
+
+      <div class="project-card" onclick="goTo('finance-coach')">
+        <div class="project-card-top">
+          <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
+          <h3>Personal Finance Coach &amp; Spending Analyzer</h3>
+          <p class="project-card-desc">AI-powered assistant that analyzes spending patterns and gives personalized financial guidance.</p>
+          <p class="project-card-tools"><em>Tools: to be added</em></p>
+        </div>
+        <div class="project-card-bottom link-out"><span>View project →</span></div>
+      </div>
+
+      <div class="project-card" onclick="goTo('chatbot')">
+        <div class="project-card-top">
+          <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
+          <h3>Chatbot</h3>
+          <p class="project-card-desc">Conversational AI chatbot built as a hands-on coursework project.</p>
+          <p class="project-card-tools"><em>Tools: to be added</em></p>
+        </div>
+        <div class="project-card-bottom link-out"><span>View project →</span></div>
+      </div>
+
+      <div class="project-card" onclick="goTo('text-cat')">
+        <div class="project-card-top">
+          <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · School project</span></div>
+          <h3>Text Categorization</h3>
+          <p class="project-card-desc">Text classification model that sorts input text into predefined categories.</p>
+          <p class="project-card-tools"><em>Tools: to be added</em></p>
+        </div>
+        <div class="project-card-bottom link-out"><span>View project →</span></div>
+      </div>
+
+      <div class="project-card placeholder">
+        <div class="project-card-top">
+          <span class="slot-tag">Open slot</span>
+          <h3>Project title</h3>
+        </div>
+        <div class="project-card-bottom"><span class="plus-mark">+</span><span>Details coming soon</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer id="contact" class="wrap">
+    <div class="footer-grid reveal">
+      <div class="footer-left">
+        <p class="eyebrow">Get in touch</p>
+        <h2>Want to see a project in progress, or talk about one? Reach out.</h2>
+      </div>
+      <div class="footer-links">
+        <a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a>
+        <a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+<!-- ============ PROJECT: KSKINLUXE ============ -->
+<div id="view-kskinluxe" class="view">
+  <section class="proj-hero wrap-narrow">
+    <button class="back-link">← All projects</button>
+    <div class="proj-meta-row" style="margin-top:22px;">
+      <div class="status-row"><span class="status-dot live"></span><span class="status-text">Live</span></div>
+      <span class="proj-timeframe">Aug 2025 — Present</span>
+    </div>
+    <h1 class="proj-title">Kskinluxe — Website</h1>
+    <p class="proj-sub">The consumer-facing site for Kskinluxe, an AI-powered skincare brand — built end-to-end as the proof-of-concept client for Thussisters&amp;Co's AI-first digital services model.</p>
+    <p class="proj-stack"><strong>Tools:</strong> Claude · No-code build</p>
+    <div class="resource-row">
+      <span class="resource-chip">📄 Spec</span>
+      <span class="resource-chip">📝 Build notes</span>
+      <span class="resource-chip">🔗 Live site</span>
+    </div>
+  </section>
+  <section class="proj-body wrap-narrow">
+    <div class="proj-block">
+      <h2>The Problem</h2>
+      <p>Kskinluxe is a brand-new business with no digital footprint. As a sole business owner
+        with a technical background, I needed a website — but wanted to build it cost-effectively
+        rather than commit to a traditional engineering spend before knowing whether there was
+        real demand. The site also needed to double as the landing page for social media
+        marketing and ads, to measure interest and intent before launching the business
+        physically.</p>
+    </div>
+    <div class="proj-block">
+      <h2>My Role &amp; Approach</h2>
+      <div class="approach-grid">
+        <div class="approach-card">
+          <span class="approach-label">My role</span>
+          <p>Product owner, designer, developer, QA, and domain expert — all one person. No
+            handoffs, no team; every decision from scope to shipping was mine to make and
+            execute.</p>
+        </div>
+        <div class="approach-card">
+          <span class="approach-label">My approach</span>
+          <p>Used Claude to build the site — the simplest and cheapest way to get something real
+            in front of people. The goal wasn't a polished final product; it was testing the
+            water before spending more than needed to validate demand.</p>
+        </div>
+      </div>
+    </div>
+    <div class="proj-block">
+      <h2>What It Does</h2>
+      <ul>
+        <li>Creates a foundation for building business awareness</li>
+        <li>Informs visitors of the services Kskinluxe will offer</li>
+        <li>Includes an embedded waitlist to measure potential demand ahead of launch</li>
+      </ul>
+    </div>
+    <div class="proj-block">
+      <h2>Outcome</h2>
+      <p>The website is live, but the business hasn't launched physically yet — so there's no
+        demand or conversion data available at this stage.</p>
+    </div>
+    <div class="proj-block">
+      <h2>What I'd Do Differently</h2>
+      <div class="fillin">[Add: one or two honest reflections]</div>
+    </div>
+    <div class="proj-block">
+      <h2>What's Next</h2>
+      <p>v1 validated that the site could exist cheaply and fast. Before the business goes live,
+        it still needs the infrastructure v1 deliberately skipped:</p>
+      <ul>
+        <li><strong>Payment integration</strong> — required to convert waitlist interest into
+          actual transactions once the business launches</li>
+        <li><strong>Booking/scheduling</strong> — needed if the service model requires
+          appointments rather than pure product purchase</li>
+        <li><strong>Admin / user profile</strong> — account and order management for returning
+          customers</li>
+        <li><strong>SEO optimization</strong> — reduce reliance on paid social for traffic once
+          the business is live and organic discovery matters more</li>
+        <li><strong>Testimonials</strong> — build trust and social proof once early customers
+          exist to draw from</li>
+        <li><strong>Tracking / analytics</strong> — measure real conversion and usage post-launch,
+          not just waitlist signups</li>
+      </ul>
+      <div class="fillin">[Add: your actual priority order and rough timing — this list is unordered; sequence it however makes sense for the launch plan]</div>
+    </div>
+  </section>
+  <footer class="wrap">
+    <div class="footer-grid">
+      <div class="footer-left"><p class="eyebrow">Get in touch</p><h2>Want to talk through this project? Reach out.</h2></div>
+      <div class="footer-links"><a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a><a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+<!-- ============ PROJECT: SKIN ANALYSIS ============ -->
+<div id="view-skin-analysis" class="view">
+  <section class="proj-hero wrap-narrow">
+    <button class="back-link">← All projects</button>
+    <div class="proj-meta-row" style="margin-top:22px;">
+      <div class="status-row"><span class="status-dot live"></span><span class="status-text">Live · Embedded in Kskinluxe</span></div>
+      <span class="proj-timeframe">Aug 2025 — Present</span>
+    </div>
+    <h1 class="proj-title">AI Skin Analysis</h1>
+    <p class="proj-sub">A photo-based feature embedded in the Kskinluxe site that analyzes a user's skin and generates personalized product recommendations.</p>
+    <p class="proj-stack"><strong>Tools:</strong> Claude · Claude API · No-code build</p>
+    <div class="resource-row">
+      <span class="resource-chip">📄 Spec</span>
+      <span class="resource-chip">📝 Build notes</span>
+      <span class="resource-chip">🔗 Live site</span>
+    </div>
+  </section>
+  <section class="proj-body wrap-narrow">
+    <div class="proj-block">
+      <h2>The Problem</h2>
+      <p>Skincare shoppers buying online have no equivalent to the in-person consultation
+        standard in Korea, where every salon visit starts with an assessment of what a client's
+        skin actually needs. Without that, they're left guessing — buying based on marketing or
+        trends rather than what's right for their skin, which drives returns and erodes trust on
+        a first purchase. I wanted to bring that consultation experience to Kskinluxe.</p>
+    </div>
+    <div class="proj-block">
+      <h2>My Role &amp; Approach</h2>
+      <div class="approach-grid">
+        <div class="approach-card">
+          <span class="approach-label">My role</span>
+          <p>Product owner, designer, developer, QA, and domain expert — all one person. No
+            handoffs, no team; every decision from scope to shipping was mine to make and
+            execute.</p>
+        </div>
+        <div class="approach-card">
+          <span class="approach-label">My approach</span>
+          <p>Chose to build the feature myself rather than purchase an in-salon AI skin analysis
+            device — the devices Korean salons use are expensive and built for in-person use, not
+            a web product. Built the feature using Claude — no custom-trained model, just direct
+            Claude API calls. Made a deliberate tradeoff of two API calls per request instead of
+            one, prioritizing response quality and speed over API cost, since this is often a
+            visitor's first impression of the brand and building trust for a first-time visit
+            mattered more than shaving cost.</p>
+        </div>
+      </div>
+    </div>
+    <div class="proj-block">
+      <h2>What It Does</h2>
+      <ul>
+        <li>User uploads 1–3 photos of their skin</li>
+        <li>Identifies skin type and key concerns</li>
+        <li>Recommends ingredients and treatments suited to their skin</li>
+        <li>Suggests an at-home maintenance routine</li>
+        <li>Suggests weekly clinic treatments</li>
+      </ul>
+    </div>
+    <div class="proj-block">
+      <h2>Outcome</h2>
+      <p>The website is live, but the business hasn't launched physically yet — so there's no
+        demand or conversion data available at this stage.</p>
+    </div>
+    <div class="proj-block">
+      <h2>What I'd Do Differently</h2>
+      <div class="fillin">[Add: one or two honest reflections]</div>
+    </div>
+    <div class="proj-block">
+      <h2>What's Next</h2>
+      <ul>
+        <li><strong>Measure accuracy</strong> — evaluate how well the recommendations actually
+          match dermatological guidance before scaling usage</li>
+        <li><strong>Consider building a proprietary model</strong> — evaluate whether a
+          purpose-built model outperforms relying solely on the Claude API</li>
+        <li><strong>Add a cost-control barrier</strong> — likely user login, to prevent unlimited
+          free usage from driving up API costs</li>
+        <li><strong>Address privacy</strong> — define how uploaded photos are handled, stored,
+          and protected</li>
+        <li><strong>Add profile storage</strong> — let users save their photos and track skin
+          treatment progress over time</li>
+      </ul>
+      <div class="fillin">[Add: your actual priority order and rough timing]</div>
+    </div>
+  </section>
+  <footer class="wrap">
+    <div class="footer-grid">
+      <div class="footer-left"><p class="eyebrow">Get in touch</p><h2>Want to talk through this project? Reach out.</h2></div>
+      <div class="footer-links"><a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a><a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+<!-- ============ PROJECT: FINANCE COACH ============ -->
+<div id="view-finance-coach" class="view">
+  <section class="proj-hero wrap-narrow">
+    <button class="back-link">← All projects</button>
+    <div class="proj-meta-row" style="margin-top:22px;">
+      <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
+      <span class="proj-timeframe">[Add: dates]</span>
+    </div>
+    <h1 class="proj-title">Personal Finance Coach &amp; Spending Analyzer</h1>
+    <p class="proj-sub">An AI-powered assistant that analyzes spending patterns and gives personalized financial guidance.</p>
+    <p class="proj-stack"><strong>Tools:</strong> [Add: language / framework / AI model or API used]</p>
+    <div class="resource-row">
+      <span class="resource-chip disabled">+ Add spec</span>
+      <span class="resource-chip disabled">+ Add repo / README</span>
+      <span class="resource-chip disabled">+ Add demo</span>
+    </div>
+  </section>
+  <section class="proj-body wrap-narrow">
+    <div class="proj-block">
+      <h2>The Problem</h2>
+      <div class="fillin">[Add: the assignment brief or the problem you framed for yourself — who this was for and what gap it addressed]</div>
+    </div>
+    <div class="proj-block">
+      <h2>My Role &amp; Approach</h2>
+      <div class="approach-grid">
+        <div class="approach-card"><span class="approach-label">Product thinking</span><div class="fillin">[Add: how you defined the scope, what "spending analysis" meant in practice, what tradeoffs you made]</div></div>
+        <div class="approach-card"><span class="approach-label">Build approach</span><div class="fillin">[Add: data source, how the coaching logic works, what you built vs. what came from a library]</div></div>
+      </div>
+    </div>
+    <div class="proj-block">
+      <h2>What It Does</h2>
+      <div class="fillin">[Add: 3–4 bullets on the actual features. A screenshot or demo GIF would help here.]</div>
+    </div>
+    <div class="proj-block">
+      <h2>Outcome</h2>
+      <div class="fillin">[Add: grade/feedback, or how it performed against sample data]</div>
+    </div>
+    <div class="proj-block">
+      <h2>What I'd Do Differently</h2>
+      <div class="fillin">[Add: one or two honest reflections]</div>
+    </div>
+  </section>
+  <footer class="wrap">
+    <div class="footer-grid">
+      <div class="footer-left"><p class="eyebrow">Get in touch</p><h2>Want to talk through this project? Reach out.</h2></div>
+      <div class="footer-links"><a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a><a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+<!-- ============ PROJECT: CHATBOT ============ -->
+<div id="view-chatbot" class="view">
+  <section class="proj-hero wrap-narrow">
+    <button class="back-link">← All projects</button>
+    <div class="proj-meta-row" style="margin-top:22px;">
+      <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
+      <span class="proj-timeframe">[Add: dates — flag if this one is actually still in progress]</span>
+    </div>
+    <h1 class="proj-title">Chatbot</h1>
+    <p class="proj-sub">A conversational AI chatbot built as a hands-on coursework project.</p>
+    <p class="proj-stack"><strong>Tools:</strong> [Add: language / framework / AI model or API used]</p>
+    <div class="resource-row">
+      <span class="resource-chip disabled">+ Add spec</span>
+      <span class="resource-chip disabled">+ Add repo / README</span>
+      <span class="resource-chip disabled">+ Add demo</span>
+    </div>
+  </section>
+  <section class="proj-body wrap-narrow">
+    <div class="proj-block">
+      <h2>The Problem</h2>
+      <div class="fillin">[Add: what this chatbot was for — customer support, Q&A, a specific domain? What was the assignment asking for?]</div>
+    </div>
+    <div class="proj-block">
+      <h2>My Role &amp; Approach</h2>
+      <div class="approach-grid">
+        <div class="approach-card"><span class="approach-label">Product thinking</span><div class="fillin">[Add: how you scoped conversation flows, what the bot should/shouldn't handle, UX/tone thinking]</div></div>
+        <div class="approach-card"><span class="approach-label">Build approach</span><div class="fillin">[Add: what model/framework powers it, how you handled conversation state, what you iterated on]</div></div>
+      </div>
+    </div>
+    <div class="proj-block">
+      <h2>What It Does</h2>
+      <div class="fillin">[Add: 3–4 bullets on actual capabilities — a screenshot or short conversation transcript would work well here]</div>
+    </div>
+    <div class="proj-block">
+      <h2>Outcome</h2>
+      <div class="fillin">[Add: grade/feedback, or how it performed in testing/demo]</div>
+    </div>
+    <div class="proj-block">
+      <h2>What I'd Do Differently</h2>
+      <div class="fillin">[Add: one or two honest reflections]</div>
+    </div>
+  </section>
+  <footer class="wrap">
+    <div class="footer-grid">
+      <div class="footer-left"><p class="eyebrow">Get in touch</p><h2>Want to talk through this project? Reach out.</h2></div>
+      <div class="footer-links"><a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a><a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+<!-- ============ PROJECT: TEXT CATEGORIZATION ============ -->
+<div id="view-text-cat" class="view">
+  <section class="proj-hero wrap-narrow">
+    <button class="back-link">← All projects</button>
+    <div class="proj-meta-row" style="margin-top:22px;">
+      <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · School project</span></div>
+      <span class="proj-timeframe">[Add: start date / expected completion]</span>
+    </div>
+    <h1 class="proj-title">Text Categorization</h1>
+    <p class="proj-sub">A text classification model that sorts input text into predefined categories.</p>
+    <p class="proj-stack"><strong>Tools:</strong> [Add: language / framework / model or approach used]</p>
+    <div class="resource-row">
+      <span class="resource-chip disabled">+ Add spec</span>
+      <span class="resource-chip disabled">+ Add repo / README</span>
+      <span class="resource-chip disabled">+ Add demo</span>
+    </div>
+  </section>
+  <section class="proj-body wrap-narrow">
+    <div class="proj-block">
+      <h2>The Problem</h2>
+      <div class="fillin">[Add: what kind of text and categories this handles, and what problem sorting them solves]</div>
+    </div>
+    <div class="proj-block">
+      <h2>My Role &amp; Approach</h2>
+      <div class="approach-grid">
+        <div class="approach-card"><span class="approach-label">Product thinking</span><div class="fillin">[Add: how you defined the categories, what "good enough" accuracy looks like, how this would be used]</div></div>
+        <div class="approach-card"><span class="approach-label">Build approach</span><div class="fillin">[Add: what model/approach you're using, what data, what's currently unfinished]</div></div>
+      </div>
+    </div>
+    <div class="proj-block">
+      <h2>What It Does <span class="wip-tag">— in progress</span></h2>
+      <div class="fillin">[Add: current state of the build — what's working, what's not yet]</div>
+    </div>
+    <div class="proj-block">
+      <h2>Outcome So Far</h2>
+      <div class="fillin">[Add: any early accuracy numbers or results, or what's next]</div>
+    </div>
+    <div class="proj-block">
+      <h2>What I'd Do Differently</h2>
+      <div class="fillin">[Add: one or two honest reflections — even mid-project, this is worth noting]</div>
+    </div>
+  </section>
+  <footer class="wrap">
+    <div class="footer-grid">
+      <div class="footer-left"><p class="eyebrow">Get in touch</p><h2>Want to talk through this project? Reach out.</h2></div>
+      <div class="footer-links"><a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a><a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+</main>
+
+<script>
+  function goTo(id){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const target = document.getElementById('view-' + id);
+    if (target) target.classList.add('active');
+    window.scrollTo({top:0, behavior:'instant'});
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+  document.querySelectorAll('.back-link').forEach(btn => btn.addEventListener('click', () => goTo('home')));
+  function scrollToProjects(){ setTimeout(() => { const el = document.getElementById('projects'); if (el) el.scrollIntoView({behavior:'smooth'}); }, 10); }
+  function scrollToContact(){ setTimeout(() => { const el = document.getElementById('contact'); if (el) el.scrollIntoView({behavior:'smooth'}); }, 10); }
+
+  const els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+  } else { els.forEach(el => el.classList.add('in')); }
+
+  function openEmailModal(){
+    document.getElementById('email-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('ef-from').focus();
+  }
+  function closeEmailModal(){
+    document.getElementById('email-modal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeEmailModal();
+  });
+  function sendEmail(event){
+    event.preventDefault();
+    const from = document.getElementById('ef-from').value.trim();
+    const subject = document.getElementById('ef-subject').value.trim();
+    const body = document.getElementById('ef-body').value.trim();
+    const fullBody = body + '\n\n—\nReply to: ' + from;
+    const mailto = 'mailto:phtn.pro@gmail.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(fullBody);
+    window.location.href = mailto;
+    closeEmailModal();
+    return false;
+  }
+</script>
+
+</body>
+</html>
