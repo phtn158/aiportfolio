@@ -287,7 +287,7 @@ footer{padding:52px 0 64px;}
   <section id="projects" class="wrap">
     <div class="section-head reveal">
       <h2>Projects</h2>
-      <span class="eyebrow">6 projects</span>
+      <span class="eyebrow">7 projects</span>
     </div>
 
     <div class="project-grid reveal">
@@ -348,6 +348,16 @@ footer{padding:52px 0 64px;}
           <h3>CI/CD Failure Log Intelligence</h3>
           <p class="project-card-desc">Prompt-engineering pipeline that sanitizes, classifies, and summarizes CI/CD failure logs into plain-English root causes and fixes, evaluated with an LLM-as-judge.</p>
           <p class="project-card-tools">Tools: Python · Prompt engineering · LLM-as-judge evaluation</p>
+        </div>
+        <div class="project-card-bottom link-out"><span>View project →</span></div>
+      </div>
+
+      <div class="project-card" onclick="goTo('study-hub')">
+        <div class="project-card-top">
+          <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · Personal project</span></div>
+          <h3>Applied GenAI Study Hub</h3>
+          <p class="project-card-desc">A personal study site — dictionary, spaced-repetition flashcards, quizzes, and a weak-spot dashboard — built from an Applied Generative AI program's own lecture slides, with a weekly workflow that folds in new material automatically.</p>
+          <p class="project-card-tools">Tools: HTML/CSS/JavaScript (ES modules) · localStorage (SM-2 spaced repetition) · Python (content pipeline)</p>
         </div>
         <div class="project-card-bottom link-out"><span>View project →</span></div>
       </div>
@@ -774,6 +784,78 @@ footer{padding:52px 0 64px;}
     <div class="proj-block">
       <h2>What I'd Do Differently</h2>
       <div class="fillin">[Add: one or two honest reflections]</div>
+    </div>
+  </section>
+  <footer class="wrap">
+    <div class="footer-grid">
+      <div class="footer-left"><p class="eyebrow">Get in touch</p><h2>Want to talk through this project? Reach out.</h2></div>
+      <div class="footer-links"><a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a><a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+<!-- ============ PROJECT: APPLIED GENAI STUDY HUB ============ -->
+<div id="view-study-hub" class="view">
+  <section class="proj-hero wrap-narrow">
+    <button class="back-link">← All projects</button>
+    <div class="proj-meta-row" style="margin-top:22px;">
+      <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · Personal project</span></div>
+      <span class="proj-timeframe">Aug 2026 — Present</span>
+    </div>
+    <h1 class="proj-title">Applied GenAI Study Hub</h1>
+    <p class="proj-sub">A personal study site — dictionary, spaced-repetition flashcards, quizzes, a formula/code reference, and a weak-spot dashboard — built from the lecture slides of an Applied Generative AI program, organized around what you'd actually <em>do</em> with the material rather than the order it was taught in.</p>
+    <p class="proj-stack"><strong>Tools:</strong> HTML/CSS/JavaScript (ES modules, no framework) · localStorage (SM-2-style spaced repetition) · Python (PDF-to-content pipeline, content validation)</p>
+    <div class="resource-row">
+      <span class="resource-chip disabled">+ Add spec</span>
+      <span class="resource-chip disabled">+ Add repo / README</span>
+      <span class="resource-chip disabled">+ Add demo</span>
+    </div>
+  </section>
+  <section class="proj-body wrap-narrow">
+    <div class="proj-block">
+      <h2>The Problem</h2>
+      <p>Studying from a stack of lecture-slide PDFs doesn't build retention — concepts are scattered across multiple decks, formats are inconsistent, and there's no mechanism for noticing what you keep getting wrong. This project turns those PDFs into one structured, testable, self-updating study surface for a single learner (me) working through an Applied Generative AI program, meant for reviewing and self-testing between lectures on a phone or laptop without setting up an account anywhere.</p>
+    </div>
+    <div class="proj-block">
+      <h2>My Role &amp; Approach</h2>
+      <div class="approach-grid">
+        <div class="approach-card">
+          <span class="approach-label">Product thinking</span>
+          <p>Deliberately scoped out accounts, login, multi-device sync, and any runtime LLM calls — all dictionary, flashcard, and quiz content is authored once from source material and stored statically, since the real requirement is one learner reviewing on whatever device they're on right now, not a multi-user product. The content structure itself went through revision: mirroring the program's actual lecture order first felt logical but read like a syllabus, so it was reorganized task-flow-first — six repeatable task-type modules (Classification, Summarization, QA, Translation, Code Generation, Speech-to-Text), each following the same pattern, with shared prerequisites up front and cross-cutting/reference material pushed to the end.</p>
+        </div>
+        <div class="approach-card">
+          <span class="approach-label">Build approach</span>
+          <p>Static HTML/CSS/JS with no build step; a single <code>content.json</code> is the source of truth that every view (dictionary, flashcards, quiz, formulas, dashboard) renders from, so adding a concept automatically makes it searchable and flashcard-eligible without per-view wiring. Chose a simplified SM-2 spaced-repetition algorithm (the same family Anki uses) over a binary right/wrong toggle so the app can track an ease factor and miss count per card and actually prioritize what needs review. The content pipeline extracts new lecture PDFs with <code>pdftotext</code>, then hand-authors entries into the shared schema, validated by script for duplicate IDs and valid quiz answer indices before merging.</p>
+        </div>
+      </div>
+    </div>
+    <div class="proj-block">
+      <h2>What It Does</h2>
+      <ul>
+        <li>Dictionary of every concept from the program (165 entries as of the latest update), each with a plain-language "explain like I forgot everything" one-liner above the formal definition, tagged by category and by the Python package that implements it</li>
+        <li>Flashcards with SM-2-style spaced repetition — cards marked "Missed it" or "Shaky" resurface more often; consistently-correct cards space out further</li>
+        <li>Multiple-choice quizzes per module, with an explanation shown after each answer</li>
+        <li>A formulas &amp; code reference pulling every formula into one lookup page</li>
+        <li>A "My Progress" weak-spot dashboard aggregating flashcard and quiz misses into a focus list</li>
+        <li>Site-wide search, and a weekly scheduled workflow that checks for new lecture material and proposes dictionary/flashcard/quiz additions in the existing schema</li>
+      </ul>
+    </div>
+    <div class="proj-block">
+      <h2>Outcome So Far</h2>
+      <p>Currently 165 dictionary entries, 84 flashcards, and 58 quiz questions across 12 modules, spanning the original NLP/LLM curriculum plus a Claude-specific practitioner track folded in through the first real run of the weekly content-update workflow. Since a real browser wasn't available in the build environment, the app was tested by running its actual ES modules against a real DOM/localStorage via jsdom rather than skipping runtime testing — this caught and fixed three real bugs: search failing to match Greek-letter terms like Cohen's κ, a "Study Days" counter that never counted the first visit, and Practice Again/Retry buttons that silently did nothing because they relied on a hash that never changed.</p>
+    </div>
+    <div class="proj-block">
+      <h2>What I'd Do Differently</h2>
+      <div class="fillin">[Add: one or two honest reflections — even mid-project, this is worth noting]</div>
+    </div>
+    <div class="proj-block">
+      <h2>What's Next</h2>
+      <ul>
+        <li><strong>Netlify deploy</strong> — get a live link up and linked from the project README</li>
+        <li><strong>Portfolio write-up</strong> — a fuller Problem/Approach/Outcome pass once the deployed site has been used for a week or two of real studying</li>
+      </ul>
+      <div class="fillin">[Add: your actual priority order and rough timing]</div>
     </div>
   </section>
   <footer class="wrap">

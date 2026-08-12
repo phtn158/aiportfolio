@@ -1,0 +1,3822 @@
+{
+  "meta": {
+    "siteTitle": "Study Site",
+    "generatedFrom": [
+      "Eval Prompts.pdf",
+      "JHU 5_Slides_NLP.pdf",
+      "Week 7 Prompt Engineering.pdf",
+      "Week 8 Lecture Slides.pdf",
+      "Week_6_Slides_LLM.pdf",
+      "Session 1 - The Claude Ecosystem__From Answers to Workflows.pdf",
+      "Session 2 - Prompt Engineering - Thinking Clearly with Claude.pdf",
+      "Session 3 - Claude Cowork & Agentic Workflows - AI That Works With You.pdf"
+    ],
+    "totalConcepts": 165,
+    "totalFlashcards": 84,
+    "totalQuizQuestions": 58
+  },
+  "modules": [
+    {
+      "id": "foundations",
+      "title": "Foundations",
+      "description": "Shared prerequisites: how raw text becomes something a model can work with, and a compressed primer on how LLMs are built. Full architecture depth lives in the Reference module.",
+      "conceptCount": 13,
+      "flashcardCount": 6,
+      "quizCount": 5
+    },
+    {
+      "id": "core-prompting",
+      "title": "Core Prompting Skills",
+      "description": "The shared toolkit used across every task-flow module: how to structure a prompt, common reasoning patterns, the generation parameters that shape output, and LangChain basics.",
+      "conceptCount": 24,
+      "flashcardCount": 10,
+      "quizCount": 5
+    },
+    {
+      "id": "classification",
+      "title": "Task-Flow: Classification & Labeling",
+      "description": "Text-to-label tasks: sentiment, NER, topic classification, aspect-based sentiment. Traditional ML vs. GenAI approach, worked example, and how to evaluate it.",
+      "conceptCount": 14,
+      "flashcardCount": 6,
+      "quizCount": 5
+    },
+    {
+      "id": "summarization",
+      "title": "Task-Flow: Summarization",
+      "description": "Condensing text into shorter form. Extractive vs. abstractive approaches, and how to evaluate summary quality.",
+      "conceptCount": 8,
+      "flashcardCount": 6,
+      "quizCount": 5
+    },
+    {
+      "id": "qa",
+      "title": "Task-Flow: Question Answering",
+      "description": "Grounded, RAG-style question answering. How to prompt with context, and the faithfulness/hallucination rubric used to evaluate it.",
+      "conceptCount": 7,
+      "flashcardCount": 6,
+      "quizCount": 5
+    },
+    {
+      "id": "translation-style",
+      "title": "Task-Flow: Translation & Style Transfer",
+      "description": "Text-to-text tasks that transform text into another language or tone. Metrics built for structured, reference-based comparison.",
+      "conceptCount": 6,
+      "flashcardCount": 4,
+      "quizCount": 3
+    },
+    {
+      "id": "code-gen",
+      "title": "Task-Flow: Code Generation",
+      "description": "Evaluating generated code, where correctness can actually be tested rather than judged subjectively.",
+      "conceptCount": 5,
+      "flashcardCount": 5,
+      "quizCount": 4
+    },
+    {
+      "id": "speech-summarization",
+      "title": "Task-Flow: Speech-to-Text + Summarization",
+      "description": "A combined pipeline: transcribe audio, then summarize it. Reuses summarization evaluation from its own module.",
+      "conceptCount": 2,
+      "flashcardCount": 2,
+      "quizCount": 2
+    },
+    {
+      "id": "eval-rigor",
+      "title": "Evaluation Rigor & Production Practices (Part A)",
+      "description": "Cross-cutting practices that apply across every task-flow: why evaluation is non-negotiable, the LLM workflow lifecycle, and rigorous evaluation methodology.",
+      "conceptCount": 44,
+      "flashcardCount": 15,
+      "quizCount": 8
+    },
+    {
+      "id": "dspy",
+      "title": "DSPy — Programmatic Prompt Optimization",
+      "description": "Treating prompts as programs instead of hand-tuned text: the four primitives and how the DSPy compiler searches for prompts automatically.",
+      "conceptCount": 9,
+      "flashcardCount": 6,
+      "quizCount": 4
+    },
+    {
+      "id": "architecture-reference",
+      "title": "Reference: Architecture Backbone",
+      "description": "Optional deep dive — full mechanics of RNN/LSTM, attention, and the three transformer model families. Dip in whenever you want the 'why' behind the primer in Foundations.",
+      "conceptCount": 15,
+      "flashcardCount": 10,
+      "quizCount": 6
+    },
+    {
+      "id": "claude-cowork",
+      "title": "Working With Claude: Ecosystem & Agentic Workflows",
+      "description": "Practitioner material on Claude's three product layers (Chat, Cowork, Code), how to pick a model tier and thinking mode, and how Cowork's agentic loop (Plan → Approve → Execute → Iterate) turns a task description into supervised, multi-step execution.",
+      "conceptCount": 18,
+      "flashcardCount": 8,
+      "quizCount": 6
+    }
+  ],
+  "concepts": [
+    {
+      "id": "nlp",
+      "term": "Natural Language Processing (NLP)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Teaching computers to read, understand, and write human language instead of just crunching numbers.",
+      "definition": "A field of AI that enables computers to understand, interpret, and generate human language. Evolved from 1980s rule-based systems, to 1990s–2000s statistical methods, to today's deep learning and generative AI.",
+      "example": "Spam filters, voice assistants, and ChatGPT are all NLP applications.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "tokenization",
+      "term": "Tokenization",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": [
+          "nltk",
+          "spacy"
+        ]
+      },
+      "eliForgot": "Chopping a sentence into bite-sized pieces (words, subwords, or characters) so a model can digest it.",
+      "definition": "The process of splitting text into units called tokens. Can be done at the word level, subword level (e.g. 'running' → 'run' + 'ning'), or character level.",
+      "example": "\"The dog is running\" → [\"The\", \"dog\", \"is\", \"running\"]",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "stop-words",
+      "term": "Stop Words",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "nltk",
+          "spacy"
+        ]
+      },
+      "eliForgot": "The filler words like \"the\" and \"is\" that carry almost no meaning on their own, so we often just delete them.",
+      "definition": "Frequent words with little semantic meaning (e.g. \"the\", \"is\", \"and\"). Removing them reduces noise and lets the model focus on meaningful terms.",
+      "example": "\"The dog is running\" → [\"dog\", \"running\"]",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "stemming-lemmatization",
+      "term": "Stemming vs. Lemmatization",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": [
+          "nltk",
+          "spacy"
+        ]
+      },
+      "eliForgot": "Two ways to shrink words down to their root form — one is a quick, crude chop; the other is a careful, dictionary-aware trim.",
+      "definition": "Stemming reduces words to a root form by stripping suffixes/prefixes (simple, sometimes produces non-words, e.g. \"studies\" → \"studi\"). Lemmatization converts words to their true dictionary base form using linguistic rules (more accurate, more expensive), e.g. \"better\" → \"good\".",
+      "example": "\"running\", \"runner\", \"runs\" → stemmed to \"run\".",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "bag-of-words",
+      "term": "Bag of Words (BoW)",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": [
+          "scikit-learn"
+        ]
+      },
+      "eliForgot": "Turning a sentence into a word-count list and throwing away the word order entirely.",
+      "definition": "Represents text as a vector of word counts from a fixed vocabulary, ignoring grammar and word order. Simple and effective for basic classification (e.g. spam detection) but loses context and produces high-dimensional, sparse vectors.",
+      "example": "\"The dog is running\" with vocabulary [the, dog, is, running, happily, in, park] → [1,1,1,1,0,0,0]",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "n-grams",
+      "term": "N-Grams",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Reading a sentence in overlapping chunks of N words at a time instead of one word at a time.",
+      "definition": "Contiguous sequences of n words in text. A unigram is 1 word, a bigram is 2, a trigram is 3. Used to measure overlap between generated and reference text — the basis for metrics like BLEU and ROUGE.",
+      "example": "\"The cat sat\" → Unigram: \"The\"; Bigram: \"The cat\"; Trigram: \"The cat sat\"",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "word-embeddings",
+      "term": "Word Embeddings",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Turning each word into a list of numbers so that words with similar meanings end up near each other on a map.",
+      "definition": "Dense vector representations of words in a continuous vector space, where semantic similarity is reflected in vector proximity. Replaced sparse representations like Bag of Words.",
+      "example": "\"dog\" → [0.4, 0.5, 0.6]",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "word2vec",
+      "term": "Word2Vec",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": [
+          "gensim"
+        ]
+      },
+      "eliForgot": "Learns word meaning by predicting which words tend to hang out next to each other.",
+      "definition": "Introduced by Google (2013). Two training approaches: Skip-gram predicts context words from a target word (good for rare words); CBOW (Continuous Bag of Words) predicts a target word from its context (faster, good for frequent words). Strength: captures word analogies efficiently. Limitation: struggles with out-of-vocabulary (OOV) words.",
+      "example": "Skip-gram: given \"dog\", predict \"barks\", \"walks\", \"puppy\".",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "glove",
+      "term": "GloVe",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": [
+          "gensim"
+        ]
+      },
+      "eliForgot": "Learns word meaning from global co-occurrence statistics across the whole corpus, not just nearby words.",
+      "definition": "Introduced by Stanford (2014). Combines global co-occurrence statistics with local context to produce embeddings. Strength: strong global semantic representation. Limitation: requires pre-training, less flexible for new data.",
+      "example": "\"ice\" and \"cold\" co-occur often → embeddings reflect that relationship; \"ice\" and \"fire\" rarely co-occur.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "fasttext",
+      "term": "FastText",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": [
+          "gensim"
+        ]
+      },
+      "eliForgot": "Breaks words into smaller word-pieces so it can still guess the meaning of a word it has never seen before.",
+      "definition": "Developed by Facebook. Represents words as character n-grams (subwords) rather than atomic units. Handles out-of-vocabulary (OOV) words and morphologically rich languages well, at the cost of larger models.",
+      "example": "\"apple\" → n-grams \"app\", \"ppl\", \"ple\". An unseen word like \"university\" can still get an embedding inferred from \"uni\", \"vers\", \"ity\".",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "attention-primer",
+      "term": "Attention (primer)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Lets a model look at every word in a sentence at once and decide which ones matter most for understanding any given word.",
+      "definition": "A mechanism that weighs the importance (attention) of different words when processing a token, rather than processing sequentially like an RNN. Enables parallelization and long-range context. Full mechanics (Query/Key/Value, softmax, multi-head) are covered in the Architecture Reference module.",
+      "example": "In \"Leaves fall from the oak tree\", attention lets the model connect \"leaves\" and \"fall\" directly, regardless of distance.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "transformer-primer",
+      "term": "Transformer (primer)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The architecture that replaced step-by-step reading with all-at-once reading, using attention — it's the engine under every modern LLM.",
+      "definition": "Introduced by Google in 2017 (\"Attention Is All You Need\"). A neural network architecture built entirely on attention mechanisms rather than recurrence, enabling parallel processing, better long-range dependency handling, and scalability. Full breakdown in the Architecture Reference module.",
+      "example": "BERT, GPT, and T5 are all transformer-based models.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "bert-gpt-t5-primer",
+      "term": "BERT / GPT / T5 (primer)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": [
+          "transformers"
+        ]
+      },
+      "eliForgot": "Three flavors of transformer: one just reads and understands (BERT), one just writes (GPT), and one does both — read then write (T5).",
+      "definition": "BERT is encoder-only, built for understanding tasks (classification, NER, QA). GPT is decoder-only, built for text generation via causal (left-to-right) attention. T5 is encoder-decoder, built for sequence-to-sequence tasks and reframes every NLP task as text-to-text. Full detail in the Architecture Reference module.",
+      "example": "Sentiment classification → BERT. Story generation → GPT. Translation → T5.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "prompt-engineering",
+      "term": "Prompt Engineering",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Figuring out exactly what to say to an AI so it actually gives you what you want.",
+      "definition": "The art and science of designing and structuring prompts fed to language models — a collection of strategies to describe a task in text in order to improve model performance, adapt it to varied tasks, and get accurate results efficiently.",
+      "example": "Turning \"summarize this\" into \"Summarize the text in 3-4 sentences, focusing on the main arguments, without introductory statements.\"",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "three-controllable-inputs",
+      "term": "Three Controllable Inputs (Model, Parameters, Prompt)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The only three knobs you actually control when using an LLM: which model, how it samples, and what you type.",
+      "definition": "Reliable LLM outputs are produced by three controllable inputs: the Model (provider, architecture, size), Parameters (temperature, top-k, top-p — control randomness/determinism), and the Prompt (the most frequently tuned input — structured outputs, few-shot examples, constraints).",
+      "example": "Same prompt, different temperature → different creativity level in the output.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "prompt-elements",
+      "term": "Basic Elements of an Effective Prompt",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The must-have ingredients of a good prompt: say clearly what you want, give it background, and tell it how to format the answer.",
+      "definition": "Core elements: clear instruction, context, and an output indicator. Frequently beneficial additions: examples (few-shot), embodiment (persona), and task breakdown.",
+      "example": "Instruction: \"Summarize the text.\" + Context: source passage + Output indicator: \"Summary:\"",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "persona-prompting",
+      "term": "Persona / Embodiment Prompting",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Telling the AI to \"act as\" a specific expert so it answers in that expert's voice and style.",
+      "definition": "Having the AI model play a role related to the task. Descriptive elements (\"experienced\", \"from [location]\") can further improve performance.",
+      "example": "\"You are a literary expert who focuses on early medieval literature. Analyze the tone of this passage.\"",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "context-prompting",
+      "term": "Adding Context to a Prompt",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Feeding the AI extra background facts before asking your question, so it doesn't have to guess.",
+      "definition": "Provides additional details the model can ground its answer in. Forms the basis of Retrieval-Augmented Generation (RAG) and greatly helps reduce hallucination by augmenting the model with knowledge outside its training data.",
+      "example": "\"Healthcare systems store sensitive patient data... Using this context, explain why cybersecurity matters in healthcare.\"",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "delimiters",
+      "term": "Text Delimiters",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Using brackets, quotes, or labels to clearly mark where one part of your prompt ends and another begins.",
+      "definition": "Textual cues (e.g. [Passage], [Question], \"\"\"...\"\"\") that demarcate sections of a prompt like task, examples, and output indicator, reducing ambiguity for the model.",
+      "example": "[Passage]: \"...\" [Question]: \"What fields are impacted?\" [Answer]:",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "task-breakdown",
+      "term": "Task Breakdown in a Prompt",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Splitting a big ask into numbered mini-steps instead of one vague instruction.",
+      "definition": "Specifying the steps required to complete a task, or splitting it into sub-tasks across successive prompts. For tasks with many instruction sets, classify the query type first, then apply the matching instruction set.",
+      "example": "\"1. Identify the tone. 2. List the main ideas. 3. Highlight rhetorical devices.\"",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "output-specification",
+      "term": "Specifying Output in a Prompt",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Telling the AI exactly what shape the answer should come in — how long, what words to use, what format.",
+      "definition": "Being descriptive about desired output: length, specific vocabulary (e.g. for classification tasks), and providing an output indicator/cue word (e.g. \"Sentiment:\") to prompt the model directly into the answer.",
+      "example": "\"Only respond with 'positive', 'negative', or 'neutral'. Sentiment:\"",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "few-shot-prompting",
+      "term": "Few-Shot Prompting",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Showing the AI a few worked examples of the task before asking it to do a new one.",
+      "definition": "Provides the model with several examples of the task (e.g. translation sentence pairs) to demonstrate the desired pattern. Caution: the order and choice of examples can greatly influence the outcome. (Brown et al., 2020)",
+      "example": "Give 3 example EN→FR sentence pairs, then ask the model to translate a 4th.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "chain-of-thought",
+      "term": "Chain-of-Thought (CoT) Prompting",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Asking the AI to think out loud, step by step, instead of jumping straight to the final answer.",
+      "definition": "Breaks complex tasks into a series of simpler steps, guiding the model through a chain of reasoning. Increases computation cost and requires careful design of intermediate steps. (Wei et al., 2022)",
+      "example": "For an arithmetic problem, start with simple operations and build to the complex one.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "tree-of-thought",
+      "term": "Tree-of-Thought (ToT) Prompting",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Letting the AI branch out and explore several different lines of reasoning before picking the best one, instead of one straight-line answer.",
+      "definition": "Guides the model to explore multiple reasoning paths by branching into different lines of thought, generating and evaluating multiple hypotheses before converging on a solution. Higher compute cost than CoT; requires designing merge/prune steps. (Yao et al., 2023)",
+      "example": "For a logic puzzle, generate multiple hypotheses, evaluate each, then converge.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "self-consistency-prompting",
+      "term": "Self-Consistency Prompting",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Asking the AI the same question multiple times and going with whatever answer comes up most.",
+      "definition": "Produces several possible answers to the same prompt and seeks consistency/majority agreement across them, rather than trusting a single run. Increased computation cost; risk of majority bias. (Wang et al., 2023)",
+      "example": "Ask a Q&A prompt 5 times, take the most common answer as final.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "active-prompting",
+      "term": "Active Prompting",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The AI pauses to ask you a clarifying question instead of just guessing what you meant.",
+      "definition": "The AI model proactively seeks additional information or clarification from the user to improve its understanding of the task. Relies on human expertise/review of uncertain responses. (Diao et al., 2023)",
+      "example": "Model asks the user how to classify an ambiguous input before proceeding.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "react-prompting",
+      "term": "ReAct / Action-Observation Prompting",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The AI alternates between doing something (like looking something up) and thinking about what it found, refining its answer each round.",
+      "definition": "Alternates between performing actions (reasoning steps, tool calls) and observing outcomes, using feedback to refine responses. Adds complexity to prompt design. (Yao et al., 2022)",
+      "example": "Model forms a hypothesis, retrieves data, adjusts based on findings, refines the answer.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "seven-parameters",
+      "term": "The 7 Generation Parameters",
+      "tags": {
+        "category": [
+          "Parameter"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The seven dials you can turn to control how an LLM's output sounds and how long it runs — from how random it is to when it stops talking.",
+      "definition": "Max Tokens (length ceiling), Temperature (randomness), Top-p (nucleus/adaptive cutoff), Top-k (fixed cutoff), Frequency Penalty (punishes repeated tokens proportional to count), Presence Penalty (one-time penalty for any repeat), Stop Sequence (halts generation on a matching string).",
+      "example": "Low temperature + low max tokens → short, factual, deterministic answers.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "max-tokens",
+      "term": "Max Tokens",
+      "tags": {
+        "category": [
+          "Parameter"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A hard word-count ceiling — the model has to stop once it hits this limit, finished or not.",
+      "definition": "Puts a hard cap on output length in tokens. Usually set to match the task: a brief answer vs. a long explanation.",
+      "example": "max_tokens=7 → \"The capital of France is Paris.\" max_tokens=41 → a longer, elaborated answer.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "stop-sequence",
+      "term": "Stop Sequence",
+      "tags": {
+        "category": [
+          "Parameter"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A specific word or symbol that, the moment the model types it, makes it stop immediately.",
+      "definition": "Generation halts the moment the model produces a specified string. Great for structured output. Max Tokens stops by count; Stop Sequence stops by pattern — often used together.",
+      "example": "stop=\".\" → generation halts right after the first period.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "temperature",
+      "term": "Temperature",
+      "tags": {
+        "category": [
+          "Parameter"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The randomness dial: low = the AI plays it safe and predictable, high = it gets creative and unpredictable.",
+      "definition": "Reshapes the probability distribution over next tokens. Low temperature → one token dominates (good for factual Q&A, code, structured output). High temperature → token choices spread out (good for creative writing, brainstorming).",
+      "example": "temperature=0.1 for code generation; temperature=0.9 for brainstorming.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "top-k-top-p",
+      "term": "Top-k vs. Top-p (Nucleus Sampling)",
+      "tags": {
+        "category": [
+          "Parameter"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Two ways to narrow down the model's word choices before it picks one — top-k keeps a fixed-size shortlist, top-p keeps growing the shortlist until it's \"probable enough.\"",
+      "definition": "Top-k restricts token selection to the k most probable next tokens (fixed cutoff). Top-p (nucleus sampling) selects from the smallest set of top-ranked tokens whose cumulative probability exceeds a threshold (adaptive cutoff).",
+      "example": "top-k=40 always considers exactly 40 candidate tokens; top-p=0.9 considers however many tokens are needed to reach 90% cumulative probability.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "frequency-presence-penalty",
+      "term": "Frequency Penalty vs. Presence Penalty",
+      "tags": {
+        "category": [
+          "Parameter"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Frequency penalty punishes a word more each time it repeats; presence penalty just dings it once for showing up at all.",
+      "definition": "Frequency Penalty scales with how many times a word has already appeared, reducing repetition proportionally. Presence Penalty penalizes a word once simply for appearing, pushing topic diversity. Best practice: test with one or the other, not both simultaneously.",
+      "example": "High frequency penalty stops a model from repeating \"very very very good\"; high presence penalty pushes it to introduce new topics/words.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "langchain",
+      "term": "LangChain",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": [
+          "langchain"
+        ]
+      },
+      "eliForgot": "A toolkit that lets you snap together prompts, models, and logic like Lego blocks instead of writing everything from scratch.",
+      "definition": "A framework using the concept of \"Chains\" to link together components like prompts and LLMs and control their execution. Core components for prompt engineering: Prompt Templates, LLM wrapper classes, and Chains.",
+      "example": "prompt_template | llm | output_parser, linked via the `|` operator.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "prompt-templates",
+      "term": "Prompt Templates (LangChain)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "langchain"
+        ]
+      },
+      "eliForgot": "A fill-in-the-blank prompt: fixed wording with placeholders you swap in variables for.",
+      "definition": "Store prompt text with `{}` placeholders for inserting variables, wrapped in a Prompt Template object that controls inputs/outputs. Key classes: BasePromptTemplate and FewShotPromptTemplate.",
+      "example": "\"Translate the following into French: {text}\"",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "langchain-chains",
+      "term": "Chains (LangChain)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "langchain"
+        ]
+      },
+      "eliForgot": "The pipeline that connects a prompt template to a model (and beyond) so running it end-to-end takes one call.",
+      "definition": "Reusable components that link together LLMs and prompts. Composable with other runnables, including other chains, typically linked via the `|` operator.",
+      "example": "A summarization chain = prompt template → LLM → output parser.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "prompt-evaluation-quality",
+      "term": "Evaluating the Quality of a Prompt",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Don't just eyeball a prompt's output and call it good — actually check it against a rubric, test it with weird inputs, and compare it to a benchmark.",
+      "definition": "Prompt quality is assessed via performance indicators, consistency across runs, completeness/specificity of output, comparison to benchmarks, and testing with variations/red-teaming (including ambiguous or harmful input, especially for user-facing applications). Prompt engineering is iterative.",
+      "example": "Run the same prompt 10 times and check how much the output varies before shipping it.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "text-to-label",
+      "term": "Text-to-Label Task",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Any task where you feed in text and get back a category or tag, not more text.",
+      "definition": "Tasks involving classification or label assignment to text inputs. Examples: sentiment analysis, topic classification, spam detection, code bug detection. Important across customer service, e-commerce, and healthcare.",
+      "example": "Input: a product review → Output: \"Positive\"/\"Negative\"/\"Neutral\"",
+      "moduleId": "classification"
+    },
+    {
+      "id": "traditional-vs-genai-classification",
+      "term": "Traditional ML vs. GenAI Classification",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "scikit-learn"
+        ]
+      },
+      "eliForgot": "The old way trains a dedicated model on lots of labeled examples first; the new way just asks an LLM to label it on the spot, no training required.",
+      "definition": "Traditional approach: featurization → model training (Naive Bayes, SVMs, deep learning) → prediction; requires large labeled datasets and struggles in low-resource scenarios or with nuance like sarcasm. GenAI approach: LLMs classify zero-shot (no training) or few-shot (with demonstrations), exploiting the model's open-endedness — lower dependency on labeled data, provides explanations alongside predictions.",
+      "example": "Traditional: train an SVM on 10,000 labeled reviews. GenAI: prompt an LLM with the review and ask it to classify sentiment, zero-shot.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "sentiment-analysis",
+      "term": "Sentiment Analysis",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Figuring out if a piece of text sounds happy, angry, or neutral.",
+      "definition": "Determines the sentiment expressed in text — positive, negative, or neutral — sometimes broken into a per-clause sentiment breakdown.",
+      "example": "\"I love it! But the price was steep.\" → Positive (battery), Negative (price), Overall: Mixed.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "ner",
+      "term": "Named Entity Recognition (NER)",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": [
+          "spacy"
+        ]
+      },
+      "eliForgot": "Picking out the names of people, places, companies, and dates hiding inside a block of text.",
+      "definition": "Identifies and extracts named entities such as products, locations, organizations, and dates from text.",
+      "example": "\"...Apple iPhone 15 in New York...\" → Product: Apple iPhone 15; Location: New York; Organization: Apple.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "absc",
+      "term": "Aspect-Based Sentiment Classification (ABSC)",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Instead of one overall vibe check, rating the sentiment of each individual feature mentioned separately.",
+      "definition": "Identifies the sentiment expressed about specific aspects/attributes of a product or topic within text, going beyond overall sentiment to analyze individual components.",
+      "example": "\"Battery life is amazing, but the camera is mediocre.\" → battery life: Positive; camera: Negative.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "precision",
+      "term": "Precision",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "scikit-learn"
+        ]
+      },
+      "eliForgot": "Of everything you flagged as positive, how much did you actually get right?",
+      "definition": "The proportion of predicted positive instances that were correct. High precision means few false positives.",
+      "example": "\"I only flag true spam\" — of all emails flagged as spam, how many actually were spam.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "recall",
+      "term": "Recall (Sensitivity)",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "scikit-learn"
+        ]
+      },
+      "eliForgot": "Of everything that was actually positive, how much did you manage to catch?",
+      "definition": "The proportion of actual positive instances that were correctly identified. High recall means few false negatives.",
+      "example": "\"I found all of the spam\" — of all actual spam, how much did the filter catch.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "f1-score",
+      "term": "F1 Score",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "scikit-learn"
+        ]
+      },
+      "eliForgot": "A single score that balances precision and recall so neither one alone can game the metric.",
+      "definition": "The harmonic mean of Precision and Recall. Strikes a balance between the two, especially useful for imbalanced datasets.",
+      "formula": "F1 = 2 × (Precision × Recall) / (Precision + Recall)",
+      "example": "Precision=0.8, Recall=0.6 → F1 ≈ 0.686",
+      "moduleId": "classification"
+    },
+    {
+      "id": "accuracy",
+      "term": "Accuracy",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "scikit-learn"
+        ]
+      },
+      "eliForgot": "Out of everything you predicted, what fraction did you get right overall?",
+      "definition": "The proportion of correctly matched samples out of all samples. Can be misleading on imbalanced datasets (a 95%-majority-class dataset can score 95% accuracy by always predicting the majority class).",
+      "example": "90 correct predictions out of 100 total → 90% accuracy.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "macro-weighted-averaging",
+      "term": "Macro- vs. Weighted-Averaged Metrics",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "scikit-learn"
+        ]
+      },
+      "eliForgot": "Macro treats every category equally no matter how rare it is; weighted gives bigger categories more say.",
+      "definition": "Macro-Averaged: calculates a metric independently per class then averages — useful when all classes matter equally. Weighted-Averaged: considers each class's frequency in the dataset while averaging — useful for imbalanced datasets.",
+      "example": "A rare class scored 0.5 F1 pulls the macro average down more than the weighted average, since weighted discounts it by its low frequency.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "confusion-matrix",
+      "term": "Confusion Matrix",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "scikit-learn"
+        ]
+      },
+      "eliForgot": "A grid showing exactly which categories the model mixes up with which other categories.",
+      "definition": "A table showing predicted vs. actual labels, revealing exactly which classes get confused with which others — used to diagnose systematic classifier errors.",
+      "example": "A confusion matrix might reveal \"Neutral\" reviews are frequently misclassified as \"Positive\".",
+      "moduleId": "classification"
+    },
+    {
+      "id": "class-imbalance",
+      "term": "Class Imbalance",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "When one label shows up way more often than the others, so a lazy model can look accurate just by always guessing the common one.",
+      "definition": "Occurs when one label dominates the dataset (e.g. 95% one label). Inflates raw accuracy and hides poor performance on minority classes; watch for hidden bias where the model defaults to the frequent class.",
+      "example": "A dataset that's 95% \"not spam\" lets a model score 95% accuracy while never catching actual spam.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "calibration",
+      "term": "Calibration",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Whether the model's confidence level actually matches how often it's right.",
+      "definition": "Whether a model's stated confidence reflects its actual correctness rate. Poor calibration means the model is over- or under-confident relative to its true accuracy.",
+      "example": "A well-calibrated model that says \"90% confident\" is right about 90% of the time across many such predictions.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "genai-eval-challenges",
+      "term": "GenAI Evaluation Challenges: Stochasticity & Ambiguity",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The same model can phrase the same correct answer differently every time, which makes automated grading tricky.",
+      "definition": "Stochasticity in output: the same label can come back as \"mixed\", \"Mixed\", or \"the sentiment is mixed\". Ambiguity in output: \"camera is good\" vs. \"the product is good\" — unclear scope. Human review complements automated evaluation for these edge cases.",
+      "example": "Post-processing/normalization logic is needed to reconcile \"Positive\" vs. \"positive\" vs. \"pos\" as the same label.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "summarization-def",
+      "term": "Summarization",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Shrinking a long document down to its essential points.",
+      "definition": "The process of condensing a long text into a shorter version while retaining core meaning. Enhances readability of research papers, reports, and news articles.",
+      "example": "A 10-page report condensed to a 3-sentence executive brief.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "extractive-summarization",
+      "term": "Extractive Summarization",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": [
+          "sumy"
+        ]
+      },
+      "eliForgot": "Cutting and pasting the most important sentences straight out of the original text.",
+      "definition": "Directly identifies and pulls out the most important sentences/phrases from the source text using techniques like TextRank or keyword matching. Advantages: simple, computationally efficient, retains original text quality. Limitations: can lack coherence when sentences are stitched together, can't rephrase or abstract ideas.",
+      "example": "Pulling the single most important sentence from a legal document verbatim.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "abstractive-summarization",
+      "term": "Abstractive Summarization",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": [
+          "transformers"
+        ]
+      },
+      "eliForgot": "Writing a brand-new summary in your own words that captures the gist, rather than copy-pasting.",
+      "definition": "Generates new sentences that encapsulate the core ideas of the original text, leveraging generative models (GPT, T5) trained on summarization. Steps: select/prompt a generative model, encode input into a dense representation, decode into a coherent summary. Advantages: human-like, captures ideas across multiple sentences. Limitations: more compute, risk of hallucinated content.",
+      "example": "\"The company saw a notable profit increase due to higher sales and better cost control\" — a rewritten synthesis, not a direct quote.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "hybrid-summarization",
+      "term": "Hybrid Summarization",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "First grab the key sentences, then rewrite/condense just those into a polished summary.",
+      "definition": "Combines extractive and abstractive approaches: extract parts of text for key phrases/words, then analyze and summarize that content. Useful for things like social media data analysis.",
+      "example": "Extract the top 10 relevant tweets on a topic, then abstractively summarize the theme across them.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "rouge",
+      "term": "ROUGE",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "rouge-score"
+        ]
+      },
+      "eliForgot": "Checks how much of the \"correct\" summary's wording actually shows up in the model's summary.",
+      "definition": "Recall-Oriented Understudy for Gisting Evaluation. Measures overlap between generated and reference text based on n-grams, longest common subsequences, or word overlap. Variants: ROUGE-N (n-gram overlap), ROUGE-L (longest common subsequence). Standard choice for evaluating summaries. Limitation: doesn't account for semantic meaning or paraphrasing.",
+      "example": "High ROUGE if the generated summary reuses many of the same words/phrases as a human reference summary.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "bertscore",
+      "term": "BERTScore",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "bert-score"
+        ]
+      },
+      "eliForgot": "Instead of checking for the exact same words, checks whether the generated text means roughly the same thing.",
+      "definition": "Leverages pre-trained language models (e.g. BERT) to compute cosine similarity between embeddings of generated and reference text, comparing meaning rather than exact words. More robust to paraphrasing than lexical metrics, but computationally intensive and sensitive to the embedding model/language coverage.",
+      "example": "\"Revenue grew 12% YoY\" vs. \"YoY revenue increased by twelve percent\" → low lexical overlap, but high BERTScore.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "summary-rubric-dimensions",
+      "term": "Summary Rubric Dimensions",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The checklist for judging a summary: did it keep the important stuff, does it read smoothly, and is it the right length for the audience?",
+      "definition": "Coverage (are all key points represented?), Coherence (reads as a unified whole), Omission risk (nothing critical left out), Audience-appropriateness (right level of detail for the reader), Compression (condensed, not verbose).",
+      "example": "A summary might have perfect coverage but poor coherence if it just concatenates extracted sentences.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "no-universal-summary-rubric",
+      "term": "Why One Summary Rubric Isn't Enough",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The same source document needs a totally different summary depending on who's reading it — a 2-sentence version for an exec vs. a detailed one for the team doing the work.",
+      "definition": "Same source, different success criteria: an executive brief (2-3 sentences, bottom line) needs different things than a detailed summary (decisions + actions + open items) or a stakeholder-specific summary (only what's relevant to them). A summary great for one audience can fail for another.",
+      "example": "A CEO wants 2 sentences; the project team wants a full decision log from the same meeting transcript.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "grounded-qa",
+      "term": "Grounded Question Answering",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "langchain"
+        ]
+      },
+      "eliForgot": "Answering a question using only facts pulled from a specific source document, instead of the model's general memory.",
+      "definition": "Question-answering, factual extraction, and inferential reasoning grounded in provided source material — the input is a question plus retrieved/relevant context, and the answer must be traceable back to that context.",
+      "example": "\"Based on the [Passage] provided, answer the [Question] accurately and concisely.\"",
+      "moduleId": "qa"
+    },
+    {
+      "id": "rag",
+      "term": "Retrieval-Augmented Generation (RAG)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "langchain",
+          "ragas"
+        ]
+      },
+      "eliForgot": "Looking up relevant documents first, then handing them to the AI so it answers from real material instead of just guessing from memory.",
+      "definition": "A pattern where relevant context/documents are retrieved and injected into the prompt before generation, grounding the model's answer in external knowledge outside its training data. Built on the \"adding context to a prompt\" technique.",
+      "example": "A support chatbot retrieves the relevant help-doc passage, then answers the user's question using it.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "qa-rubric-dimensions",
+      "term": "QA Rubric Dimensions",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The checklist for a good answer: is it traceable to the source, factually right, fully answers the question, and doesn't overreach beyond what was asked?",
+      "definition": "Faithfulness/grounding (answer traceable to source), Factual correctness (named entities, numbers, dates), Citation coverage (claims attributed to the right passage), Answer completeness (covers the full question), Scope discipline (no information beyond what was asked).",
+      "example": "An answer that's factually correct but cites the wrong passage fails on citation coverage even though the facts are right.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "qa-failure-modes",
+      "term": "QA Typical Failure Modes",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The ways a Q&A system screws up: making up facts confidently, answering only half the question, quoting the wrong source, inferring things the source never said, or refusing to answer when it actually could.",
+      "definition": "Plausible hallucinations (fabricated facts presented convincingly), Partial answers (addresses only part of the question), Wrong-passage attribution (quotes from the wrong source), Overreach (inferring claims the source doesn't support), Refusal on answerable questions.",
+      "example": "Asked \"What was Q3 revenue?\", the model confidently states a number that doesn't appear anywhere in the source.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "faithfulness",
+      "term": "Faithfulness",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "ragas",
+          "deepeval"
+        ]
+      },
+      "eliForgot": "What fraction of the claims in the answer are actually backed up by the source material.",
+      "definition": "The signature failure mode to watch for in generation. Measures whether the output stays grounded in the source rather than fabricating information.",
+      "formula": "Faithfulness = (Number of claims in the response supported by sources) / (Total number of claims in the response)",
+      "example": "If a response makes 5 claims and only 4 are supported by the source, faithfulness = 4/5 = 0.8.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "hallucination-types",
+      "term": "Types of Hallucination",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The different flavors of \"making stuff up\": flatly contradicting the source, adding facts that aren't there, drawing a false conclusion from true facts, citing the wrong source for a right fact, or inventing a timeline.",
+      "definition": "Intrinsic (contradicts the source directly), Extrinsic (adds claims not in the source), Compositional (true facts combined into a false conclusion), Attribution errors (correct fact, wrong source), Continuity (invented timelines or sequences).",
+      "example": "Compositional: source says \"Revenue grew\" and \"costs grew\" separately; model incorrectly concludes \"profit grew\".",
+      "moduleId": "qa"
+    },
+    {
+      "id": "hallucination-detection",
+      "term": "Hallucination Detection Strategies",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": [
+          "ragas",
+          "deepeval"
+        ]
+      },
+      "eliForgot": "Ways to catch an AI making things up: check if its citations are real, pull out its claims and match them to the source, or just ask another AI to judge.",
+      "definition": "Citation verification (do cited passages exist?), Claim extraction + source matching, LLM-as-a-Judge with a faithfulness rubric, Embedding similarity between claims and source, Structured output + schema validation.",
+      "example": "Extract every factual claim from a generated answer, then check each one against the retrieved source passages.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "machine-translation",
+      "term": "Machine Translation",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "transformers"
+        ]
+      },
+      "eliForgot": "Automatically converting text from one language into another.",
+      "definition": "Automatically translates text from one language to another. Use cases: global communication, e-commerce, writing code across locales. Generative models handle this well due to contextual understanding and flexibility.",
+      "example": "\"Hello World!\" → \"Bonjour le monde!\"",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "text-style-transfer",
+      "term": "Text Style Transfer",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Rewriting the same message but in a different tone — like turning a casual email into a formal one.",
+      "definition": "Adapts the tone of text while preserving its meaning. Use case: adapting tone for business communication, ensuring consistency and professionalism.",
+      "example": "\"Hey guys, ...\" → \"Dear Colleagues, ...\"",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "bleu",
+      "term": "BLEU",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "sacrebleu"
+        ]
+      },
+      "eliForgot": "Checks how many of the exact same word-chunks appear in both the AI's translation and a human reference translation.",
+      "definition": "Bilingual Evaluation Understudy. Measures n-gram precision between generated and reference text, with a brevity penalty to prevent overgeneration. Variants: BLEU-1 (unigram), BLEU-2 (bigram), etc. Commonly used for machine translation. Limitation: focuses on precision, ignores recall, struggles with synonyms/rephrased content.",
+      "example": "A translation using different-but-correct synonyms from the reference scores poorly on BLEU despite being accurate.",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "comet",
+      "term": "COMET",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "unbabel-comet"
+        ]
+      },
+      "eliForgot": "A trained AI model that scores a translation's quality the way a human judge would, instead of just counting matching words.",
+      "definition": "Crosslingual Optimized Metric for Evaluation of Translation. A neural evaluation model (usually for machine translation) that scores quality using source, hypothesis, and sometimes reference text. Trained on human judgments — better aligns with human perception of adequacy and fluency than pure overlap-based metrics.",
+      "example": "COMET can score a fluent, accurate paraphrase highly even when BLEU would score it low.",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "lexical-vs-semantic-metrics",
+      "term": "Lexical vs. Semantic Metrics",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Lexical metrics check if you used the same words; semantic metrics check if you meant the same thing.",
+      "definition": "Lexical metrics (BLEU, ROUGE, Exact Match) reward output that LOOKS like the reference — useful as baselines, never as the sole primary metric. Semantic metrics (BERTScore, COMET) reward output that MEANS the same thing, more robust to paraphrasing.",
+      "example": "Reference: \"Revenue grew 12% YoY.\" Output: \"YoY revenue increased by twelve percent.\" → Lexical: LOW. Semantic: HIGH.",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "exact-match",
+      "term": "Exact Match",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A strict yes/no check: does the output match the reference character-for-character?",
+      "definition": "A binary metric: score 1 if the output string matches the reference exactly, else 0. Common in tasks like extractive QA or structured prediction with fixed answers. Too strict for open-ended generation where many valid phrasings exist.",
+      "example": "Reference: \"Paris is capital of France.\" Output: \"Paris is capital of France.\" → Exact Match = 1 (perfect).",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "code-rubric-dimensions",
+      "term": "Code Generation Rubric Dimensions",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The checklist for good generated code: does it actually run correctly, pass hidden tests, match the required interface, read cleanly, and avoid security holes?",
+      "definition": "Functional correctness (does the code run and produce the right output?), Test pass rate (hidden unit tests covering edge cases), Specification adherence (matches signature/types/contract), Code quality (readability, idiomatic style, no dead code), Security (no injection vectors, unsafe I/O, secret leakage).",
+      "example": "Code that passes all visible tests but fails a hidden edge-case test scores poorly on test pass rate.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "code-failure-modes",
+      "term": "Code Generation Typical Failure Modes",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The ways generated code goes wrong: it looks fine but breaks, it fails on edge cases, it imports a library that doesn't exist, it's correct for an old version of an API, or it does something unsafe.",
+      "definition": "Looks-right-runs-wrong (syntactically valid but logically broken), Off-by-one and boundary errors on edge inputs, Hallucinated APIs (imports/methods that don't exist), Version drift (correct for an old API, wrong for the current one), Unsafe patterns (shell execution, unescaped inputs).",
+      "example": "Generated code imports `pandas.read_json_v2()`, a method that was never a real pandas function — a hallucinated API.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "pass-at-k",
+      "term": "pass@k",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "human-eval"
+        ]
+      },
+      "eliForgot": "If you let the model try k times, what's the chance at least one of those attempts is actually correct?",
+      "definition": "Tests functional correctness of generated code — measures the probability that at least one of k sampled completions passes all tests. pass@1 is stricter than pass@10 (fewer chances to get it right).",
+      "example": "pass@1 = 40% means, given one attempt, the model produces fully correct code 40% of the time.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "code-benchmarks",
+      "term": "Standard Code Benchmarks",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "human-eval"
+        ]
+      },
+      "eliForgot": "Standardized sets of coding problems used to compare different models on equal footing.",
+      "definition": "HumanEval, MBPP, SWE-Bench: benchmarks for deterministic evaluation — Python problems and real GitHub issues with passing tests, used for standardized model comparison.",
+      "example": "HumanEval contains hand-written Python programming problems with unit tests to check correctness.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "execution-based-eval",
+      "term": "Execution-Based Evaluation",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": [
+          "pytest"
+        ]
+      },
+      "eliForgot": "The strongest way to check code: just run it against real tests and see if it passes — no need for a fuzzy metric.",
+      "definition": "Runs the generated code against a test harness. The strongest signal available for code evaluation — no metric needed beyond pass/fail.",
+      "example": "Running `pytest` against a generated function's hidden test suite.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "speech-to-text",
+      "term": "Speech-to-Text (STT)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "openai-whisper"
+        ]
+      },
+      "eliForgot": "Converting spoken audio into written text.",
+      "definition": "Converts audio into text, the first stage of workflows like meeting-notes generation or customer support call analysis.",
+      "example": "A recorded meeting → a raw text transcript.",
+      "moduleId": "speech-summarization"
+    },
+    {
+      "id": "stt-summarization-pipeline",
+      "term": "End-to-End STT + Summarization Pipeline",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "openai-whisper",
+          "transformers"
+        ]
+      },
+      "eliForgot": "The full assembly line: turn speech into text, clean it up, then summarize it, and check the summary is actually good.",
+      "definition": "Four stages: (1) Speech-to-Text conversion, (2) Text preprocessing — clean and structure transcriptions for consistency, (3) Summarization — abstractive and/or extractive, (4) Evaluation of the summarization output (e.g. ROUGE, LLM eval). Use cases: meeting notes, customer support call insights.",
+      "example": "Raw audio → Whisper transcript → cleaned text → abstractive summary → ROUGE-scored against a reference summary.",
+      "moduleId": "speech-summarization"
+    },
+    {
+      "id": "plausibility-vs-reliability",
+      "term": "Plausibility vs. Reliability",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "An answer that sounds confident isn't the same thing as an answer that's actually correct.",
+      "definition": "Plausibility: sounds fluent, confident, professional, matches the style of a correct answer, passes a quick read-through, feels trustworthy. Reliability: verifiable against source material, consistent across repeated trials, correct across the distribution of inputs, evaluable not felt. LLM outputs sound confident and fluent even when wrong — plausibility is the default; reliability must be earned and measured.",
+      "example": "A fluent, well-formatted answer that cites a source that doesn't actually say what's claimed is plausible but not reliable.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "sounds-good-not-a-metric",
+      "term": "\"Sounds Good\" Is Not a Metric",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Just reading an answer and thinking \"yeah that looks right\" isn't real evaluation — it's a guess dressed up as judgment.",
+      "definition": "Reading an output and impression-checking it (\"that looks right\") is unreliable and varies person to person. \"Performs well\" requires evidence and reproducibility, defined by a protocol. Without a defined evaluation protocol, you're relying on impression, not evidence.",
+      "example": "Two reviewers reading the same output can walk away with opposite impressions — that's the danger of skipping a defined protocol.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "output-variability",
+      "term": "Output Variability",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Ask an LLM the exact same question twice, and you might get two different answers — that's just how it works, not a bug.",
+      "definition": "Sources: stochastic sampling (temperature/top-p), ambiguity (underspecified prompts have multiple valid completions), under-specification (vague instructions let the model 'fill in the gaps'). Implication: a single output is one sample, not 'the model's answer' — you cannot assess prompt quality from one run. Stability is a first-class property of prompts.",
+      "example": "Running the same prompt 10 times and getting 3 different phrasings of a correct answer, plus 1 wrong one.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "task-dependence",
+      "term": "Task Dependence (No Universal Good Prompt)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A prompt that works great for one job might completely fail at a different job — there's no one-size-fits-all magic prompt.",
+      "definition": "Prompts are task-specific; a prompt good for one task fails for another. There is no universally applicable 'good prompt' — success criteria differ by task (Q&A: factual correctness/groundedness; Summarization: coverage + right compression; Classification: label correctness/consistency).",
+      "example": "A verbose, hedge-everything prompt style might help open-ended Q&A but hurt terse classification output.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "why-evaluation-non-negotiable",
+      "term": "Why Evaluation Is Non-Negotiable",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Skipping evaluation doesn't save time — it just moves the pain to production, where it's more expensive and embarrassing.",
+      "definition": "Four risks of skipping evaluation: Production Incidents (a plausible-but-wrong output earns trust, then breaks it — worse than a visible error), Cumulative Drift (small unevaluated prompt tweaks compound into unpredictable regressions), Irreproducibility (an unmeasured 'improvement' can't be defended or extended), False Confidence (teams ship with conviction and debug in production).",
+      "example": "A team ships a prompt tweak that 'looks better' but silently regresses on 10% of real traffic, discovered only after user complaints.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "llm-workflow-lifecycle",
+      "term": "LLM Workflow Lifecycle (5 Stages)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The full loop of building an AI feature responsibly: define it, test it, tune it, measure it, then keep watching it in the real world.",
+      "definition": "Ideation (define task, audience, expected output) → Testing (build baselines, test edge cases, develop variants) → Optimization (version and experiment, prompt optimization) → Evaluation (measure against rubrics and gold data) → Monitoring (track drift, prompt regressions, analyze failure modes). Evaluation feeds back into the next iteration.",
+      "example": "A regression caught in Monitoring sends the team back to Optimization to fix and re-Evaluate before redeploying.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "prompts-as-versioned-artifacts",
+      "term": "Prompts as Versioned Artifacts",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Treat your prompts like code: give every version a name, a date, and a record of what changed — don't just overwrite 'prompt.txt'.",
+      "definition": "Prompts in production should be treated as versioned artifacts (named, timestamped, with a logged change description), not throwaway text. Benefits: Track Changes, Enable Comparison (side-by-side diffs on outputs/metrics), Support Rollback, Maintain Reproducibility. Version control is the foundation of evaluation — if you can't tell which prompt produced which result, you can't improve systematically.",
+      "example": "prompt_v3 ('output as expected') vs. prompt_v4 ('structured outputs') — each with a name and description of what changed.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "one-off-vs-pipeline",
+      "term": "One-Off Approach vs. Pipeline Approach",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Tweaking a prompt by hand until it 'looks good' vs. building a real repeatable process with versioning and evaluation baked in.",
+      "definition": "One-Off: write prompt, run once, tweak wording, run again, 'looks good', deploy — no reproducibility, no versioning, no systematic improvement. Pipeline: retrieve context, build prompt from template, call LLM, parse/validate output, record prompt version + evaluation score, iterate with evidence — each step is inspectable, versioned, and independently improvable.",
+      "example": "A pipeline approach logs every prompt version's evaluation score, so you can prove version 4 actually beat version 3.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "failure-taxonomy",
+      "term": "Taxonomy for LLM Failures",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "When something goes wrong, first figure out whether it's the prompt's fault, the model's fault, or the data's fault — because the fix is different for each.",
+      "definition": "Prompt Issues (missing constraints/grounding, ambiguous task description, bad/absent few-shot examples, format confusion → fix: rewrite the prompt). Model Limits (task exceeds reasoning capacity, known weaknesses like arithmetic/multi-hop reasoning, context window too small, provider instability → fix: change the model). Data/Context Issues (irrelevant retrieved context, input truncated, noise/contradictions in source, missing metadata → fix: improve the data pipeline).",
+      "example": "If a model consistently fails multi-hop arithmetic regardless of prompt phrasing, that's a Model Limit, not a Prompt Issue — the fix is switching models, not rewording.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "eval-driven-development",
+      "term": "Evaluation-Driven Development (EDD)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Decide what \"good\" looks like and build a test set for it BEFORE you write the prompt — not after you've already decided it looks fine.",
+      "definition": "Traditional pattern: write prompt, inspect output, iterate; success = 'looks good to me'; regressions invisible until production. EDD pattern: define success criteria first (before prompts), build an evaluation dataset before optimization, measure every change against fixed criteria, regressions caught automatically, every decision evidence-based. The evaluation-first principle: rubric comes first, prompt comes second — you cannot improve what you haven't defined.",
+      "example": "Before writing a single prompt variant, define a gold set of 50 examples and a scoring rubric — then start iterating on the prompt against that fixed bar.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "core-eval-approaches",
+      "term": "Core Approaches to LLM Evaluation",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Four different ways to check if an AI is doing well: ask humans, run automated math on it, compare it to a standard test, or actively try to break it.",
+      "definition": "Human Evaluation (gold standard, subjective quality, captures nuance, expensive/slow/annotator bias). Automated Metrics (scalable, reproducible — reference-based like BLEU/ROUGE/BERTScore, reference-free like perplexity/coherence, LLM-as-a-judge). Benchmark Datasets (standardized comparison — MMLU, HELM, BIG-bench, TruthfulQA, GSM8K). Adversarial Testing (find failure modes — red-teaming, jailbreaking, robustness to input perturbations). Strong evaluation combines all; no single approach alone is sufficient for production systems.",
+      "example": "A production system might use automated ROUGE for daily checks, human eval quarterly, and adversarial red-teaming before major releases.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "task-based-eval-taxonomy",
+      "term": "Task-Based Taxonomy: Divergent vs. Convergent",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Some tasks have one right answer you can just check against (like math); others have many valid answers that need a judgment call (like creative writing).",
+      "definition": "Open-Ended (Divergent) Tasks: subjective, multiple valid answers — evaluated via Reference-Free (LLM-as-Judge, human review) or Reference-Based (lexical similarity like BLEU/ROUGE, semantic similarity like BERTScore/COMET) methods. Verifiable (Convergent) Tasks: objective, one correct answer — evaluated via Accuracy Metrics (precision/recall/F1), Standardized Benchmarks (MMLU/ARC/GSM8K/HumanEval), Code & Math Evaluation (pass@k), Assertion-based Metrics (==, exact match, regex).",
+      "example": "Grading a math answer (convergent, one right answer) vs. grading a creative essay (divergent, many valid approaches) demand fundamentally different evaluation strategies.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "eval-metrics-taxonomy",
+      "term": "Taxonomy of Evaluation Metrics",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Metrics fall into a few different buckets — how correct, how natural-sounding, how relevant/grounded, and how safe — and you need at least one from each bucket for a full picture.",
+      "definition": "Accuracy (BLEU, ROUGE, BERTScore, F1, AUC-ROC — how closely output matches expected answer). Fluency (Perplexity, Grammatical Error Rate — how natural/human-like text reads; lower perplexity = better language modeling). Relevance and Consistency (Factual Consistency, Semantic Similarity, Faithfulness — does output address the query and stay grounded without hallucinating). Safety and Bias (Toxicity, Stereotype Bias, Adversarial Robustness, Fairness). No single metric captures all aspects — use at least one from each category.",
+      "example": "An output can be fluent and accurate but still fail on Safety and Bias if it perpetuates a harmful stereotype.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "one-metric-cannot-rule-them-all",
+      "term": "One Metric Cannot Rule Them All",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Using the wrong metric for the wrong task type gives you a confidently wrong answer about how good your model is.",
+      "definition": "Task-metric mismatches: Q&A + BLEU/ROUGE fails because grammatically different answers may be equally correct. Summarization + length-only fails because short summaries may omit essential points. Classification + accuracy-alone fails because majority-class heuristics inflate accuracy. Code Generation + Exact Match/BLEU/ROUGE/METEOR fails because syntactically similar code may behave differently.",
+      "example": "Scoring a Q&A system on BLEU alone would penalize a perfectly correct answer just for being phrased differently than the reference.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "human-vs-automated-eval",
+      "term": "Human vs. Automated Evaluation",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Humans catch subtlety but are slow and expensive; automated checks are fast and cheap but miss nuance and can be gamed.",
+      "definition": "Automated: fast (thousands/minute), cheap at scale, misses nuance/novel failures, gameable by surface features, requires human calibration to trust. Human: nuanced judgment on ambiguous cases, context-aware, catches subtle errors automated metrics miss, expensive/slow, individual annotator variance.",
+      "example": "An automated metric might miss that a technically-accurate summary reads as condescending — a human reviewer catches that instantly.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "eval-is-not-free",
+      "term": "Evaluation Is Not Free: Budget It",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Both human grading and automated grading cost real time and money — plan for that cost instead of being surprised by it.",
+      "definition": "Human Evaluation Costs: annotator time (30s-30min/example), training time, coordination/review overhead, calibration sessions, re-labeling when guidelines change. Automated Evaluation Costs: LLM-as-Judge API calls (several per example), full gold set per prompt version, orchestration/reporting infrastructure, human calibration maintenance, storage/versioning of results.",
+      "example": "Running an LLM-as-Judge across a 500-example gold set for every prompt version adds up in API cost fast — budget for it.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "benchmark-datasets",
+      "term": "Standardized Benchmark Datasets",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Pre-made, widely-used test sets that let you compare your model against everyone else's on a level playing field.",
+      "definition": "MMLU (57 subjects, general knowledge), HELM (holistic multi-metric suite), BIG-bench, TruthfulQA, GSM8K, and for code: HumanEval, MBPP, SWE-Bench.",
+      "example": "Reporting a model's MMLU score lets you compare it directly against every other model that's also been scored on MMLU.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "adversarial-testing",
+      "term": "Adversarial Testing",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Deliberately trying to break the model to find its weak spots before a real user does.",
+      "definition": "Red-teaming: break the model deliberately. Jailbreaking: test policy circumvention. Robustness: test input perturbations and edge cases.",
+      "example": "Trying dozens of rephrased jailbreak attempts against a safety-tuned model to find gaps before launch.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "gold-dataset-foundation",
+      "term": "Gold Datasets: The Foundation of Trustworthy Evaluation",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Every automated metric is only as trustworthy as the human-verified answer key it's compared against — build that answer key first.",
+      "definition": "Automated metrics are only as good as the ground truth they're calibrated against. Building the gold set (ground truth) is the dependency that sits under every other evaluation technique.",
+      "example": "A perfectly-implemented ROUGE calculation is worthless if the reference summaries it compares against are themselves low-quality.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "building-eval-protocols",
+      "term": "Building Task-Specific Evaluation Protocols",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The 4-step recipe for setting up a real evaluation: decide what the task is, decide what counts as success, gather test examples, then actually score it.",
+      "definition": "Define Task (what is the output supposed to do?) → Choose Metrics (what counts as success for this task?) → Build Test Set (curate gold examples for testing) → Evaluate (compute and report scores).",
+      "example": "For a support-ticket classifier: define the task (route to correct department), choose F1 per class, build 200 labeled tickets, then compute and report scores.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "good-eval-set-qualities",
+      "term": "What Makes a Good Evaluation Set",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A good test set looks like real messy data, includes the tricky cases, is labeled by real people, covers everything the system will actually face, is rated by difficulty, and gets updated as things change.",
+      "definition": "Representativeness (reflects the real input distribution, not just easy cases), Edge cases (known failure modes, ambiguous/hard examples), Difficulty bands (easy/medium/hard to see where a model degrades first), Task coverage (all task types/sub-tasks the system will face), Human-labeled truth (every example has a reference answer from a human following a rubric), Regularly refreshed (evolves as the system does).",
+      "example": "A gold set that's only 'easy' examples will make a model look better than it will perform on real, messier production traffic.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "gold-dataset-curation-process",
+      "term": "The Gold Dataset Curation Process",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The 5-step assembly line for building a trustworthy answer key: gather examples, tag how hard they are, throw in tricky cases on purpose, have humans write the correct answers, and get multiple opinions on the disputed ones.",
+      "definition": "01 Sample (production/realistic/synthetic generation) → 02 Tag difficulty (Easy/Medium/Hard) → 03 Adversarial (include known failure modes) → 04 Reference outputs (humans produce expected answers) → 05 Multi-review (contested cases get multiple ratings from evaluators).",
+      "example": "A contested case where two annotators disagree gets a third rating rather than being arbitrarily resolved by one person.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "iaa",
+      "term": "Inter-Annotator Agreement (IAA)",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "scikit-learn"
+        ]
+      },
+      "eliForgot": "A measure of how often two different human graders actually agree with each other when labeling the same data.",
+      "definition": "Measures how consistently multiple human annotators assign the same labels when independently reviewing the same data. Helps quantify whether annotation guidelines are clear and whether annotators share a reliable understanding — critical for nuanced tasks (tone, coherence, reasoning, meaning) where human judgments naturally diverge.",
+      "example": "If two annotators rating the same 100 responses only agree on 60 of them, that's a low-IAA signal worth investigating.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "why-iaa-matters",
+      "term": "Why IAA Matters: Before You Trust a Gold Set",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "If two trained humans can't even agree on the right answer, no model — and no automated grader — can be trusted to match that answer either.",
+      "definition": "Data Quality Signal (High IAA = labels are reliable; Low IAA = rubric unclear or task is ambiguous; noisy labels cause the model to learn the noise). Rubric Diagnostic (disagreement points at the fix — low-IAA items expose missing edge-case rules, forcing a real definition of each label; improve the rubric, not the annotators). Model Ceiling (humans cap what a model can achieve; a model can't reliably exceed human agreement; reporting accuracy without IAA is misleading). Measure IAA before you trust the dataset, not after you've trained on it.",
+      "example": "Reporting '95% model accuracy' means little if human annotators themselves only agreed with each other 70% of the time on the same data.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "raw-agreement",
+      "term": "Raw Agreement (P₀)",
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The simplest possible agreement check: what percent of items did the two graders both label the same way?",
+      "definition": "The percentage of items where raters agree. Simple and intuitive, but does NOT correct for chance — inflates on skewed label distributions. Usually used only as a baseline alongside chance-corrected metrics.",
+      "example": "If two annotators agree 90% of the time but one label dominates 95% of cases, most of that agreement happened by chance.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "cohens-kappa",
+      "term": "Cohen's κ",
+      "aliases": [
+        "Cohen's kappa",
+        "kappa"
+      ],
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "scikit-learn"
+        ]
+      },
+      "eliForgot": "A fairer version of \"percent agreement\" that subtracts out the agreement you'd expect just from random luck.",
+      "definition": "The standard metric for two-rater agreement on categorical labels, correcting for expected-by-chance agreement. Works for any number of categories and treats both raters identically. P₀ = observed agreement across all items. Pₑ = expected agreement by chance, from label marginals.",
+      "formula": "κ = (P₀ − Pₑ) / (1 − Pₑ)",
+      "example": "100 items, labels (+, −): P₀ = 0.85, Pₑ = 0.50 → κ = (0.85 − 0.50) / (1 − 0.50) = 0.70 (Substantial agreement).",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "cohens-kappa-interpretation",
+      "term": "Cohen's κ Interpretation Thresholds",
+      "aliases": [
+        "Cohen's kappa interpretation",
+        "kappa"
+      ],
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A rough cheat-sheet for reading a kappa score: below 0.2 is basically noise, above 0.8 is essentially perfect agreement.",
+      "definition": "Widely cited thresholds (rules of thumb, not hard cutoffs): < 0.20 = Poor/Slight, 0.21–0.40 = Fair, 0.41–0.60 = Moderate, 0.61–0.80 = Substantial, 0.81–1.00 = Almost perfect.",
+      "example": "A kappa of 0.70 falls in the 'Substantial' agreement band.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fleiss-kappa",
+      "term": "Fleiss' κ",
+      "aliases": [
+        "Fleiss kappa",
+        "kappa"
+      ],
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Cohen's kappa, but for three or more raters instead of just two, and the raters don't even need to be the same people each time.",
+      "definition": "Extension of Cohen's κ for multi-rater designs (three or more raters). Does NOT require the same raters for every item — useful when you rotate annotators through a pool of examples.",
+      "example": "5 annotators rotating through a pool of 500 examples, each item rated by 3 of the 5 — Fleiss' κ handles this without requiring the same trio every time.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "krippendorffs-alpha",
+      "term": "Krippendorff's α",
+      "aliases": [
+        "Krippendorff's alpha",
+        "alpha"
+      ],
+      "tags": {
+        "category": [
+          "Metric"
+        ],
+        "tool": [
+          "krippendorff"
+        ]
+      },
+      "eliForgot": "The most flexible agreement metric — works with any number of raters, missing data, and any kind of rating scale, not just simple categories.",
+      "definition": "The most general IAA metric: handles missing data, ordinal/interval/ratio scales, and any number of raters. Preferred when ratings aren't plain categorical. Harder to compute than Cohen's or Fleiss' κ.",
+      "example": "Rating summaries on a 1-5 quality scale with some annotators skipping some items — Krippendorff's α handles the missing data gracefully.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "iaa-diagnostic-patterns",
+      "term": "IAA as a Diagnostic",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Where the disagreement happens tells you what's actually wrong: unclear rubric, genuinely hard data, annotators drifting over time, or one annotator being consistently harsher/softer than the rest.",
+      "definition": "Low Agreement on Easy Cases: rubric is underspecified, annotators applying different implicit criteria. Low Agreement on Hard Cases Only: usually expected, genuinely ambiguous data — document it, don't force consensus. Drift Over Time: early agreement high, later low — signals training wear-off or changing interpretation. Systematic Bias: one annotator consistently scores higher/lower — needs calibration. Disagreement usually means the rubric or example is the problem, not the annotators.",
+      "example": "If agreement steadily drops over the course of a labeling project, that's Drift — a sign annotators need a refresher, not that the data got harder.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "labeling-guidelines",
+      "term": "Labeling Guidelines That Work",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Good instructions for human labelers spell out exactly what counts as what, with real worked examples — vague 1-to-5 scales just guarantee disagreement.",
+      "definition": "Good guidelines include: clear task definition, explicit rubric with inputs/scale, worked examples (3+ per rating level), edge-case guidance, calibration examples, decision trees for multi-step judgments. Common failures: vague criteria ('rate quality 1-5'), missing edge cases (annotators invent rules), changing guidelines mid-project, no calibration, single-annotator assumption with no drift check.",
+      "example": "\"Rate quality 1-5\" alone is a guideline failure; a good guideline gives 3 worked examples showing exactly what a 1, 3, and 5 look like.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "llm-as-judge",
+      "term": "LLM-as-a-Judge",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": [
+          "ragas",
+          "deepeval"
+        ]
+      },
+      "eliForgot": "Using one AI to grade the output of another AI, since it's cheaper and faster than always using human graders.",
+      "definition": "Using LLMs to evaluate LLM outputs at scale. Not ground truth — it is a tool, useful for scaling evaluation, dangerous when trusted blindly.",
+      "example": "G-Eval, RAGAS, and DeepEval are named frameworks that implement LLM-as-a-judge scoring.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "three-llm-judge-methods",
+      "term": "Three Ways to Use an LLM Judge",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Ask the judge which of two answers is better, ask it to score one answer on a scale, or hand it a checklist and have it grade each item.",
+      "definition": "Pairwise Comparison (present A and B, ask which is better — good for ranking, but suffers from position bias). Numerical Scoring (rate each output 1-5 per criterion — good for absolute quality, but suffers from scale compression). Rubric-Based (present a structured rubric, judge assesses each criterion — most reliable, forces explicit reasoning). All three require careful calibration against human labels — uncalibrated judge output is opinion dressed up as measurement.",
+      "example": "Rubric-based judging asks the LLM to score faithfulness, completeness, and coherence separately, rather than one vague overall score.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "llm-judge-biases",
+      "term": "When LLM Judges Mislead (Biases)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "LLM judges have their own blind spots: they favor whichever answer comes first, they favor longer answers, they favor their own writing style, and they tend to just agree with whatever you suggest.",
+      "definition": "Position bias (first option in pairwise comparisons is often preferred — randomize order). Length bias (judges prefer longer, more elaborate answers even when shorter is better). Style bias (judges prefer outputs matching their own style, penalizing different-but-correct). Sycophancy (when asked to validate, the judge validates — ask neutrally, not leadingly). Self-preference (a judge evaluating its own outputs rates them higher). Confidence-fluency confusion (fluent wrong answers beat awkward correct ones).",
+      "example": "Swapping the order of A and B in a pairwise comparison and getting a different winner reveals position bias in the judge.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "calibrating-llm-judge",
+      "term": "How to Calibrate an LLM Judge",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Before trusting an AI judge, check its scores against real human scores on a sample set, and keep re-checking over time.",
+      "definition": "5 steps: 01 Human sample (20-50 examples rated by humans) → 02 Run judge (same sample, compare to human scores) → 03 Correlation (Pearson/Spearman, aim > 0.6) → 04 Refine judge (if low, rubric or prompt too vague) → 05 Spot-check (re-label periodically as things change).",
+      "formula": "Target: Pearson/Spearman correlation > 0.6 between judge and human scores.",
+      "example": "An LLM judge with only 0.3 correlation to human scores needs its rubric refined before being trusted in production.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "prompt-stability",
+      "term": "Prompt Stability",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "How reliably a prompt gives you the same good answer every time you run it, instead of sometimes being right and sometimes not.",
+      "definition": "A prompt is stable if it produces consistent, correct outputs across repeated runs on the same input. Stability spectrum: High (same quality, same facts), Medium (same quality, varies in detail), Low (sometimes right, sometimes wrong). A stable prompt is consistent across trials and minor input variations; a brittle prompt can wreak havoc.",
+      "example": "A brittle prompt might give the correct answer 6 times out of 10 and a subtly wrong answer the other 4 times.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "prompt-stability-measurement",
+      "term": "What Prompt Stability Means (4 Measurement Types)",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Four ways to test if a prompt is solid: run it many times and see if outputs agree, tweak the wording slightly, check if independent reasoning paths reach the same answer, or change casing/punctuation and see if the answer holds.",
+      "definition": "01 Repeated-Trial Consistency (run the same prompt N times, how often do outputs converge?). 02 Sensitivity Analysis (make small prompt changes, wording/reordering, measure output drift). 03 Self-Consistency (for reasoning tasks, do independent runs agree even with different reasoning paths?). 04 Input Perturbation (change input surface features — casing, punctuation, synonyms — measure output stability).",
+      "example": "Changing \"What's the capital?\" to \"what is the capital?\" and checking whether the answer changes tests Input Perturbation stability.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "self-consistency-technique",
+      "term": "Self-Consistency (as a stability technique)",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Running a decision task multiple times and going with whatever answer wins the majority vote, to smooth out random flukes.",
+      "definition": "For decision tasks (classification, sentiment), use majority voting across multiple runs. Costs more compute (multiple runs) but produces more stable decisions. Most useful when the cost of a wrong classification is high.",
+      "example": "4 runs on a sentiment classification: negative, negative, positive, negative → majority vote = negative (3/4).",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "four-output-qualities",
+      "term": "The Four Output Qualities",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Four separate things to check about any AI answer: is it factually right, does it actually address the need, does it stay grounded in real sources, and does its confidence match reality?",
+      "definition": "Accuracy/Correctness (is the answer factually right, compared against ground truth?). Relevance (does the output address the actual need, not just the surface topic?). Faithfulness (does the output stay grounded, or fabricate? — the signature failure mode). Confidence (does stated confidence actually match correctness?). No single score tells the full story — an output can score well on accuracy but fail on groundedness.",
+      "example": "An answer can correctly restate a well-known fact (high accuracy) while completely ignoring what the user actually asked (low relevance).",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "confidence-vs-correctness",
+      "term": "Confidence ≠ Correctness",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "An AI sounding sure of itself tells you nothing about whether it's actually right — never take its stated confidence at face value.",
+      "definition": "Log-Probabilities (model's internal token probability — limited but usable signal for short, discrete answers). Confidence (asking the model to rate its own confidence — unreliable alone, can become systematically overconfident). Self-Consistency (tracking agreement across multiple independent runs — a stronger signal than any stated confidence). Never trust stated confidence as ground truth; measure agreement across runs instead.",
+      "example": "A model that says 'I'm 95% confident' can still be wrong just as often as one that hedges — self-reported confidence isn't calibrated by default.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "model-comparison-axes",
+      "term": "Four Axes for Model Comparison",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "When picking which AI model to use, weigh four things: how good is it, how much does it cost, how fast does it respond, and how consistent are its answers?",
+      "definition": "Quality (correctness, faithfulness, completeness). Cost (price per 1K tokens, scaled to expected traffic volume). Latency (time to first token and total generation time). Consistency (variance across repeated runs on the same input).",
+      "example": "A cheaper, faster model might be the right call for a low-stakes internal tool even if a pricier model scores slightly higher on quality.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "pareto-frontier",
+      "term": "The Pareto Frontier (Model Selection)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "There's no single \"best\" model — just a set of models where you can't get better without paying more, and your job is to pick a good tradeoff.",
+      "definition": "A model is Pareto-optimal if no other model is both cheaper and better. The frontier is the set of Pareto-optimal models, each a distinct tradeoff. The frontier is the decision surface — your use case tells you where on it to sit.",
+      "example": "A frontier model might sit at 'expensive but best quality' while a smaller model sits at 'cheap and good enough' — both can be Pareto-optimal for different use cases.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "intelligence-density",
+      "term": "Intelligence Density",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "How much reasoning power a model packs in relative to its size and compute cost — a smaller model can be more \"intelligence-dense\" than a bigger, less efficient one.",
+      "definition": "Refers to an LLM's reasoning power or performance per unit of model size or computation cost. Cost-quality curves shift over time as smaller models catch up in intelligence density.",
+      "example": "A newer, smaller model matching an older, much larger model's benchmark scores has higher intelligence density.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "why-model-choice-deserves-rigor",
+      "term": "Why Model Choice Deserves the Same Rigor as Prompting",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Swapping the model out from under a prompt isn't free — the same prompt can behave completely differently on a different model.",
+      "definition": "What changes between models: quality on specific tasks, latency profile, cost per request (can vary up to ~20x), output format consistency, stability. Why the prompt doesn't carry cleanly: a prompt optimized for one model can underperform on another; instruction-following differs; few-shot example sensitivity varies; token budget/context handling differs; re-optimization per model is often needed.",
+      "example": "A prompt tuned carefully for one model's instruction-following style may need to be re-optimized entirely after switching providers.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "dspy-paradigm",
+      "term": "The DSPy Paradigm",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "dspy"
+        ]
+      },
+      "eliForgot": "Instead of manually fiddling with prompt wording, you describe what you want and let an algorithm search for the best prompt for you.",
+      "definition": "Hand-tuning prompts is guessing dressed up as engineering. DSPy makes the prompt a program, and optimization a search — you define the specification, the metric, and the training data; the optimizer finds the prompt.",
+      "example": "Instead of manually rewording a prompt 20 times, define a Signature and Metric, then let MIPROv2 search for the best-performing version.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "old-way-vs-dspy-way",
+      "term": "Old Way vs. DSPy Way",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "dspy"
+        ]
+      },
+      "eliForgot": "The old way is trial-and-error by hand; the DSPy way is declaring what you want and letting the system search for how to get it.",
+      "definition": "Old way: write prompt as a string, tweak wording, run, inspect, keep what looks good — improvements are anecdotal, no systematic comparison. DSPy way: declare inputs/outputs via Signatures, compose behavior via Modules, measure success via Metrics, search via Optimizers — every change is quantified.",
+      "example": "Old way: 'this phrasing feels better.' DSPy way: 'this phrasing scores 0.82 vs. 0.74 on the metric.'",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "dspy-signatures",
+      "term": "Signatures",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "dspy"
+        ]
+      },
+      "eliForgot": "A declaration of what goes in and what comes out of your AI step — without saying exactly how to word the prompt to get there.",
+      "definition": "Declares what a program does at the interface level: named inputs with semantic purpose, named outputs with expected content, descriptions guiding the model, type information for structured outputs. Separates 'what' from 'how' — the prompt is derived, and optimizers rewrite the prompt while preserving the contract. Documentation is code, always in sync.",
+      "example": "A Signature declaring `question -> answer` with type hints, without specifying the exact prompt wording used to get there.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "dspy-modules",
+      "term": "Modules",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "dspy"
+        ]
+      },
+      "eliForgot": "Building blocks for HOW the AI reasons — think step by step, write code to reason, or use tools and observe results.",
+      "definition": "Compose the actual behavior — reasoning steps, retrieval, chain-of-thought, custom logic. Predict (simplest, calls the model with a signature, returns structured output). Chain-of-Thought (adds explicit reasoning steps, often improves multi-step accuracy). Program-of-Thought (generates code/structured tool calls as the reasoning medium). ReAct (alternates reasoning and action — calls tools, observes results, continues reasoning). Modules compose into complex reasoning architectures (e.g. a RAG module = Retriever + ChainOfThought + Predict).",
+      "example": "dspy.ChainOfThought wraps a Signature to add explicit step-by-step reasoning before the final answer.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "dspy-metrics",
+      "term": "Metrics (DSPy)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "dspy"
+        ]
+      },
+      "eliForgot": "The scoring function that tells the optimizer whether a candidate prompt is doing a good job or not.",
+      "definition": "Built From Rubrics (encode task-specific rubrics grounded in gold data). Returns a Score (binary correct/incorrect, or continuous partial credit, usually [0,1]). Can Invoke LLM-Judge (a calibrated judge can itself become the metric function). Guides the Search (the optimizer explores variations; the metric tells it which direction is 'better').",
+      "example": "A metric could call an LLM-as-judge to score faithfulness, then return that score to guide the optimizer.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "dspy-optimizers",
+      "term": "Optimizers",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "dspy"
+        ]
+      },
+      "eliForgot": "The search algorithms that actually try out different prompt variations and keep the ones that score best on your metric.",
+      "definition": "Search algorithms that vary prompts, examples, and parameters to maximize the given evaluation metric. BootstrapFewShot (generates few-shot examples from the gold set — good starting point, low cost). MIPROv2 (jointly optimizes instructions + examples via Bayesian search — sophisticated, handles larger search spaces, medium-high cost). COPRO (coordinate-wise prompt optimization — refines each prompt component independently). GEPA (Genetic-Pareto: evolutionary optimizer using natural language reflection to propose targeted updates, maintains diverse top candidates to escape local maxima).",
+      "example": "Start with BootstrapFewShot for a quick win; upgrade to MIPROv2 if the gain plateaus and you have a larger budget.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "dspy-optimizer-decision-guide",
+      "term": "Choosing the Right DSPy Optimizer",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "dspy"
+        ]
+      },
+      "eliForgot": "Which search algorithm to pick depends on your budget and how much data you have — start cheap and simple, escalate only if needed.",
+      "definition": "BootstrapFewShot: quick first win, limited budget, 10-50 examples, ~$1-3. MIPROv2: maximum accuracy with budget available, 100+ examples, $10-30. GEPA (3.x): when MIPROv2 plateaus / complex multi-step tasks, 50+ examples, medium-high cost. BootstrapFinetune: small model + highest accuracy at inference, 200+ examples, high cost (finetune). LabeledFewShot: no optimization budget / fast baseline, k examples, negligible cost. Start simple and upgrade only if the gain is insufficient; finetune only if you need sub-10ms inference on a small model.",
+      "example": "A team with only 20 labeled examples and a tight budget should start with BootstrapFewShot, not MIPROv2.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "dspy-workflow",
+      "term": "DSPy Workflow & Compiler",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "dspy"
+        ]
+      },
+      "eliForgot": "You write the task definition and rules for success in code, and the DSPy \"compiler\" automatically figures out the best prompt by trying things and learning from what worked.",
+      "definition": "Data Preparation (define task, example inputs) → Pipeline (Signature, Module) → Optimizer searches using Training data + Metric, proposing candidates, bootstrapping, and searching for the Best Prompt, iterating. The compilation engine replaces trial and error — DSPy translates Python code into optimized model parameters by observing execution traces.",
+      "example": "Running unoptimized code on training data, collecting traces that pass the metric, then having the optimizer select and evaluate candidate programs to pick the best-scoring one.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "dspy-key-takeaway",
+      "term": "The DSPy Paradigm Shift",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "dspy"
+        ]
+      },
+      "eliForgot": "You stop being the one who writes the actual prompt wording — your job becomes defining the spec, the scoring rule, and the training examples, and letting the optimizer do the wordsmithing.",
+      "definition": "You do not engineer the prompt. You engineer the specification (Signature), the metric, and the training data. The optimizer finds the prompt.",
+      "example": "Rather than hand-writing 10 prompt variants, you write one Signature + Metric + a small labeled dataset, and let MIPROv2 discover the best-performing prompt.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "rnn",
+      "term": "Recurrent Neural Network (RNN)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A network that reads text one word at a time, carrying a memory of everything it's read so far to the next word.",
+      "definition": "Processes sequences by passing a hidden state (memory) from one time step to the next. Advantages: sequential context, handles variable-length input. Limitations: vanishing gradient problem, sequential bottleneck (can't parallelize).",
+      "example": "Reading \"The dog is running\" one word at a time, updating a hidden state after each word.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "vanishing-gradient",
+      "term": "Vanishing/Exploding Gradient Problem",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "In a long chain of calculations, early information can shrink down to almost nothing (or blow up to huge numbers) by the time it reaches the end, making it impossible to learn long-range patterns.",
+      "definition": "In deep/recurrent networks, gradients used to update early-layer weights shrink (vanish) or grow (explode) as they backpropagate through many layers, since each layer's derivative (e.g. sigmoid's max is 0.25) compounds multiplicatively. This makes the impact of early weights on the loss function vanishingly small, crippling learning of long-range dependencies. Limitations led directly to the development of the Transformer.",
+      "example": "0.25 × 0.25 = 0.0625 — two sigmoid layers alone shrink the gradient signal by 94% before even considering more layers.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "lstm",
+      "term": "Long Short-Term Memory (LSTM)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": []
+      },
+      "eliForgot": "An upgraded RNN with separate 'fast' and 'slow' memory tracks and gates that decide what to keep and what to forget.",
+      "definition": "Uses different paths for long-term and short-term memory. A sigmoid function (range 0-1) determines what % of long-term memory is remembered; a tanh activation (range -1 to 1) determines what % of short-term memory is added; combined to create a new short-term memory.",
+      "example": "An LSTM can 'remember' that a sentence started with 'The vase is fragile' many words later when generating 'don't move it to the edge.'",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "sequential-model-limitations",
+      "term": "Limitations of Sequential Models",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "RNNs and LSTMs have to process one word at a time, which is slow, forgetful over long distances, and doesn't scale well.",
+      "definition": "Sequential dependency (can't parallelize), vanishing/exploding gradient, memory constraints, limited contextual range, poor scalability.",
+      "example": "A 500-word document processed by an RNN must be read strictly in order, one token at a time — no shortcuts.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "attention-mechanism-full",
+      "term": "Attention Mechanism (full mechanics)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Instead of reading in strict order, attention lets every word directly look at every other word and decide how much to care about each one.",
+      "definition": "Introduced by Google in 2017 (\"Attention Is All You Need\", Vaswani et al.). Weighs the importance of different words when processing a token. Advantages: parallelization, memory efficiency, adaptive focus/weighting, scalable to input/output length. Solves the vanishing gradient and sequential bottleneck problems of RNNs by creating direct paths between all input/output positions.",
+      "example": "In translation, attention lets the decoder look directly at any encoder position, not just the most recent hidden state.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "qkv",
+      "term": "Query, Key, Value (Q, K, V)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Query is what you're looking for, Keys are the labels on everything available, and Values are the actual content you retrieve once you find a match.",
+      "definition": "Query (Q): what we're looking for (e.g. \"it\" in a sentence). Keys (K): possible matches (e.g. \"cat\", \"mat\"). Values (V): the actual information retrieved (e.g. representations of \"cat\", \"mat\"). Scores: a similarity measure between query and keys, determining how much focus each part of the input receives.",
+      "example": "\"I love pizza, but hate olives\" — \"love\" (query) attends most strongly to \"pizza\" (key/value).",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "scaled-dot-product-attention",
+      "term": "Scaled Dot-Product Attention",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Multiply Query and Key together to get a similarity score, then shrink that score down a bit before turning it into weights — the shrinking keeps the math stable.",
+      "definition": "Computes attention scores via the dot product of Query and Key vectors. To improve stability for high-dimensional vectors, the dot product is scaled by dividing by the square root of the key dimension (√dₖ) before applying softmax.",
+      "formula": "Attention(Q,K,V) = softmax(QKᵀ / √dₖ) · V",
+      "example": "Without scaling, dot products in high dimensions grow large and push softmax into regions with tiny gradients — dividing by √dₖ keeps values in a stable range.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "softmax-function",
+      "term": "Softmax Function",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Turns a list of raw scores into a set of percentages that all add up to 100%, so you can read them as \"how much attention goes where.\"",
+      "definition": "Converts inputs into numbers between 0 and 1 that sum to 1.0. Normalizes similarity scores, emphasizes differences between them, and maintains context sensitivity.",
+      "formula": "softmax(sᵢ) = e^(sᵢ) / Σⱼ e^(sⱼ)",
+      "example": "Scores 0.99 and 0.59 → e^0.99=2.69, e^0.59=1.80 → normalized into attention weights that sum to 1.0, with the higher score getting proportionally more weight.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "self-attention",
+      "term": "Self-Attention",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Every word in a sentence gets to look at every other word (including itself) to figure out which ones matter most for understanding it.",
+      "definition": "Allows the model to determine which parts of an input sequence are most relevant to understanding any given word. Steps: (1) generate Query/Key/Value vectors for each word, (2) compute attention scores via dot product of Q and K, (3) apply softmax and compute a weighted sum of Values.",
+      "example": "In \"The cat sat on the mat because it was soft\", self-attention lets \"it\" attend most strongly to \"mat\" (what was soft).",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "multi-head-attention",
+      "term": "Multi-Head Attention",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Running several self-attention processes side by side, each specializing in noticing a different kind of relationship, then combining their findings.",
+      "definition": "Extends self-attention by letting the model focus on different types of relationships simultaneously. Each head has its own Q/K/V transformation matrices (initialized randomly, learned via backpropagation), computes attention independently, and outputs are concatenated. Improves expressiveness, contextual understanding, and performance; avoids symmetry so each head learns unique relationships.",
+      "example": "Head 1 might focus on subject-verb relationships (\"cat\" → \"sat\"); Head 2 might focus on object-preposition relationships (\"mat\" → \"on\").",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "transformer-architecture-full",
+      "term": "Transformer Architecture (full)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The full blueprint: an encoder that reads and understands the input, and a decoder that generates the output — both built from stacked attention layers.",
+      "definition": "Key components: Input embeddings (convert tokens to dense vectors), Positional embeddings (add position information — since attention has no inherent sense of word order, e.g. \"John saw the dog\" vs. \"The dog saw John\"), Self-attention (focus on relevant parts of the sentence). Encoder processes input into a rich context-aware representation; Decoder generates output one token at a time using the encoded input and previously generated tokens. Encoder and decoder often do not share weights.",
+      "example": "Encoding \"Leaves fall from the oak tree\" into embedding vectors, then decoding token-by-token into \"Les feuilles tombent du chêne.\"",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "bert-full",
+      "term": "BERT (full architecture)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": [
+          "transformers"
+        ]
+      },
+      "eliForgot": "An encoder-only model that reads a sentence in both directions at once (not just left-to-right) so it deeply understands context before answering.",
+      "definition": "Bidirectional Encoder Representations from Transformers. Bidirectional contextual understanding (e.g. distinguishes \"bank\" meanings using both left and right context). Trained via Masked Language Modeling (MLM — predict masked tokens, e.g. \"The cat sat on the [MASK]\") and Next Sentence Prediction (NSP). Architecture: BERT-Base (12 layers, 768 hidden units, 12 attention heads), BERT-Large (24 layers, 1024 hidden units, 16 attention heads). Fine-tuned by adding task-specific heads: classification head for text classification, output layer for QA span prediction, token classification head for NER. Encoder-only, focused exclusively on understanding tasks (classification, NER, extractive QA, text similarity).",
+      "example": "Fine-tuning BERT for sentiment analysis: add a classification head on top of pretrained BERT and train on labeled review data.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "gpt-full",
+      "term": "GPT (full architecture)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": [
+          "transformers"
+        ]
+      },
+      "eliForgot": "A decoder-only model that can only look backward at what's already been written, and its whole job is predicting the next word.",
+      "definition": "Generative Pretrained Transformer, developed by OpenAI. Decoder-only, consists only of decoder blocks, trained as a causal language model (predicts the next token given preceding tokens). Unidirectional attention (only looks at previous tokens). Each decoder layer contains: Self-Attention (Causal — focuses only on past tokens), Feed-Forward Network, Layer Normalization and Residual Connections (for training stability). Pre-trained on massive datasets (Wikipedia, books). Scales from GPT-2 (1.5B params) to GPT-3 (175B) to GPT-4. Strengths: causal attention for coherent generation, zero-shot/few-shot learning, multitasking (writing, translating, summarizing, coding) with one architecture.",
+      "example": "Given \"Once upon a\", GPT predicts the next token, then the next, generating text left-to-right using only prior context.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "t5-full",
+      "term": "T5 (full architecture)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": [
+          "transformers"
+        ]
+      },
+      "eliForgot": "An encoder-decoder model that treats literally every NLP task — translation, summarization, classification — as \"turn this text into that text.\"",
+      "definition": "Text-to-Text Transfer Transformer. Reframes every NLP task as a text-to-text problem, rather than having task-specific architectures. Pretrained via Span Corruption (\"fill-in-the-blank\" — mask random spans of text, model fills them in), similar in spirit to BERT's MLM. Scalable across sizes (T5-Small to T5-XXL). Supports few-shot/zero-shot learning with minimal fine-tuning. Ideal for sequence-to-sequence tasks: machine translation, summarization, question answering, text simplification.",
+      "example": "Input: \"The [MASK] is blue and [MASK] over the sea.\" Target: \"sky stretches\" — the span-corruption pretraining task.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "encoder-decoder-comparison",
+      "term": "Encoder-Only vs. Decoder-Only vs. Encoder-Decoder",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "One family only reads (BERT), one family only writes (GPT), and one family reads then writes (T5) — pick based on whether your task is understanding or generating.",
+      "definition": "Encoder-Only (BERT): primary task = understanding text, bidirectional attention, stacked encoder layers, pretraining = masked language modeling, strength = contextual understanding. Decoder-Only (GPT): primary task = generating text, unidirectional/causal attention, stacked decoder layers, pretraining = causal language modeling, strength = fluent text generation. Encoder-Decoder (T5): sequence-to-sequence tasks, uses both encoder and decoder, ideal for transformation of one sequence into another.",
+      "example": "Classification/QA → BERT. Open-ended generation/chat → GPT. Translation/summarization → T5.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "claude-ecosystem-layers",
+      "term": "Claude Ecosystem Layers (Chat → Cowork → Code)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Three ways to work with Claude, each one built because the last one wasn't enough: talk to it, hand it your files, or let it run code.",
+      "definition": "The Claude product ecosystem organized as three layers of increasing autonomy: Chat (think with AI, one-off conversational tasks), Cowork (work with AI on local files across multi-step tasks), and Code (delegate to AI for system-level automation). Each layer exists because the previous one is inefficient for certain types of work.",
+      "example": "Drafting a quick email → Chat. Building a formatted multi-file report from existing spreadsheets → Cowork. Automating a recurring data pipeline → Code.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "ai-as-consultant",
+      "term": "AI as a Consultant (vs. AI for Workflows)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Sometimes AI is like a smart friend you ask one question; sometimes it's like a coworker who takes an entire project off your plate.",
+      "definition": "A framing distinction between using AI for quick, one-off tasks with a clear start and end (consultant mode — you drive, AI assists) versus using AI to own multi-step professional workflows end-to-end (workflow/agentic mode).",
+      "example": "Asking Claude to rewrite a paragraph = consultant. Asking Claude to gather data, analyze it, and produce a formatted report = workflow.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "chat-limitations-multistep",
+      "term": "Why Chat Breaks Down for Multi-Step Work",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A chat window forgets everything between sessions, so you end up doing all the gluing-together yourself.",
+      "definition": "Four reasons pure chat interfaces struggle with multi-step professional work: fragmented interface (context doesn't carry across sessions), repeated context (re-explaining background every message), manual stitching (connecting outputs between messages by hand), and the user still owning coordination and execution.",
+      "example": "Building a weekly report in Chat means you paste data in, get a paragraph back, then manually copy it into a document yourself for every section.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "claude-chat",
+      "term": "Claude Chat",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The classic back-and-forth: you ask, Claude answers, you decide what to do with it.",
+      "definition": "The conversational layer of the Claude ecosystem — quick, text-based, one-off tasks where the user drives the conversation and Claude responds to prompts without maintaining a persistent task or files.",
+      "example": "Asking Claude to summarize a pasted article or brainstorm campaign taglines.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "claude-cowork-product",
+      "term": "Claude Cowork",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Give Claude a task and your files, and it goes and does the work instead of just talking about it.",
+      "definition": "The file-based collaboration layer of the Claude ecosystem. Claude reads, edits, and creates files directly, maintains context across multi-step tasks, and executes a defined task end-to-end rather than just responding to individual prompts.",
+      "example": "Uploading five data files and asking Cowork to build a complete formatted report from them.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "claude-code-layer",
+      "term": "Claude Code (ecosystem layer)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The layer where Claude stops working inside a chat window and starts operating your systems directly, with full autonomy on a defined task.",
+      "definition": "The system-level automation layer of the Claude ecosystem. Claude uses code to operate in systems — connecting to data sources, running queries, and executing defined tasks with full autonomy, rather than working through a chat or file interface.",
+      "example": "Claude Code connecting to a database, running queries, and fetching the latest numbers automatically for a report.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "multimodal-inputs-claude",
+      "term": "Multimodal Inputs (\"Show, Don't Translate\")",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Just hand Claude the actual file — the screenshot, the spreadsheet, the PDF — instead of typing out a text description of it.",
+      "definition": "Providing Claude with raw artifacts (documents, PDFs, images, spreadsheets, code files) directly rather than manually translating their content into text first. Reduces information loss and friction, and turns Claude into a working interface for real-world artifacts rather than just a chatbot.",
+      "example": "Uploading a screenshot of a broken UI instead of describing the bug in a paragraph.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "claude-model-tiers",
+      "term": "Claude Model Tiers (Haiku / Sonnet / Opus)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Three sizes of the same brand: a cheap fast one, a balanced everyday one, and an expensive deep-thinking one.",
+      "definition": "The Claude model family, organized around a speed–cost–quality tradeoff. Haiku: fastest and cheapest, best for high-volume simple tasks (classification, extraction, routing). Sonnet: balanced speed/cost/quality, best for everyday business tasks (writing, data analysis, daily workflows). Opus: slowest and most expensive, best for complex reasoning, strategy, and long-form multi-step analysis.",
+      "example": "Routing thousands of support tickets by category → Haiku. Drafting a weekly report → Sonnet. Multi-step pricing strategy analysis → Opus.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "extended-vs-adaptive-thinking",
+      "term": "Extended Thinking vs. Adaptive Thinking",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Extended Thinking is you telling Claude 'think hard for this long'; Adaptive Thinking is Claude deciding for itself how much thinking the problem needs.",
+      "definition": "Two approaches to controlling Claude's reasoning depth. Extended Thinking: the user explicitly sets how much Claude should think, giving predictable token usage — best when you already know a problem needs deep analysis. Adaptive Thinking: Claude automatically scales its reasoning based on the complexity it detects, which is simpler for most everyday use cases.",
+      "example": "A quick email reply needs minimal thinking; a pricing strategy decision benefits from deep, extended reasoning.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "system-prompt-design",
+      "term": "System Prompt Design (Role, Tone, Constraints, Format)",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A system prompt is the job description you give Claude before the conversation starts, so it acts like a specialist instead of a generalist.",
+      "definition": "Structuring a system prompt around four elements — Role (who Claude should be), Tone (how it should communicate), Constraints (what it should avoid), and Output Format (how the response should be structured). Clearly demarcated sections eliminate vagueness and force specificity, transforming Claude from a generalist into a clearly defined specialist.",
+      "example": "\"You are a compliance-focused financial analyst (Role). Write concisely and formally (Tone). Never speculate beyond the provided data (Constraints). Respond in a three-bullet summary (Format).\"",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "claude-connectors",
+      "term": "Connectors Ecosystem (Chrome, Excel, PowerPoint, Slack)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Plug-ins that let Claude reach into your actual tools instead of just answering inside a chat box.",
+      "definition": "Integrations that let Claude browse and interact with web content (Chrome), analyze and edit spreadsheet data (Excel), create and edit presentations (PowerPoint), and access messages and channels (Slack). Connectors enable real-time data access, cross-tool workflows, and direct file creation/editing rather than manual copy-paste.",
+      "example": "Asking Claude to pull live figures from a connected Slack channel directly into an Excel report.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "cowork-capabilities",
+      "term": "Key Cowork Capabilities",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The six things that make Cowork feel like a coworker instead of a chatbot: it can touch your files, split up work, produce real documents, run on a schedule, remember the task, and package itself into reusable bundles.",
+      "definition": "Six defining capabilities of Claude Cowork: Direct Local File Access (reads/writes local files, no manual uploads), Sub-Agent Coordination (breaks complex work into smaller parallel tasks), Professional Outputs (generates Excel, PowerPoint, and formatted documents), Scheduled Tasks (runs on demand or on a recurring cadence via /schedule), Context Continuity (remembers task, intermediate outputs, and direction across steps), and Plugins (bundles skills, connectors, and sub-agents for a role, team, or company).",
+      "example": "A Cowork task that reads five local files in parallel, then saves an Excel dashboard and a Word memo to an output folder.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "agentic-loop",
+      "term": "The Agentic Loop (Plan → Approve → Execute → Iterate)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The four-beat rhythm of working with an AI agent: it tells you the plan, you approve it, it does the work, then you both refine the result together.",
+      "definition": "The core workflow pattern for agentic Cowork tasks. Plan: Claude reads context and announces what it will do. Approve: the human reviews the plan before Claude starts. Execute: Claude works — reading files, analyzing, generating. Iterate: the human reviews output, suggests refinements, and Claude adjusts. Analogous to delegating to a competent colleague: brief them, approve the approach, let them work, review the result.",
+      "example": "Claude proposes an 8-step plan for a monthly report, waits for approval, executes all 8 steps, then revises the commentary after feedback.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "human-oversight-cowork",
+      "term": "Human Oversight in Cowork (Visible Reasoning, Approval Gates, Supervisor Role)",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The three guardrails that keep an autonomous AI agent safe to use at work: you can always see its thinking, it asks before doing anything risky, and nothing ships without your sign-off.",
+      "definition": "Three safety mechanisms that make agentic AI usable for professional work: Visible Reasoning (Claude shows its plan and thinking before and during tasks), Approval Gates (Claude asks before significant actions like creating files or modifying data), and the Supervisor role (Claude proposes, the human approves — nothing happens without sign-off).",
+      "example": "Before overwriting a shared spreadsheet, Cowork pauses and asks for explicit approval.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "claude-skills-concept",
+      "term": "Claude Skills",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Instead of retyping the same good prompt every time, you save the whole workflow once and just trigger it by name from then on.",
+      "definition": "Deterministic, reusable workflow instructions that can be saved and triggered repeatedly, turning a one-off Cowork workflow into a repeatable, shareable playbook. Benefits: repeatability (consistent runs), output consistency (same quality every time), and team-wide usage (shared across a team). Represents a progression from CLAUDE.md (project-level context) to Skills (reusable across projects and teams).",
+      "example": "Saving a validated 'monthly close pack' workflow as a Skill so any analyst on the team can trigger it identically next month.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "claude-md",
+      "term": "CLAUDE.md",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A file that tells Claude the standing rules of a project once, so it doesn't need to be re-briefed every session.",
+      "definition": "A persistent context file that loads automatically every Cowork session, containing information such as folder structure and naming conventions, KPI targets, flag thresholds, standing workflow steps, formatting rules, and output folder conventions — so Claude already knows the rules before a task begins.",
+      "example": "A CLAUDE.md specifying 'CSAT < 80% = RED' means Claude flags that threshold automatically without being told each time.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "sub-agent-coordination",
+      "term": "Sub-Agent Coordination",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "For big jobs, Claude splits the work into smaller pieces and works on several of them at the same time instead of one at a time.",
+      "definition": "A Cowork capability where complex tasks are broken into smaller sub-tasks and worked on as parallel workstreams rather than sequentially, enabling faster handling of multi-source tasks (e.g. reading several files at once).",
+      "example": "Reading five separate source files in parallel instead of one after another before cross-referencing them.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "what-makes-work-agentic",
+      "term": "What Makes a Workflow \"Agentic\"",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A workflow counts as agentic when the AI does things on its own initiative — opens files, plans ahead, works in parallel, connects information across sources, and can be scheduled to repeat — not just when it answers a question.",
+      "definition": "Behaviors that distinguish agentic execution from reactive chat assistance: no file upload needed (opens local files directly), automatic context loading (e.g. from CLAUDE.md), plan-before-act (announces the full plan before writing anything), parallel sub-agent work, cross-source synthesis (connecting insights across different files), and one-command recurrence (e.g. /schedule) that turns a one-off task into an autonomous recurring workflow.",
+      "example": "In the Monthly Close Pack case study, Claude opens 5 local files, cross-references a CSV against an Excel cost overrun, and can be scheduled to rerun automatically next month.",
+      "moduleId": "claude-cowork"
+    }
+  ],
+  "flashcards": [
+    {
+      "id": "fc-found-1",
+      "front": "What's the difference between stemming and lemmatization?",
+      "back": "Stemming crudely chops suffixes (fast, sometimes produces non-words). Lemmatization uses linguistic rules to find the true dictionary base form (accurate, slower).",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "fc-found-2",
+      "front": "Word2Vec: Skip-gram vs. CBOW — which predicts what?",
+      "back": "Skip-gram predicts context words from a target word (good for rare words). CBOW predicts the target word from context (faster, good for frequent words).",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "fc-found-3",
+      "front": "Why does FastText handle out-of-vocabulary words better than Word2Vec?",
+      "back": "FastText represents words as character n-grams (subwords), so it can infer an embedding for an unseen word from its subword pieces.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "fc-found-4",
+      "front": "What does GloVe combine that Word2Vec doesn't?",
+      "back": "GloVe combines global corpus-wide co-occurrence statistics with local context; Word2Vec is purely local context-based.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "fc-found-5",
+      "front": "What's the main limitation of Bag of Words?",
+      "back": "It ignores word order and context entirely — \"dog bites man\" and \"man bites dog\" produce the same vector.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "fc-found-6",
+      "front": "Encoder-only vs. decoder-only vs. encoder-decoder: name the model for each.",
+      "back": "Encoder-only → BERT (understanding). Decoder-only → GPT (generation). Encoder-decoder → T5 (sequence-to-sequence).",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "fc-core-1",
+      "front": "What are the three controllable inputs for reliable LLM output?",
+      "back": "Model, Parameters, and Prompt.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "fc-core-2",
+      "front": "What are the three core elements of an effective prompt?",
+      "back": "Clear instruction, context, and an output indicator.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "fc-core-3",
+      "front": "Chain-of-Thought vs. Tree-of-Thought — what's the key difference?",
+      "back": "CoT follows one linear reasoning chain. ToT branches into multiple reasoning paths, evaluates them, and converges on the best one.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "fc-core-4",
+      "front": "What's the main risk of Few-Shot Prompting?",
+      "back": "The order and choice of examples can greatly influence the outcome.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "fc-core-5",
+      "front": "Low temperature vs. high temperature — when do you use each?",
+      "back": "Low temperature: factual Q&A, code generation, structured output. High temperature: creative writing, brainstorming.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "fc-core-6",
+      "front": "Top-k vs. top-p: fixed or adaptive cutoff?",
+      "back": "Top-k = fixed cutoff (always k tokens). Top-p (nucleus sampling) = adaptive cutoff (as many tokens as needed to hit the probability threshold).",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "fc-core-7",
+      "front": "Frequency penalty vs. presence penalty — how do they differ?",
+      "back": "Frequency penalty scales with how many times a word has repeated. Presence penalty is a one-time flag just for appearing at all.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "fc-core-8",
+      "front": "In LangChain, what operator typically links runnables into a chain?",
+      "back": "The pipe operator `|`.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "fc-core-9",
+      "front": "What does Self-Consistency Prompting do differently from a single generation?",
+      "back": "It generates multiple answers to the same prompt and takes the majority/most consistent one, rather than trusting one run.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "fc-core-10",
+      "front": "What's the risk of ReAct / Action-Observation prompting?",
+      "back": "Increased complexity in prompt design, since it alternates reasoning and tool-based actions.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "fc-class-1",
+      "front": "Precision vs. Recall — in one line each.",
+      "back": "Precision: of what you flagged positive, how much was correct. Recall: of what was actually positive, how much did you catch.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "fc-class-2",
+      "front": "What's the F1 score formula?",
+      "back": "F1 = 2 × (Precision × Recall) / (Precision + Recall) — the harmonic mean of the two.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "fc-class-3",
+      "front": "Why can accuracy be misleading?",
+      "back": "On an imbalanced dataset, always predicting the majority class can produce high accuracy while completely missing the minority class.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "fc-class-4",
+      "front": "Macro-average vs. weighted-average — which is better for imbalanced data?",
+      "back": "Weighted-average, since it accounts for class frequency; macro-average treats every class equally regardless of size.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "fc-class-5",
+      "front": "What's the key advantage of GenAI classification over traditional ML classification?",
+      "back": "No training data required (zero/few-shot), better handling of ambiguity/nuance, and it can provide explanations alongside predictions.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "fc-class-6",
+      "front": "What does a confusion matrix show that accuracy alone doesn't?",
+      "back": "Exactly which classes get mixed up with which other classes — not just the overall correct rate.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "fc-summ-1",
+      "front": "Extractive vs. abstractive summarization — what's the core difference?",
+      "back": "Extractive pulls existing sentences directly from the source. Abstractive generates new sentences that paraphrase/synthesize the core ideas.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "fc-summ-2",
+      "front": "What's the main limitation of ROUGE as a summarization metric?",
+      "back": "It measures lexical/n-gram overlap, so it doesn't account for semantic meaning or reward good paraphrasing.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "fc-summ-3",
+      "front": "Why might BERTScore rate two summaries similarly even with almost no shared words?",
+      "back": "BERTScore compares embedding similarity (meaning), not exact word overlap, so it's robust to paraphrasing.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "fc-summ-4",
+      "front": "Name the 5 summary rubric dimensions.",
+      "back": "Coverage, Coherence, Omission risk, Audience-appropriateness, Compression.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "fc-summ-5",
+      "front": "What's a key limitation of extractive summarization?",
+      "back": "It can lack coherence when sentences are stitched together, and can't rephrase or abstract ideas — only reuse exact text.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "fc-summ-6",
+      "front": "What's the biggest risk specific to abstractive summarization?",
+      "back": "Hallucinated content — since the model generates new text, it can introduce claims not actually in the source.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "fc-qa-1",
+      "front": "What is the formula for Faithfulness?",
+      "back": "Faithfulness = (claims supported by sources) / (total claims in the response).",
+      "moduleId": "qa"
+    },
+    {
+      "id": "fc-qa-2",
+      "front": "Name the 5 types of hallucination.",
+      "back": "Intrinsic, Extrinsic, Compositional, Attribution errors, Continuity.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "fc-qa-3",
+      "front": "What's the difference between intrinsic and extrinsic hallucination?",
+      "back": "Intrinsic directly contradicts the source. Extrinsic adds claims that simply aren't present in the source at all.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "fc-qa-4",
+      "front": "What's an 'attribution error' hallucination?",
+      "back": "The fact stated is correct, but it's attributed to the wrong source passage.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "fc-qa-5",
+      "front": "Name the 5 QA rubric dimensions.",
+      "back": "Faithfulness/grounding, Factual correctness, Citation coverage, Answer completeness, Scope discipline.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "fc-qa-6",
+      "front": "What is RAG?",
+      "back": "Retrieval-Augmented Generation — retrieving relevant context/documents and injecting them into the prompt before generation, to ground the answer in external knowledge.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "fc-trans-1",
+      "front": "What penalty does BLEU apply, and why?",
+      "back": "A brevity penalty, to prevent the model from gaming the score by generating unnaturally short output.",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "fc-trans-2",
+      "front": "What's the key advantage of COMET over BLEU?",
+      "back": "COMET is a neural model trained on human judgments, so it aligns better with human perception of translation quality than pure n-gram overlap.",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "fc-trans-3",
+      "front": "Why does BLEU penalize good synonym-based translations?",
+      "back": "BLEU rewards exact n-gram overlap with the reference, so a correct translation using different words/synonyms scores lower even though it's accurate.",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "fc-trans-4",
+      "front": "When is Exact Match an appropriate metric, and when is it too strict?",
+      "back": "Appropriate for extractive QA or structured prediction with one fixed answer. Too strict for open-ended generation where many valid phrasings exist.",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "fc-code-1",
+      "front": "What does pass@k measure?",
+      "back": "The probability that at least one of k sampled code completions passes all tests.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "fc-code-2",
+      "front": "pass@1 vs. pass@10 — which is stricter?",
+      "back": "pass@1 is stricter — the model gets only one attempt to be correct, vs. 10 chances for pass@10.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "fc-code-3",
+      "front": "What is a 'hallucinated API' failure mode?",
+      "back": "Generated code imports or calls methods/libraries that don't actually exist.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "fc-code-4",
+      "front": "Why is execution-based evaluation considered the strongest signal for code?",
+      "back": "It runs the code against real tests — pass/fail is a direct, unambiguous signal, no proxy metric needed.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "fc-code-5",
+      "front": "Name 3 standard code generation benchmarks.",
+      "back": "HumanEval, MBPP, SWE-Bench.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "fc-stt-1",
+      "front": "What are the 4 stages of an end-to-end STT + summarization pipeline?",
+      "back": "Speech-to-Text conversion, text preprocessing, summarization, evaluation of the summary.",
+      "moduleId": "speech-summarization"
+    },
+    {
+      "id": "fc-stt-2",
+      "front": "Why is text preprocessing needed between STT and summarization?",
+      "back": "Raw transcriptions need cleaning and structuring for consistency before they're fed into a summarization step.",
+      "moduleId": "speech-summarization"
+    },
+    {
+      "id": "fc-evr-1",
+      "front": "What's the formula for Cohen's κ?",
+      "back": "κ = (P₀ − Pₑ) / (1 − Pₑ), where P₀ = observed agreement, Pₑ = agreement expected by chance.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-2",
+      "front": "Cohen's κ = 0.70 — what agreement band is that?",
+      "back": "Substantial (0.61–0.80).",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-3",
+      "front": "Cohen's κ vs. Fleiss' κ — what's the difference?",
+      "back": "Cohen's κ is for exactly two raters. Fleiss' κ extends it to three or more raters, and doesn't require the same raters for every item.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-4",
+      "front": "When would you use Krippendorff's α instead of Cohen's or Fleiss' κ?",
+      "back": "When you have missing data, ordinal/interval/ratio scales (not just plain categories), or any number of raters — it's the most general but hardest to compute.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-5",
+      "front": "Why does raw agreement (P₀) alone mislead you?",
+      "back": "It doesn't correct for chance — it inflates on skewed label distributions, since agreement can happen by accident when one label dominates.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-6",
+      "front": "Name the 5 stages of the LLM workflow lifecycle.",
+      "back": "Ideation, Testing, Optimization, Evaluation, Monitoring.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-7",
+      "front": "What are the 3 ways to use an LLM-as-a-judge?",
+      "back": "Pairwise Comparison, Numerical Scoring, Rubric-Based (most reliable).",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-8",
+      "front": "Name 3 biases that can mislead an LLM judge.",
+      "back": "Position bias, length bias, style bias (also: sycophancy, self-preference, confidence-fluency confusion).",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-9",
+      "front": "What correlation target should you aim for when calibrating an LLM judge against human scores?",
+      "back": "Pearson/Spearman correlation > 0.6.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-10",
+      "front": "What does Evaluation-Driven Development (EDD) require you to do before writing a prompt?",
+      "back": "Define success criteria first and build an evaluation dataset — rubric comes before the prompt.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-11",
+      "front": "What are the four axes for comparing models?",
+      "back": "Quality, Cost, Latency, Consistency.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-12",
+      "front": "What makes a model 'Pareto-optimal'?",
+      "back": "No other model is both cheaper AND better than it.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-13",
+      "front": "Why is stated model confidence unreliable as a correctness signal?",
+      "back": "Models can become systematically overconfident when self-reporting; self-consistency across multiple runs is a stronger signal.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-14",
+      "front": "Low IAA on easy cases vs. low IAA on hard cases — what does each usually mean?",
+      "back": "Low IAA on easy cases = rubric is underspecified. Low IAA on hard cases only = usually expected, genuinely ambiguous data.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-evr-15",
+      "front": "What are the four output qualities that no single score captures together?",
+      "back": "Accuracy/Correctness, Relevance, Faithfulness, Confidence.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "fc-dspy-1",
+      "front": "What are the four DSPy primitives?",
+      "back": "Signatures, Modules, Metrics, Optimizers.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "fc-dspy-2",
+      "front": "What does a DSPy Signature declare?",
+      "back": "The interface: named inputs/outputs with their semantic purpose and type info — WHAT the program does, not HOW.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "fc-dspy-3",
+      "front": "Name 4 DSPy Modules.",
+      "back": "Predict, Chain-of-Thought, Program-of-Thought, ReAct.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "fc-dspy-4",
+      "front": "BootstrapFewShot vs. MIPROv2 — when do you use each?",
+      "back": "BootstrapFewShot: quick first win, limited budget, 10-50 examples. MIPROv2: maximum accuracy with budget available, 100+ examples, Bayesian joint search.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "fc-dspy-5",
+      "front": "What does GEPA stand for and how does it work?",
+      "back": "Genetic-Pareto — an evolutionary optimizer using natural language reflection to propose targeted prompt updates, keeping diverse top candidates to escape local maxima.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "fc-dspy-6",
+      "front": "In the DSPy paradigm shift, what do YOU actually engineer (instead of the prompt)?",
+      "back": "The specification (Signature), the metric, and the training data — the optimizer finds the actual prompt.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "fc-arch-1",
+      "front": "What is the vanishing gradient problem?",
+      "back": "In deep/recurrent networks, gradients shrink as they backpropagate through many layers, making early weights barely update — crippling learning of long-range dependencies.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "fc-arch-2",
+      "front": "What do Q, K, and V stand for in attention?",
+      "back": "Query (what we're looking for), Key (possible matches), Value (the actual information retrieved).",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "fc-arch-3",
+      "front": "What's the formula for scaled dot-product attention?",
+      "back": "Attention(Q,K,V) = softmax(QKᵀ / √dₖ) · V",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "fc-arch-4",
+      "front": "Why do we divide by √dₖ in scaled dot-product attention?",
+      "back": "To improve numerical stability for high-dimensional vectors — without scaling, dot products grow large and push softmax into low-gradient regions.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "fc-arch-5",
+      "front": "What does multi-head attention let the model do that single-head self-attention can't?",
+      "back": "Focus on multiple different types of relationships simultaneously — each head learns a different relationship pattern, then outputs are concatenated.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "fc-arch-6",
+      "front": "BERT's two pretraining tasks?",
+      "back": "Masked Language Modeling (MLM) and Next Sentence Prediction (NSP).",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "fc-arch-7",
+      "front": "Why is GPT called 'causal' or 'unidirectional'?",
+      "back": "It only attends to previous tokens (not future ones), since its job is predicting the next token given everything so far.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "fc-arch-8",
+      "front": "What is T5's pretraining task called?",
+      "back": "Span Corruption — masking random spans of text and training the model to fill them in, similar in spirit to BERT's MLM.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "fc-arch-9",
+      "front": "BERT-Base architecture specs?",
+      "back": "12 layers, 768 hidden units, 12 attention heads.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "fc-arch-10",
+      "front": "Why do positional embeddings matter in a Transformer?",
+      "back": "Attention has no inherent sense of word order, so positional embeddings add that information — otherwise 'John saw the dog' and 'The dog saw John' would look identical to the model.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "fc-cowork-1",
+      "front": "What's the core difference between how you work in Chat vs. Cowork?",
+      "back": "In Chat, you prompt, Claude responds, and you manually stitch outputs together. In Cowork, you define a task and Claude executes it as an agent end-to-end, reading and creating files directly.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "fc-cowork-2",
+      "front": "Match each Claude model tier to its best use: high-volume simple tasks, everyday business writing, complex multi-step strategy.",
+      "back": "Haiku → high-volume simple tasks (classification, extraction, routing). Sonnet → everyday business tasks (writing, analysis, daily workflows). Opus → complex reasoning, strategy, and multi-step analysis.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "fc-cowork-3",
+      "front": "Extended Thinking vs. Adaptive Thinking — who controls the reasoning depth in each?",
+      "back": "Extended Thinking: you explicitly set how much Claude should think (predictable token usage). Adaptive Thinking: Claude automatically scales reasoning based on detected complexity.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "fc-cowork-4",
+      "front": "What four elements should a well-structured system prompt define?",
+      "back": "Role (who Claude should be), Tone (how it communicates), Constraints (what to avoid), and Output Format (how the response should be structured).",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "fc-cowork-5",
+      "front": "Name the four steps of the Agentic Loop in Cowork.",
+      "back": "Plan → Approve → Execute → Iterate: Claude announces the plan, the human approves it, Claude executes, and the human reviews/refines.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "fc-cowork-6",
+      "front": "What are the three human oversight mechanisms that make agentic AI safe for professional work?",
+      "back": "Visible Reasoning (Claude shows its thinking), Approval Gates (Claude asks before significant actions), and the Supervisor role (nothing happens without human sign-off).",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "fc-cowork-7",
+      "front": "What's the difference between reusing prompts and reusing a Claude Skill?",
+      "back": "Reusing a prompt (Chat) means retyping instructions each time. A Skill (Cowork) saves an entire deterministic workflow so it can be triggered repeatedly with consistent output, and shared across a team.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "fc-cowork-8",
+      "front": "Why is 'no file upload needed' considered a marker of agentic behavior, not just a convenience?",
+      "back": "It means Claude is acting on local files directly and autonomously as part of executing a task, rather than only reacting to whatever content a user manually pastes or uploads into a chat message.",
+      "moduleId": "claude-cowork"
+    }
+  ],
+  "quiz": [
+    {
+      "id": "q-found-1",
+      "question": "Which technique breaks words into character n-grams to handle out-of-vocabulary words?",
+      "options": [
+        "Word2Vec",
+        "GloVe",
+        "FastText",
+        "Bag of Words"
+      ],
+      "correctIndex": 2,
+      "explanation": "FastText represents words as character n-grams (subwords), allowing it to infer embeddings for unseen words.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "q-found-2",
+      "question": "A bigram is:",
+      "options": [
+        "A single word",
+        "Two contiguous words",
+        "Three contiguous words",
+        "A word embedding"
+      ],
+      "correctIndex": 1,
+      "explanation": "N-grams are contiguous sequences of n words; a bigram = 2 words (e.g. \"The cat\").",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "q-found-3",
+      "question": "Which model architecture is decoder-only and built for text generation?",
+      "options": [
+        "BERT",
+        "T5",
+        "GPT",
+        "Word2Vec"
+      ],
+      "correctIndex": 2,
+      "explanation": "GPT consists only of decoder blocks with causal (unidirectional) attention, trained to predict the next token.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "q-found-4",
+      "question": "Why might you remove stop words before analysis?",
+      "options": [
+        "To increase vocabulary size",
+        "To reduce noise and focus on meaningful terms",
+        "To improve grammar",
+        "To enable tokenization"
+      ],
+      "correctIndex": 1,
+      "explanation": "Stop words like \"the\" and \"is\" carry little semantic meaning; removing them reduces noise.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "q-found-5",
+      "question": "What core innovation let Transformers process text in parallel instead of sequentially like RNNs?",
+      "options": [
+        "Stemming",
+        "Attention",
+        "Bag of Words",
+        "Stop-word removal"
+      ],
+      "correctIndex": 1,
+      "explanation": "Attention lets the model weigh relationships between all tokens simultaneously, removing the need for sequential processing.",
+      "moduleId": "foundations"
+    },
+    {
+      "id": "q-core-1",
+      "question": "Which prompting technique has the model generate several answers and pick the majority result?",
+      "options": [
+        "Chain-of-Thought",
+        "Self-Consistency",
+        "Active Prompting",
+        "Few-Shot"
+      ],
+      "correctIndex": 1,
+      "explanation": "Self-Consistency Prompting produces several possible answers and seeks agreement/majority across them.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "q-core-2",
+      "question": "Which parameter puts a hard ceiling on output length regardless of content?",
+      "options": [
+        "Temperature",
+        "Stop Sequence",
+        "Max Tokens",
+        "Top-p"
+      ],
+      "correctIndex": 2,
+      "explanation": "Max Tokens caps the output length by count; Stop Sequence caps it by pattern match.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "q-core-3",
+      "question": "In LangChain, what stores prompt text with `{}` placeholders for variables?",
+      "options": [
+        "Chains",
+        "LLM wrapper classes",
+        "Prompt Templates",
+        "Optimizers"
+      ],
+      "correctIndex": 2,
+      "explanation": "Prompt Templates hold the prompt text and placeholder variables, controlled by a Prompt Template object.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "q-core-4",
+      "question": "What's a caution specifically associated with Tree-of-Thought prompting?",
+      "options": [
+        "It cannot use examples",
+        "Increased computation cost, more than Chain-of-Thought",
+        "It only works for translation",
+        "It requires no design work"
+      ],
+      "correctIndex": 1,
+      "explanation": "ToT explores multiple branching reasoning paths, which costs more compute than CoT and requires designing merge/prune steps.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "q-core-5",
+      "question": "Which of the 7 generation parameters scales its penalty with how many times a word has already appeared?",
+      "options": [
+        "Presence Penalty",
+        "Frequency Penalty",
+        "Top-k",
+        "Stop Sequence"
+      ],
+      "correctIndex": 1,
+      "explanation": "Frequency Penalty penalizes proportional to the word's total count so far; Presence Penalty is a flat one-time penalty.",
+      "moduleId": "core-prompting"
+    },
+    {
+      "id": "q-class-1",
+      "question": "A spam filter flags 20 emails as spam; 15 actually are spam. What is its precision?",
+      "options": [
+        "15/20 = 0.75",
+        "20/15 = 1.33",
+        "15/100",
+        "Cannot be determined"
+      ],
+      "correctIndex": 0,
+      "explanation": "Precision = correctly predicted positives / all predicted positives = 15/20 = 0.75.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "q-class-2",
+      "question": "Which metric is the harmonic mean of precision and recall?",
+      "options": [
+        "Accuracy",
+        "F1 Score",
+        "Macro-average",
+        "Confusion matrix"
+      ],
+      "correctIndex": 1,
+      "explanation": "F1 = 2 × (Precision × Recall) / (Precision + Recall).",
+      "moduleId": "classification"
+    },
+    {
+      "id": "q-class-3",
+      "question": "In a dataset that's 95% one label, why is accuracy alone a poor metric?",
+      "options": [
+        "Accuracy can't be computed on imbalanced data",
+        "A model can score 95% just by always predicting the majority class",
+        "Accuracy only works for regression",
+        "Accuracy requires a confusion matrix"
+      ],
+      "correctIndex": 1,
+      "explanation": "Class imbalance inflates accuracy since the majority-class heuristic alone achieves a high score without real discrimination.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "q-class-4",
+      "question": "What is a key benefit of using GenAI (LLMs) for classification over traditional supervised ML?",
+      "options": [
+        "It requires more labeled training data",
+        "It can work in zero- or few-shot settings and handle nuance/ambiguity better",
+        "It removes the need for evaluation",
+        "It eliminates stochasticity in outputs"
+      ],
+      "correctIndex": 1,
+      "explanation": "LLMs can classify without training data and handle ambiguity/context better, though they introduce stochasticity that traditional models don't have.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "q-class-5",
+      "question": "Aspect-Based Sentiment Classification (ABSC) differs from standard sentiment analysis by:",
+      "options": [
+        "Only working on single words",
+        "Assigning sentiment to specific aspects/attributes within the text, not just overall",
+        "Requiring no training data ever",
+        "Only applying to translation tasks"
+      ],
+      "correctIndex": 1,
+      "explanation": "ABSC breaks sentiment down per aspect (e.g. battery life vs. camera) rather than giving one overall sentiment label.",
+      "moduleId": "classification"
+    },
+    {
+      "id": "q-summ-1",
+      "question": "Which summarization approach directly pulls sentences from the source text without rewriting them?",
+      "options": [
+        "Abstractive",
+        "Extractive",
+        "Hybrid",
+        "Semantic"
+      ],
+      "correctIndex": 1,
+      "explanation": "Extractive summarization identifies and pulls key sentences/phrases directly, without generating new text.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "q-summ-2",
+      "question": "Why is BERTScore generally better than ROUGE at rewarding a good paraphrase?",
+      "options": [
+        "BERTScore counts more n-grams",
+        "BERTScore compares embedding-based semantic similarity, not just word overlap",
+        "ROUGE always outperforms BERTScore",
+        "BERTScore requires no reference text"
+      ],
+      "correctIndex": 1,
+      "explanation": "BERTScore uses embeddings to measure meaning similarity, so paraphrased text scores well even with different wording.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "q-summ-3",
+      "question": "A summary is well-written and covers all key points but was written for executives when the audience needed operational detail. Which rubric dimension does this fail?",
+      "options": [
+        "Coherence",
+        "Compression",
+        "Audience-appropriateness",
+        "Coverage"
+      ],
+      "correctIndex": 2,
+      "explanation": "Audience-appropriateness is specifically about matching the level of detail to the reader's needs.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "q-summ-4",
+      "question": "What is the primary risk of abstractive summarization compared to extractive?",
+      "options": [
+        "It's always more expensive to run",
+        "Risk of generating inaccurate or hallucinated content",
+        "It cannot summarize long documents",
+        "It requires labeled training data"
+      ],
+      "correctIndex": 1,
+      "explanation": "Because abstractive summarization generates new text, it risks fabricating content not present in the source.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "q-summ-5",
+      "question": "ROUGE-L specifically measures overlap based on:",
+      "options": [
+        "Longest common subsequence",
+        "Character count",
+        "Sentiment score",
+        "Embedding cosine similarity"
+      ],
+      "correctIndex": 0,
+      "explanation": "ROUGE-L captures sequence-level overlap via the longest common subsequence between candidate and reference.",
+      "moduleId": "summarization"
+    },
+    {
+      "id": "q-qa-1",
+      "question": "A response makes 8 factual claims; 6 are supported by the source document. What is its faithfulness score?",
+      "options": [
+        "8/6 = 1.33",
+        "6/8 = 0.75",
+        "6/6 = 1.0",
+        "2/8 = 0.25"
+      ],
+      "correctIndex": 1,
+      "explanation": "Faithfulness = supported claims / total claims = 6/8 = 0.75.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "q-qa-2",
+      "question": "A model states a true fact but cites the wrong source passage for it. This is which hallucination type?",
+      "options": [
+        "Intrinsic",
+        "Extrinsic",
+        "Attribution error",
+        "Continuity"
+      ],
+      "correctIndex": 2,
+      "explanation": "Attribution errors are correct facts attributed to the wrong source.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "q-qa-3",
+      "question": "Which QA failure mode describes answering only half of a multi-part question?",
+      "options": [
+        "Overreach",
+        "Partial answer",
+        "Refusal",
+        "Wrong-passage attribution"
+      ],
+      "correctIndex": 1,
+      "explanation": "A partial answer addresses only part of the question asked.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "q-qa-4",
+      "question": "What does 'scope discipline' mean in QA evaluation?",
+      "options": [
+        "The model answers as fast as possible",
+        "The model provides no information beyond what was actually asked",
+        "The model always cites 3+ sources",
+        "The model uses a fixed vocabulary"
+      ],
+      "correctIndex": 1,
+      "explanation": "Scope discipline means not overreaching beyond the actual question asked.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "q-qa-5",
+      "question": "Which hallucination type involves combining true individual facts into a false overall conclusion?",
+      "options": [
+        "Extrinsic",
+        "Compositional",
+        "Intrinsic",
+        "Attribution error"
+      ],
+      "correctIndex": 1,
+      "explanation": "Compositional hallucination: true facts → false conclusion when combined incorrectly.",
+      "moduleId": "qa"
+    },
+    {
+      "id": "q-trans-1",
+      "question": "BLEU is best described as measuring:",
+      "options": [
+        "Semantic similarity via embeddings",
+        "N-gram precision with a brevity penalty",
+        "Human-judged fluency directly",
+        "Grammar correctness only"
+      ],
+      "correctIndex": 1,
+      "explanation": "BLEU measures n-gram precision between candidate and reference text, with a brevity penalty against overly short outputs.",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "q-trans-2",
+      "question": "Which metric is trained directly on human judgments of translation quality?",
+      "options": [
+        "BLEU",
+        "Exact Match",
+        "COMET",
+        "ROUGE"
+      ],
+      "correctIndex": 2,
+      "explanation": "COMET is a neural evaluation model trained on human judgments, aligning better with perceived adequacy and fluency.",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "q-trans-3",
+      "question": "A reference and output convey the same meaning using totally different words. A lexical metric will likely score this:",
+      "options": [
+        "High, since meaning matches",
+        "Low, since word overlap is low",
+        "Undefined",
+        "Always 1.0"
+      ],
+      "correctIndex": 1,
+      "explanation": "Lexical metrics reward surface word overlap, not meaning, so a good paraphrase scores low despite being correct.",
+      "moduleId": "translation-style"
+    },
+    {
+      "id": "q-code-1",
+      "question": "A model is evaluated with pass@1 = 30% and pass@10 = 65%. What does this tell you?",
+      "options": [
+        "The model is broken",
+        "Given 10 attempts, correct code appears far more often than with a single attempt",
+        "pass@10 is always lower than pass@1",
+        "The metric is invalid"
+      ],
+      "correctIndex": 1,
+      "explanation": "pass@k increases with k since more sampled attempts increase the chance at least one is fully correct.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "q-code-2",
+      "question": "Generated code imports a function that has never existed in the library. This is:",
+      "options": [
+        "Version drift",
+        "A hallucinated API",
+        "An off-by-one error",
+        "An unsafe pattern"
+      ],
+      "correctIndex": 1,
+      "explanation": "Hallucinated APIs are imports or methods that don't actually exist in the real library.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "q-code-3",
+      "question": "What is the strongest evaluation signal for whether generated code is correct?",
+      "options": [
+        "BLEU score against reference code",
+        "Code readability review only",
+        "Execution-based evaluation (running it against a test harness)",
+        "Comparing token count"
+      ],
+      "correctIndex": 2,
+      "explanation": "Running the code against real tests gives a direct pass/fail signal — no proxy metric needed.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "q-code-4",
+      "question": "Code that was correct for an old version of a library but breaks with the current version is an example of:",
+      "options": [
+        "Version drift",
+        "Off-by-one error",
+        "Looks-right-runs-wrong",
+        "Hallucinated API"
+      ],
+      "correctIndex": 0,
+      "explanation": "Version drift occurs when generated code reflects an outdated API that has since changed.",
+      "moduleId": "code-gen"
+    },
+    {
+      "id": "q-stt-1",
+      "question": "In an STT + summarization pipeline, what comes immediately after transcription?",
+      "options": [
+        "Evaluation",
+        "Text preprocessing",
+        "Speech synthesis",
+        "Translation"
+      ],
+      "correctIndex": 1,
+      "explanation": "The pipeline is: STT → text preprocessing (cleaning/structuring) → summarization → evaluation.",
+      "moduleId": "speech-summarization"
+    },
+    {
+      "id": "q-stt-2",
+      "question": "Which evaluation methods are suggested for the summarization stage of this pipeline?",
+      "options": [
+        "pass@k",
+        "ROUGE and LLM evaluation",
+        "Cohen's kappa only",
+        "BLEU only"
+      ],
+      "correctIndex": 1,
+      "explanation": "The pipeline explicitly names ROUGE and LLM eval as evaluation methods for the summarization output.",
+      "moduleId": "speech-summarization"
+    },
+    {
+      "id": "q-evr-1",
+      "question": "Two raters agree on 85 of 100 items. Given P(A=+)=0.55, P(B=+)=0.50, P(A=−)=0.45, P(B=−)=0.50, what is Cohen's κ?",
+      "options": [
+        "0.85",
+        "0.50",
+        "0.70",
+        "1.00"
+      ],
+      "correctIndex": 2,
+      "explanation": "P₀=0.85, Pₑ=(0.55×0.50)+(0.45×0.50)=0.50. κ=(0.85−0.50)/(1−0.50)=0.70.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "q-evr-2",
+      "question": "Which IAA metric should you use with 3+ raters who rotate through a pool of examples (not the same raters every time)?",
+      "options": [
+        "Cohen's κ",
+        "Raw Agreement (P₀)",
+        "Fleiss' κ",
+        "BLEU"
+      ],
+      "correctIndex": 2,
+      "explanation": "Fleiss' κ extends Cohen's κ to 3+ raters and doesn't require the same raters for every item.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "q-evr-3",
+      "question": "An LLM judge, when shown option A first and then B, prefers A. When the order is reversed, it now prefers B. This demonstrates:",
+      "options": [
+        "Sycophancy",
+        "Position bias",
+        "Self-preference",
+        "Length bias"
+      ],
+      "correctIndex": 1,
+      "explanation": "Position bias is when the first-presented option in a pairwise comparison is favored regardless of actual quality.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "q-evr-4",
+      "question": "In Evaluation-Driven Development, what comes first?",
+      "options": [
+        "Writing the prompt",
+        "Defining success criteria and building the evaluation dataset",
+        "Deploying to production",
+        "Running the LLM judge"
+      ],
+      "correctIndex": 1,
+      "explanation": "EDD's core principle: rubric comes first, prompt comes second — you cannot improve what you haven't defined.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "q-evr-5",
+      "question": "A model is Pareto-optimal if:",
+      "options": [
+        "It has the highest quality score of all models",
+        "It is the cheapest model available",
+        "No other model is both cheaper and better",
+        "It has zero latency"
+      ],
+      "correctIndex": 2,
+      "explanation": "Pareto-optimality means no other model dominates it on both cost and quality simultaneously.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "q-evr-6",
+      "question": "What should you do BEFORE trusting a gold-standard evaluation dataset?",
+      "options": [
+        "Deploy it to production immediately",
+        "Measure Inter-Annotator Agreement (IAA)",
+        "Delete low-confidence examples",
+        "Run only automated metrics on it"
+      ],
+      "correctIndex": 1,
+      "explanation": "IAA should be measured before trusting the dataset, not after training/evaluating on it — low IAA signals the gold set itself may be unreliable.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "q-evr-7",
+      "question": "Which of the following is NOT one of the 5 stages of the LLM workflow lifecycle?",
+      "options": [
+        "Ideation",
+        "Monitoring",
+        "Tokenization",
+        "Optimization"
+      ],
+      "correctIndex": 2,
+      "explanation": "The 5 stages are Ideation, Testing, Optimization, Evaluation, Monitoring. Tokenization is a preprocessing step, not a lifecycle stage.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "q-evr-8",
+      "question": "Why is stated LLM confidence considered an unreliable signal on its own?",
+      "options": [
+        "Models cannot generate confidence scores",
+        "It can become systematically overconfident and doesn't reliably track actual correctness",
+        "Confidence scores are always 100%",
+        "It only applies to classification tasks"
+      ],
+      "correctIndex": 1,
+      "explanation": "Self-reported confidence is unreliable on its own; self-consistency across multiple independent runs is a stronger signal.",
+      "moduleId": "eval-rigor"
+    },
+    {
+      "id": "q-dspy-1",
+      "question": "Which DSPy primitive declares named inputs/outputs without dictating the exact prompt wording?",
+      "options": [
+        "Modules",
+        "Metrics",
+        "Signatures",
+        "Optimizers"
+      ],
+      "correctIndex": 2,
+      "explanation": "Signatures declare the interface (what), separating it from the mechanics (how) — optimizers rewrite the prompt while preserving the contract.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "q-dspy-2",
+      "question": "A team has only 15 labeled examples and a very limited budget. Which optimizer should they start with?",
+      "options": [
+        "MIPROv2",
+        "BootstrapFinetune",
+        "BootstrapFewShot",
+        "GEPA"
+      ],
+      "correctIndex": 2,
+      "explanation": "BootstrapFewShot is the quick, low-cost first win, appropriate for 10-50 examples.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "q-dspy-3",
+      "question": "Which DSPy Module alternates between reasoning and taking actions like tool calls?",
+      "options": [
+        "Predict",
+        "Chain-of-Thought",
+        "ReAct",
+        "Program-of-Thought"
+      ],
+      "correctIndex": 2,
+      "explanation": "ReAct alternates reasoning and action, calling tools and observing results before continuing to reason.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "q-dspy-4",
+      "question": "In DSPy, what tells the optimizer whether one candidate prompt is 'better' than another?",
+      "options": [
+        "The Signature",
+        "The Metric",
+        "The Module type",
+        "The token count"
+      ],
+      "correctIndex": 1,
+      "explanation": "Metrics return a score that guides the optimizer's search toward better-performing candidates.",
+      "moduleId": "dspy"
+    },
+    {
+      "id": "q-arch-1",
+      "question": "What core limitation of RNNs directly motivated the invention of the Transformer?",
+      "options": [
+        "Too much parallelization",
+        "Vanishing gradient and sequential bottleneck",
+        "Too few parameters",
+        "Lack of tokenization"
+      ],
+      "correctIndex": 1,
+      "explanation": "RNNs' vanishing/exploding gradients and inability to parallelize (sequential bottleneck) directly motivated the Transformer's attention-based, parallelizable design.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "q-arch-2",
+      "question": "In scaled dot-product attention, what is divided by √dₖ before applying softmax?",
+      "options": [
+        "The Value vectors",
+        "The dot product of Query and Key",
+        "The token embeddings",
+        "The positional embeddings"
+      ],
+      "correctIndex": 1,
+      "explanation": "The QKᵀ dot product is scaled by √dₖ for numerical stability before softmax is applied.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "q-arch-3",
+      "question": "Which model is encoder-only and best suited for classification and extractive QA?",
+      "options": [
+        "GPT",
+        "T5",
+        "BERT",
+        "Word2Vec"
+      ],
+      "correctIndex": 2,
+      "explanation": "BERT is encoder-only, using bidirectional attention, purpose-built for understanding tasks.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "q-arch-4",
+      "question": "T5's core design philosophy is that:",
+      "options": [
+        "Every NLP task should be reframed as text-to-text",
+        "Only translation tasks matter",
+        "Attention should be unidirectional",
+        "Models should not be pretrained"
+      ],
+      "correctIndex": 0,
+      "explanation": "T5 (Text-to-Text Transfer Transformer) reframes every task, from classification to translation, as a text-to-text problem.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "q-arch-5",
+      "question": "Why does GPT use unidirectional (causal) attention instead of bidirectional?",
+      "options": [
+        "It's faster to train only",
+        "Its task is next-token prediction, so it must not see future tokens",
+        "Bidirectional attention doesn't exist",
+        "It has no attention mechanism"
+      ],
+      "correctIndex": 1,
+      "explanation": "As a causal language model, GPT predicts the next token from only the preceding context, so it can't attend to future tokens without leaking the answer.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "q-arch-6",
+      "question": "Multi-head attention improves on single-head self-attention primarily by:",
+      "options": [
+        "Using fewer parameters",
+        "Letting different heads learn different types of relationships in parallel",
+        "Removing the need for positional embeddings",
+        "Making the model unidirectional"
+      ],
+      "correctIndex": 1,
+      "explanation": "Each attention head has its own Q/K/V matrices and can specialize in different relationship types (e.g. subject-verb vs. object-preposition), improving expressiveness.",
+      "moduleId": "architecture-reference"
+    },
+    {
+      "id": "q-cowork-1",
+      "question": "Which Claude ecosystem layer is best suited for a one-off task like rewriting a paragraph for tone?",
+      "options": [
+        "Claude Code",
+        "Claude Chat",
+        "Claude Cowork",
+        "A scheduled Skill"
+      ],
+      "correctIndex": 1,
+      "explanation": "Chat is built for quick, one-off tasks with a clear start and end — exactly the 'AI as consultant' use case.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "q-cowork-2",
+      "question": "A task needs the cheapest, fastest model for classifying thousands of support tickets. Which tier fits best?",
+      "options": [
+        "Opus",
+        "Sonnet",
+        "Haiku",
+        "Extended Thinking"
+      ],
+      "correctIndex": 2,
+      "explanation": "Haiku is optimized for speed and scale on high-volume, simple tasks like classification and routing.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "q-cowork-3",
+      "question": "In the Agentic Loop, what happens in the 'Approve' step?",
+      "options": [
+        "Claude reads files and starts generating output immediately",
+        "The human reviews Claude's proposed plan before any work begins",
+        "Claude schedules the task to run automatically next month",
+        "The human edits the output directly in the file"
+      ],
+      "correctIndex": 1,
+      "explanation": "Approve sits between Plan and Execute: the human reviews the plan and signs off before Claude starts doing the work.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "q-cowork-4",
+      "question": "Which of these is NOT one of the four elements a Claude system prompt should define?",
+      "options": [
+        "Role",
+        "Tone",
+        "Constraints",
+        "Temperature"
+      ],
+      "correctIndex": 3,
+      "explanation": "System prompt design covers Role, Tone, Constraints, and Output Format. Temperature is a generation parameter, not a system prompt element.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "q-cowork-5",
+      "question": "What distinguishes Sub-Agent Coordination from simply asking Claude one question at a time?",
+      "options": [
+        "It requires uploading every file manually",
+        "It breaks complex work into smaller tasks handled as parallel workstreams",
+        "It only works inside Claude Chat",
+        "It replaces the need for an approval gate"
+      ],
+      "correctIndex": 1,
+      "explanation": "Sub-agent coordination splits a complex task into smaller pieces worked on in parallel, rather than processing everything sequentially in one thread.",
+      "moduleId": "claude-cowork"
+    },
+    {
+      "id": "q-cowork-6",
+      "question": "What does CLAUDE.md primarily provide in a Cowork workflow?",
+      "options": [
+        "A one-time prompt template used only for the first task",
+        "Persistent project context (conventions, targets, rules) that loads automatically every session",
+        "A log of completed tasks for billing purposes",
+        "The system prompt's temperature and max token settings"
+      ],
+      "correctIndex": 1,
+      "explanation": "CLAUDE.md holds standing project context — folder conventions, KPI targets, thresholds, and workflow rules — that Claude loads automatically each session instead of being re-briefed.",
+      "moduleId": "claude-cowork"
+    }
+  ]
+}

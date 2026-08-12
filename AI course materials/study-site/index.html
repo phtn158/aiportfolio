@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Applied GenAI Study Hub</title>
+<meta name="description" content="A personal study site for Applied Generative AI: dictionary, flashcards with spaced repetition, quizzes, and a formula reference." />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<header class="app-header">
+  <div class="app-header-inner">
+    <a href="#/" class="brand">📚 GenAI Study Hub</a>
+    <nav class="main-nav" id="main-nav">
+      <a href="#/" data-route="/">Home</a>
+      <a href="#/dictionary" data-route="/dictionary">Dictionary</a>
+      <a href="#/flashcards" data-route="/flashcards">Flashcards</a>
+      <a href="#/quiz" data-route="/quiz">Quiz</a>
+      <a href="#/formulas" data-route="/formulas">Formulas &amp; Code</a>
+      <a href="#/dashboard" data-route="/dashboard">My Progress</a>
+    </nav>
+    <div class="search-wrap">
+      <input type="text" class="search-input" id="global-search" placeholder="Search any concept…" autocomplete="off" />
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="app-footer">
+  Built for personal study. Progress is saved only in this browser (localStorage) — nothing leaves your device.
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
