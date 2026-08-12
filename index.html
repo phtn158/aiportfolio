@@ -287,7 +287,7 @@ footer{padding:52px 0 64px;}
   <section id="projects" class="wrap">
     <div class="section-head reveal">
       <h2>Projects</h2>
-      <span class="eyebrow">5 projects</span>
+      <span class="eyebrow">6 projects</span>
     </div>
 
     <div class="project-grid reveal">
@@ -316,8 +316,8 @@ footer{padding:52px 0 64px;}
         <div class="project-card-top">
           <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
           <h3>Personal Finance Coach &amp; Spending Analyzer</h3>
-          <p class="project-card-desc">AI-powered assistant that analyzes spending patterns and gives personalized financial guidance.</p>
-          <p class="project-card-tools"><em>Tools: to be added</em></p>
+          <p class="project-card-desc">LLM-based transaction categorization, spending analytics, anomaly detection, and a conversational coach that predicts days until a user hits their spending limit.</p>
+          <p class="project-card-tools">Tools: Python · LLM API · Regression model</p>
         </div>
         <div class="project-card-bottom link-out"><span>View project →</span></div>
       </div>
@@ -335,9 +335,19 @@ footer{padding:52px 0 64px;}
       <div class="project-card" onclick="goTo('text-cat')">
         <div class="project-card-top">
           <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · School project</span></div>
-          <h3>Text Categorization</h3>
-          <p class="project-card-desc">Text classification model that sorts input text into predefined categories.</p>
-          <p class="project-card-tools"><em>Tools: to be added</em></p>
+          <h3>Aspect-Based Sentiment Classification</h3>
+          <p class="project-card-desc">LLM-prompting pipeline (via LangChain) that classifies sentiment toward specific aspects of a review, evaluated against the SemEval-2014 ABSC benchmark.</p>
+          <p class="project-card-tools">Tools: Python · LangChain · Hugging Face Transformers</p>
+        </div>
+        <div class="project-card-bottom link-out"><span>View project →</span></div>
+      </div>
+
+      <div class="project-card" onclick="goTo('cicd-log-intel')">
+        <div class="project-card-top">
+          <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
+          <h3>CI/CD Failure Log Intelligence</h3>
+          <p class="project-card-desc">Prompt-engineering pipeline that sanitizes, classifies, and summarizes CI/CD failure logs into plain-English root causes and fixes, evaluated with an LLM-as-judge.</p>
+          <p class="project-card-tools">Tools: Python · Prompt engineering · LLM-as-judge evaluation</p>
         </div>
         <div class="project-card-bottom link-out"><span>View project →</span></div>
       </div>
@@ -560,8 +570,8 @@ footer{padding:52px 0 64px;}
       <span class="proj-timeframe">[Add: dates]</span>
     </div>
     <h1 class="proj-title">Personal Finance Coach &amp; Spending Analyzer</h1>
-    <p class="proj-sub">An AI-powered assistant that analyzes spending patterns and gives personalized financial guidance.</p>
-    <p class="proj-stack"><strong>Tools:</strong> [Add: language / framework / AI model or API used]</p>
+    <p class="proj-sub">A Python-based finance coach for a fictional fintech (ClearLedger Inc.) that auto-categorizes transactions with an LLM, predicts days-to-spending-limit, and coaches users toward better spending decisions conversationally.</p>
+    <p class="proj-stack"><strong>Tools:</strong> Python · LLM API (few-shot transaction categorization) · Regression model (spend prediction) · Interactive dashboard · Conversational AI coach</p>
     <div class="resource-row">
       <span class="resource-chip disabled">+ Add spec</span>
       <span class="resource-chip disabled">+ Add repo / README</span>
@@ -571,18 +581,24 @@ footer{padding:52px 0 64px;}
   <section class="proj-body wrap-narrow">
     <div class="proj-block">
       <h2>The Problem</h2>
-      <div class="fillin">[Add: the assignment brief or the problem you framed for yourself — who this was for and what gap it addressed]</div>
+      <p>Case-study brief: ClearLedger Inc., a pre-Series-A fintech with 55,000 users, was losing 71% of users after their second session because the app required manually tagging 60–150 transactions before delivering any insight. The assignment: design a Personal Finance Coach that eliminates that manual step entirely, under real constraints — limited ML expertise, no labeled training data, and a strict cost budget — while getting a user to their first real insight in under five minutes.</p>
     </div>
     <div class="proj-block">
       <h2>My Role &amp; Approach</h2>
       <div class="approach-grid">
-        <div class="approach-card"><span class="approach-label">Product thinking</span><div class="fillin">[Add: how you defined the scope, what "spending analysis" meant in practice, what tradeoffs you made]</div></div>
-        <div class="approach-card"><span class="approach-label">Build approach</span><div class="fillin">[Add: data source, how the coaching logic works, what you built vs. what came from a library]</div></div>
+        <div class="approach-card"><span class="approach-label">Product thinking</span><p>Scoped the build around four AI capabilities that had to work as one coherent pipeline rather than isolated exercises: LLM classification, interactive visualization, regression-based prediction, and stateful conversational memory. Every design choice (few-shot prompts instead of a trained classifier, per-user regression instead of a cross-user model) was made to work around the "no labeled data / limited ML expertise" constraints, not just picked for its own sake.</p></div>
+        <div class="approach-card"><span class="approach-label">Build approach</span><p>Ingests and normalizes a raw transactions CSV, enriches it with MCC-code categories, then re-classifies each transaction into a small fixed taxonomy via a few-shot LLM prompt (batched/cached by merchant to control cost). That feeds an analytics layer (spend aggregation + z-score anomaly detection) which powers both a live spending dashboard and a per-user regression model predicting days remaining until the user's self-set discretionary limit. Ranked, category-level spending-reduction suggestions and the prediction are then grounded into a multi-turn conversational coach via system-prompt injection, so the coach cites real numbers instead of inventing them.</p></div>
       </div>
     </div>
     <div class="proj-block">
       <h2>What It Does</h2>
-      <div class="fillin">[Add: 3–4 bullets on the actual features. A screenshot or demo GIF would help here.]</div>
+      <ul>
+        <li>Ingests a bank-statement CSV and categorizes every transaction with an LLM — no manual tagging required</li>
+        <li>Renders an interactive spending dashboard (category breakdown, spend trend, anomaly markers, limit burn-down)</li>
+        <li>Predicts days remaining before the user hits their discretionary spending limit, via a regression model trained on their own transaction history</li>
+        <li>Surfaces ranked, category-level suggestions for extending that runway (e.g. "cutting dining 20% adds 2 days")</li>
+        <li>Answers follow-up questions through a multi-turn conversational coach grounded in the actual prediction and spend data</li>
+      </ul>
     </div>
     <div class="proj-block">
       <h2>Outcome</h2>
@@ -661,9 +677,9 @@ footer{padding:52px 0 64px;}
       <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · School project</span></div>
       <span class="proj-timeframe">[Add: start date / expected completion]</span>
     </div>
-    <h1 class="proj-title">Text Categorization</h1>
-    <p class="proj-sub">A text classification model that sorts input text into predefined categories.</p>
-    <p class="proj-stack"><strong>Tools:</strong> [Add: language / framework / model or approach used]</p>
+    <h1 class="proj-title">Aspect-Based Sentiment Classification</h1>
+    <p class="proj-sub">An ABSC pipeline that classifies sentiment toward specific aspects of a review (e.g. food vs. service) via LLM prompting through LangChain, rather than training a task-specific classifier — benchmarked on the SemEval-2014 Task 4 dataset.</p>
+    <p class="proj-stack"><strong>Tools:</strong> Python · LangChain · Hugging Face Transformers (Qwen2.5-0.5B-Instruct) · pandas · scikit-learn · SemEval-2014 laptop/restaurant review dataset</p>
     <div class="resource-row">
       <span class="resource-chip disabled">+ Add spec</span>
       <span class="resource-chip disabled">+ Add repo / README</span>
@@ -673,18 +689,24 @@ footer{padding:52px 0 64px;}
   <section class="proj-body wrap-narrow">
     <div class="proj-block">
       <h2>The Problem</h2>
-      <div class="fillin">[Add: what kind of text and categories this handles, and what problem sorting them solves]</div>
+      <p>Aspect-Based Sentiment Classification identifies sentiment toward individual aspects within a piece of text rather than one overall label — e.g. in "the food was delicious, but the service was slow," sentiment toward food is positive while service is negative. That level of detail is far more actionable for businesses than document-level sentiment. ABSC is traditionally handled with fine-tuned classifiers (BERT-style models); this project instead explores how far a general-purpose LLM, driven purely by prompt design, can get on the same task.</p>
     </div>
     <div class="proj-block">
       <h2>My Role &amp; Approach</h2>
       <div class="approach-grid">
-        <div class="approach-card"><span class="approach-label">Product thinking</span><div class="fillin">[Add: how you defined the categories, what "good enough" accuracy looks like, how this would be used]</div></div>
-        <div class="approach-card"><span class="approach-label">Build approach</span><div class="fillin">[Add: what model/approach you're using, what data, what's currently unfinished]</div></div>
+        <div class="approach-card"><span class="approach-label">Product thinking</span><p>Chose a small, locally-run instruction-tuned model (Qwen2.5-0.5B-Instruct) over a larger one deliberately — the exercise's goal was understanding how each pipeline component works end-to-end, not maximizing accuracy, so faster iteration won out over model size.</p></div>
+        <div class="approach-card"><span class="approach-label">Build approach</span><p>Wrapped a Hugging Face text-generation pipeline in LangChain's <code>HuggingFacePipeline</code>, paired it with a few-shot <code>PromptTemplate</code> that constrains output to a fixed sentiment label set, and built a custom output parser (regex extraction + <code>ast.literal_eval</code>, wrapped in a <code>RunnableLambda</code>) to safely pull clean (aspect, sentiment) tuples out of noisy raw generations. The three pieces are composed into a single chain with LangChain's pipe operator.</p></div>
       </div>
     </div>
     <div class="proj-block">
       <h2>What It Does <span class="wip-tag">— in progress</span></h2>
-      <div class="fillin">[Add: current state of the build — what's working, what's not yet]</div>
+      <ul>
+        <li>Loads and validates the SemEval-2014 laptop and restaurant review datasets</li>
+        <li>Runs a few-shot prompt through the LangChain chain to extract aspects and classify sentiment (positive/negative/neutral/conflict) per aspect</li>
+        <li>Parses raw LLM output into clean, validated (aspect, sentiment) tuples</li>
+        <li>Iterates over the deduped review set with progress tracking (tqdm), collecting predictions per review</li>
+      </ul>
+      <p>Still to build: graceful handling of failed/unparseable generations, attaching gold labels alongside predictions, and the scikit-learn evaluation layer (precision/recall/F1, confusion matrix) that scores the pipeline against ground truth.</p>
     </div>
     <div class="proj-block">
       <h2>Outcome So Far</h2>
@@ -693,6 +715,65 @@ footer{padding:52px 0 64px;}
     <div class="proj-block">
       <h2>What I'd Do Differently</h2>
       <div class="fillin">[Add: one or two honest reflections — even mid-project, this is worth noting]</div>
+    </div>
+  </section>
+  <footer class="wrap">
+    <div class="footer-grid">
+      <div class="footer-left"><p class="eyebrow">Get in touch</p><h2>Want to talk through this project? Reach out.</h2></div>
+      <div class="footer-links"><a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a><a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+<!-- ============ PROJECT: CICD LOG INTELLIGENCE ============ -->
+<div id="view-cicd-log-intel" class="view">
+  <section class="proj-hero wrap-narrow">
+    <button class="back-link">← All projects</button>
+    <div class="proj-meta-row" style="margin-top:22px;">
+      <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
+      <span class="proj-timeframe">[Add: dates]</span>
+    </div>
+    <h1 class="proj-title">CI/CD Failure Log Intelligence</h1>
+    <p class="proj-sub">A prompt-engineering pipeline that reads a failed CI/CD build log, sanitizes it, classifies the failure, and explains it in plain English with a concrete fix — evaluated with an LLM-as-judge instead of word-overlap metrics.</p>
+    <p class="proj-stack"><strong>Tools:</strong> Python · Prompt engineering · PII sanitization · LLM-as-judge evaluation (+ ROUGE / BERTScore)</p>
+    <div class="resource-row">
+      <span class="resource-chip disabled">+ Add spec</span>
+      <span class="resource-chip disabled">+ Add repo / README</span>
+      <span class="resource-chip disabled">+ Add demo</span>
+    </div>
+  </section>
+  <section class="proj-body wrap-narrow">
+    <div class="proj-block">
+      <h2>The Problem</h2>
+      <p>CI/CD pipelines fail across many different tools — Jenkins, GitHub Actions, GitLab CI, CircleCI, Azure DevOps — each producing noisy, inconsistently formatted logs. Engineers lose time just figuring out what broke before they can even start fixing it. The goal: cut time-to-diagnosis to under five minutes by having an LLM read the failed-build log and explain it, without ever exposing raw log contents (which can contain secrets/PII) directly to the model.</p>
+    </div>
+    <div class="proj-block">
+      <h2>My Role &amp; Approach</h2>
+      <div class="approach-grid">
+        <div class="approach-card"><span class="approach-label">Product thinking</span><p>Set hard rules up front rather than letting the LLM free-form: raw logs are never sent to the model unsanitized, classification must use only a fixed label set, and summaries must follow a fixed output structure — so results stay consistent and machine-parseable across the whole dataset. Judged usefulness by task metrics (accuracy, actionability) rather than word-overlap metrics, since a technically-similar-sounding summary isn't the same as a useful one.</p></div>
+        <div class="approach-card"><span class="approach-label">Build approach</span><p>Built a pipeline that sanitizes each raw log first (strips long token-like strings, file paths, and <code>KEY=VALUE</code> env-var secrets), classifies the failure against a fixed taxonomy with a majority-vote consistency check across repeated model calls, then generates a plain-English summary with a concrete fix. An LLM-as-judge scores each summary for accuracy and actionability alongside ROUGE/BERTScore, and a separate script automatically reruns and regenerates any summary the judge flags as not actionable.</p></div>
+      </div>
+    </div>
+    <div class="proj-block">
+      <h2>What It Does</h2>
+      <ul>
+        <li>Ingests failure logs from a multi-CI-tool dataset (Jenkins, GitHub Actions, GitLab CI, CircleCI, Azure DevOps)</li>
+        <li>Sanitizes each log — strips tokens, file paths, and env-var secrets — before anything reaches the model</li>
+        <li>Classifies each failure into a fixed label set, with a consistency check across repeated model calls</li>
+        <li>Summarizes the failure in plain English with a concrete suggested fix, in a fixed output structure</li>
+        <li>Scores summary quality with an LLM-as-judge (accuracy + actionability) alongside ROUGE/BERTScore</li>
+        <li>Automatically reruns and regenerates summaries the judge flags as low-actionability</li>
+      </ul>
+    </div>
+    <div class="proj-block">
+      <h2>Outcome</h2>
+      <p>Ran end-to-end across the failure-log dataset, producing judged accuracy/actionability scores and ROUGE/BERTScore metrics per sample.</p>
+      <div class="fillin">[Add: summary stats — e.g. % of summaries judged actionable, average judge score, grade/feedback]</div>
+    </div>
+    <div class="proj-block">
+      <h2>What I'd Do Differently</h2>
+      <div class="fillin">[Add: one or two honest reflections]</div>
     </div>
   </section>
   <footer class="wrap">
