@@ -287,7 +287,7 @@ footer{padding:52px 0 64px;}
   <section id="projects" class="wrap">
     <div class="section-head reveal">
       <h2>Projects</h2>
-      <span class="eyebrow">7 projects</span>
+      <span class="eyebrow">10 projects</span>
     </div>
 
     <div class="project-grid reveal">
@@ -358,6 +358,36 @@ footer{padding:52px 0 64px;}
           <h3>Applied GenAI Study Hub</h3>
           <p class="project-card-desc">A personal study site — dictionary, spaced-repetition flashcards, quizzes, and a weak-spot dashboard — built from an Applied Generative AI program's own lecture slides, with a weekly workflow that folds in new material automatically.</p>
           <p class="project-card-tools">Tools: HTML/CSS/JavaScript (ES modules) · localStorage (SM-2 spaced repetition) · Python (content pipeline)</p>
+        </div>
+        <div class="project-card-bottom link-out"><span>View project →</span></div>
+      </div>
+
+      <div class="project-card" onclick="goTo('eval-genai-workflows')">
+        <div class="project-card-top">
+          <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
+          <h3>Evaluating GenAI Workflows — Prompt Optimization</h3>
+          <p class="project-card-desc">LLM aspect + sentiment classifier for customer reviews, improved with DeepEval's GEPA prompt optimizer and validated with F1 scoring on a held-out test set.</p>
+          <p class="project-card-tools">Tools: Python · OpenAI API · DeepEval (GEPA optimization) · scikit-learn · pandas</p>
+        </div>
+        <div class="project-card-bottom link-out"><span>View project →</span></div>
+      </div>
+
+      <div class="project-card" onclick="goTo('aiaas-client-outreach')">
+        <div class="project-card-top">
+          <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · Personal project</span></div>
+          <h3>AIaaS Client Outreach &amp; Automation Design</h3>
+          <p class="project-card-desc">Go-to-market plan and n8n automation workflow design for offering AI-as-a-Service to small businesses — prospecting strategy, service packaging/pricing, and an automated outreach pipeline.</p>
+          <p class="project-card-tools">Tools: n8n (workflow design) · Market research</p>
+        </div>
+        <div class="project-card-bottom link-out"><span>View project →</span></div>
+      </div>
+
+      <div class="project-card" onclick="goTo('absc-product-sentiment')">
+        <div class="project-card-top">
+          <div class="status-row"><span class="status-dot wip"></span><span class="status-text">Early stage · School project</span></div>
+          <h3>Product Sentiment Classification (Early Exploration)</h3>
+          <p class="project-card-desc">Early-stage sentiment classification exploration — a small hand-labeled set of product reviews, done separately from and prior to the LangChain-based ABSC pipeline.</p>
+          <p class="project-card-tools"><em>Tools: to be added</em></p>
         </div>
         <div class="project-card-bottom link-out"><span>View project →</span></div>
       </div>
@@ -856,6 +886,171 @@ footer{padding:52px 0 64px;}
         <li><strong>Portfolio write-up</strong> — a fuller Problem/Approach/Outcome pass once the deployed site has been used for a week or two of real studying</li>
       </ul>
       <div class="fillin">[Add: your actual priority order and rough timing]</div>
+    </div>
+  </section>
+  <footer class="wrap">
+    <div class="footer-grid">
+      <div class="footer-left"><p class="eyebrow">Get in touch</p><h2>Want to talk through this project? Reach out.</h2></div>
+      <div class="footer-links"><a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a><a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+<!-- ============ PROJECT: EVAL GENAI WORKFLOWS ============ -->
+<div id="view-eval-genai-workflows" class="view">
+  <section class="proj-hero wrap-narrow">
+    <button class="back-link">← All projects</button>
+    <div class="proj-meta-row" style="margin-top:22px;">
+      <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
+      <span class="proj-timeframe">[Add: dates]</span>
+    </div>
+    <h1 class="proj-title">Evaluating GenAI Workflows — Prompt Optimization</h1>
+    <p class="proj-sub">A guided hands-on exercise: build an LLM-powered aspect + sentiment classifier for customer reviews of a sneaker line, then use DeepEval's GEPA optimizer to automatically improve the classification prompt and measure the gain with F1 scoring.</p>
+    <p class="proj-stack"><strong>Tools:</strong> Python · OpenAI API · DeepEval (Golden datasets, GEPA prompt optimization) · scikit-learn (F1 evaluation) · pandas</p>
+    <div class="resource-row">
+      <span class="resource-chip disabled">+ Add spec</span>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/tree/master/EvalGenAIWorkflow" target="_blank" rel="noopener">💻 Repo</a>
+      <span class="resource-chip disabled">+ Add demo</span>
+    </div>
+  </section>
+  <section class="proj-body wrap-narrow">
+    <div class="proj-block">
+      <h2>The Problem</h2>
+      <p>Case-study brief: Nima, a global sportswear brand, launched a new sneaker line that drove strong early sales but also a rise in product returns. Star ratings alone couldn't explain why customers were dissatisfied — the real signal was buried in free-text reviews mentioning specific product aspects like sizing, comfort, durability, color, design, and price/value. The exercise: build a proof-of-concept that identifies the aspect each review is about and classifies the sentiment toward it, then evaluate and systematically improve that classifier.</p>
+    </div>
+    <div class="proj-block">
+      <h2>My Role &amp; Approach</h2>
+      <div class="approach-grid">
+        <div class="approach-card"><span class="approach-label">Product thinking</span><p>Treated prompt quality as something to measure and iterate on rather than eyeball — held out a true test set from the start, and used gold-labeled data specifically to validate whether a prompt-optimization pass actually generalized, versus just overfitting to the examples it saw.</p></div>
+        <div class="approach-card"><span class="approach-label">Build approach</span><p>Built a baseline (v1) system prompt classifying each review's aspect and sentiment via the OpenAI API, scored it against the gold training labels with aspect F1, sentiment F1, and joint F1. Then ran DeepEval's GEPA optimizer over a Golden dataset to automatically evolve the prompt, re-scored the optimized (v2) prompt on the same training set, and finally ran v2 once on the held-out test set to check whether the improvement generalized to unseen data.</p></div>
+      </div>
+    </div>
+    <div class="proj-block">
+      <h2>What It Does</h2>
+      <ul>
+        <li>Classifies each customer review into a product aspect (sizing, comfort, durability, color, design, price/value) and a sentiment (positive/negative/neutral)</li>
+        <li>Scores predictions against gold labels with aspect F1, sentiment F1, and joint F1</li>
+        <li>Runs DeepEval's GEPA prompt optimizer to automatically rewrite the classification prompt for better accuracy and consistency</li>
+        <li>Compares baseline vs. optimized prompt performance side-by-side on the training set</li>
+        <li>Validates the optimized prompt once on a held-out test set to check for overfitting</li>
+      </ul>
+    </div>
+    <div class="proj-block">
+      <h2>Outcome</h2>
+      <p>GEPA-based prompt optimization improved classification performance over the baseline prompt, particularly for sentiment prediction and joint aspect-sentiment accuracy. The optimized prompt held up on the unseen test set, indicating the improvement generalized rather than overfitting to the training data.</p>
+      <div class="fillin">[Add: exact F1 numbers / grade / feedback]</div>
+    </div>
+    <div class="proj-block">
+      <h2>What I'd Do Differently</h2>
+      <div class="fillin">[Add: one or two honest reflections]</div>
+    </div>
+  </section>
+  <footer class="wrap">
+    <div class="footer-grid">
+      <div class="footer-left"><p class="eyebrow">Get in touch</p><h2>Want to talk through this project? Reach out.</h2></div>
+      <div class="footer-links"><a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a><a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+<!-- ============ PROJECT: AIAAS CLIENT OUTREACH ============ -->
+<div id="view-aiaas-client-outreach" class="view">
+  <section class="proj-hero wrap-narrow">
+    <button class="back-link">← All projects</button>
+    <div class="proj-meta-row" style="margin-top:22px;">
+      <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · Personal project</span></div>
+      <span class="proj-timeframe">[Add: dates]</span>
+    </div>
+    <h1 class="proj-title">AIaaS Client Outreach &amp; Automation Design</h1>
+    <p class="proj-sub">A go-to-market plan and n8n automation workflow design for ThuWork Digital Solution's AI-as-a-Service offering — targeting small businesses with packaged AI automation rather than generic "AI consulting."</p>
+    <p class="proj-stack"><strong>Tools:</strong> n8n (workflow design) · Market research</p>
+    <div class="resource-row">
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solution/AIaaS_Small_Business_Client_Outreach_Plan.docx" target="_blank" rel="noopener">📄 Outreach plan</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solution/n8n_workflow_design.html" target="_blank" rel="noopener">📝 Workflow design</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solution/AI-AS-A-SERVICE%20Market%20Research%202026.pdf" target="_blank" rel="noopener">📄 Market research</a>
+    </div>
+  </section>
+  <section class="proj-body wrap-narrow">
+    <div class="proj-block">
+      <h2>The Problem</h2>
+      <p>Selling "AI consulting" to small businesses is a hard, abstract pitch. The goal was to design a repeatable customer-acquisition engine for an AI-as-a-Service business that sells measurable business outcomes instead — e.g. automatically responding to leads and booking appointments — and to figure out how much of that outreach and qualification process could itself be automated.</p>
+    </div>
+    <div class="proj-block">
+      <h2>My Role &amp; Approach</h2>
+      <div class="approach-grid">
+        <div class="approach-card"><span class="approach-label">Product thinking</span><p>Focused on one vertical at a time rather than targeting all small businesses generally, to keep the offer, demo, and outreach message standardized. Defined three tiered packages (AI Starter, AI Automation, AI Business Agent) around outcome-based pricing — implementation fee plus recurring management — instead of hourly consulting.</p></div>
+        <div class="approach-card"><span class="approach-label">Build approach</span><p>Laid out a prospect-research workflow (Google Maps, Yelp, Instagram, LinkedIn, local directories) for finding and qualifying target businesses, then designed a corresponding n8n automation workflow — with triggers, AI-driven qualification/response steps, and branching logic — to automate the outreach pipeline itself.</p></div>
+      </div>
+    </div>
+    <div class="proj-block">
+      <h2>What It Does</h2>
+      <ul>
+        <li>Defines a target-customer and positioning strategy for pitching AIaaS to small businesses by vertical</li>
+        <li>Lays out three service/pricing tiers (AI Starter, AI Automation, AI Business Agent)</li>
+        <li>Documents a prospecting workflow across Google Maps, Yelp, Instagram, LinkedIn, and local directories</li>
+        <li>Designs an n8n automation workflow (with a diagrammed trigger/action/AI-step flow) to run outreach and lead qualification automatically</li>
+        <li>Includes supporting AIaaS market research for 2026</li>
+      </ul>
+    </div>
+    <div class="proj-block">
+      <h2>Outcome</h2>
+      <div class="fillin">[Add: whether the n8n workflow has been built/deployed yet, and any early outreach results]</div>
+    </div>
+    <div class="proj-block">
+      <h2>What's Next</h2>
+      <div class="fillin">[Add: build and deploy the n8n workflow, run a pilot outreach batch]</div>
+    </div>
+  </section>
+  <footer class="wrap">
+    <div class="footer-grid">
+      <div class="footer-left"><p class="eyebrow">Get in touch</p><h2>Want to talk through this project? Reach out.</h2></div>
+      <div class="footer-links"><a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a><a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+<!-- ============ PROJECT: ABSC PRODUCT SENTIMENT (EARLY) ============ -->
+<div id="view-absc-product-sentiment" class="view">
+  <section class="proj-hero wrap-narrow">
+    <button class="back-link">← All projects</button>
+    <div class="proj-meta-row" style="margin-top:22px;">
+      <div class="status-row"><span class="status-dot wip"></span><span class="status-text">Early stage · School project</span></div>
+      <span class="proj-timeframe">[Add: dates]</span>
+    </div>
+    <h1 class="proj-title">Product Sentiment Classification (Early Exploration)</h1>
+    <p class="proj-sub">An early-stage sentiment classification exploration — a small hand-labeled set of product review sentences (positive/negative) — done separately from, and prior to, the LangChain-based Aspect-Based Sentiment Classification project.</p>
+    <p class="proj-stack"><strong>Tools:</strong> [Add: language / framework / model used]</p>
+    <div class="resource-row">
+      <span class="resource-chip disabled">+ Add spec</span>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/tree/master/ABSC_aspect-based_sentiment_classification" target="_blank" rel="noopener">💻 Repo</a>
+      <span class="resource-chip disabled">+ Add demo</span>
+    </div>
+  </section>
+  <section class="proj-body wrap-narrow">
+    <div class="proj-block">
+      <h2>The Problem</h2>
+      <div class="fillin">[Add: what this exercise was for, and how it relates to the later LangChain-based ABSC project]</div>
+    </div>
+    <div class="proj-block">
+      <h2>My Role &amp; Approach</h2>
+      <div class="approach-grid">
+        <div class="approach-card"><span class="approach-label">Product thinking</span><div class="fillin">[Add: scope and goals of this exploration]</div></div>
+        <div class="approach-card"><span class="approach-label">Build approach</span><div class="fillin">[Add: model/approach used once this moves past the sample-data stage]</div></div>
+      </div>
+    </div>
+    <div class="proj-block">
+      <h2>What It Does <span class="wip-tag">— early stage</span></h2>
+      <ul>
+        <li>Contains a small hand-labeled sample set of product review sentences tagged positive/negative</li>
+      </ul>
+      <p>Still to build: an actual classification pipeline and evaluation against the labeled examples.</p>
+    </div>
+    <div class="proj-block">
+      <h2>Outcome So Far</h2>
+      <div class="fillin">[Add: next steps once this project resumes]</div>
     </div>
   </section>
   <footer class="wrap">

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AIaaS Client Outreach Automation — n8n Workflow Design</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1d212b; --border:#2a2f3a;
+    --text:#e8eaee; --muted:#9aa3b2; --accent:#6ea8fe; --accent2:#7ee3c5;
+    --warn:#f5b866; --pink:#e893c9;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f6f7f9; --panel:#ffffff; --panel2:#f0f2f6; --border:#dde1e8;
+      --text:#1b1e26; --muted:#5b6474; --accent:#2563eb; --accent2:#0d9488;
+      --warn:#b45309; --pink:#be185d;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  .wrap{max-width:960px; margin:0 auto; padding:40px 24px 80px;}
+  h1{font-size:1.6rem; margin-bottom:4px;}
+  .sub{color:var(--muted); margin-top:0; margin-bottom:32px; font-size:0.95rem;}
+  h2{font-size:1.15rem; margin-top:48px; border-bottom:1px solid var(--border); padding-bottom:8px;}
+  h3{font-size:1rem; color:var(--accent); margin-top:28px;}
+  p{color:var(--text);}
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:10px;
+    padding:18px 20px; margin:14px 0;
+  }
+  .pill{
+    display:inline-block; font-size:0.72rem; font-weight:600; letter-spacing:.02em;
+    padding:2px 9px; border-radius:99px; margin-right:6px; text-transform:uppercase;
+  }
+  .pill.trigger{background:rgba(110,168,254,.15); color:var(--accent);}
+  .pill.action{background:rgba(126,227,197,.15); color:var(--accent2);}
+  .pill.ai{background:rgba(245,184,102,.15); color:var(--warn);}
+  .pill.branch{background:rgba(232,147,201,.15); color:var(--pink);}
+  table{width:100%; border-collapse:collapse; font-size:0.88rem; margin:12px 0;}
+  th,td{text-align:left; padding:8px 10px; border-bottom:1px solid var(--border); vertical-align:top;}
+  th{color:var(--muted); font-weight:600; font-size:0.78rem; text-transform:uppercase; letter-spacing:.03em;}
+  code{
+    background:var(--panel2); padding:1px 6px; border-radius:5px; font-size:0.85em;
+    border:1px solid var(--border);
+  }
+  .mermaid{background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:20px; margin:20px 0;}
+  .legend{display:flex; gap:16px; flex-wrap:wrap; font-size:0.82rem; color:var(--muted); margin:10px 0 24px;}
+  .legend span{display:inline-flex; align-items:center; gap:6px;}
+  .dot{width:10px; height:10px; border-radius:3px; display:inline-block;}
+  ul{padding-left:20px;}
+  li{margin:4px 0;}
+  .note{
+    border-left:3px solid var(--accent); background:var(--panel2); padding:10px 14px;
+    border-radius:0 8px 8px 0; font-size:0.9rem; color:var(--muted); margin:16px 0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>AIaaS Client Outreach Automation</h1>
+<p class="sub">n8n workflow design — Med Spa vertical &middot; Google Sheets as the data store &middot; built from the AIaaS_Small_Business_Client_Outreach_Plan</p>
+
+<h2>What n8n actually is</h2>
+<p>n8n is a visual workflow builder: you drag <strong>nodes</strong> onto a canvas and connect them with lines to define what happens, step by step, when something triggers the workflow. Each node does one job — call an API, filter data, ask an AI model a question, write a row to a spreadsheet — and passes its output to the next node as structured data (JSON). You're not writing a program from scratch; you're wiring pre-built blocks together, and dropping into a bit of JavaScript only inside individual nodes when you need custom logic.</p>
+
+<table>
+<tr><th>Concept</th><th>What it means</th></tr>
+<tr><td><strong>Trigger node</strong></td><td>The node that starts a workflow — a schedule ("every day at 9am"), a webhook (an external system pings a URL), or manual click.</td></tr>
+<tr><td><strong>Action node</strong></td><td>Does something with data: HTTP Request (call an API), Google Sheets (read/write rows), Gmail, Slack, etc. n8n has 400+ built-in integrations.</td></tr>
+<tr><td><strong>AI node</strong></td><td>Sends data to Claude/OpenAI/etc. with a prompt and gets structured output back — this is how scoring and drafting get done.</td></tr>
+<tr><td><strong>IF / Switch node</strong></td><td>Branches the workflow based on a condition, e.g. "if score ≥ 7, continue; else stop."</td></tr>
+<tr><td><strong>Expression</strong> <code>{{ }}</code></td><td>Lets you reference data from a previous node inside any field, e.g. <code>{{$json.business_name}}</code>.</td></tr>
+<tr><td><strong>Execution</strong></td><td>One full run of a workflow, logged so you can see exactly what data flowed through each node — this is your debugging tool.</td></tr>
+<tr><td><strong>Credential</strong></td><td>A saved, encrypted connection to an external account (your Google Sheet, your Claude API key, your Gmail) that any node can reuse.</td></tr>
+</table>
+
+<div class="note">You can run n8n two ways: <strong>n8n Cloud</strong> (hosted, ~$20–50/mo, zero setup) or <strong>self-hosted</strong> (free, runs on a $5–10/mo VPS or even your own machine, slightly more setup). For a first build I'd start on Cloud so we're not debugging server config on top of learning the tool.</div>
+
+<h2>The full pipeline</h2>
+<p>Six workflows, each one triggered either on a schedule or by the previous one finishing. They all read from and write to the same Google Sheet, which acts as the shared database.</p>
+
+<div class="legend">
+  <span><span class="dot" style="background:var(--accent)"></span> Trigger</span>
+  <span><span class="dot" style="background:var(--accent2)"></span> Action / Integration</span>
+  <span><span class="dot" style="background:var(--warn)"></span> AI step (Claude)</span>
+  <span><span class="dot" style="background:var(--pink)"></span> Branch / Decision</span>
+</div>
+
+<div class="mermaid">
+flowchart TD
+    classDef trig fill:#6ea8fe,stroke:#3d7bd9,color:#0a0e14
+    classDef act fill:#7ee3c5,stroke:#3fae8a,color:#0a0e14
+    classDef ai fill:#f5b866,stroke:#c98a2f,color:#0a0e14
+    classDef branch fill:#e893c9,stroke:#b85a94,color:#0a0e14
+    classDef sheet fill:#2a2f3a,stroke:#4a5162,color:#e8eaee
+
+    A1[/"Schedule: weekly"/]:::trig --> A2["Google Places API:<br/>search 'med spa' + city list"]:::act
+    A2 --> A3["Google Sheets:<br/>append new rows<br/>(dedupe on business name)"]:::act
+    A3 --> SH1[("Sheet: Prospects tab")]:::sheet
+
+    SH1 --> B1[/"Trigger: on new row"/]:::trig
+    B1 --> B2["HTTP Request:<br/>fetch website HTML"]:::act
+    B2 --> B3["HTTP Request:<br/>Instagram profile + recent posts"]:::act
+    B3 --> B4["Claude: extract decision-maker name,<br/>booking system, IG engagement signals"]:::ai
+    B4 --> B5["Google Sheets:<br/>update enrichment fields"]:::act
+    B5 --> SH1
+
+    SH1 --> C1[/"Trigger: enriched, not yet scored"/]:::trig
+    C1 --> C2["Claude: score 0–10 vs. 5-criterion rubric<br/>+ 1-line rationale"]:::ai
+    C2 --> C3{"Score ≥ 7?"}:::branch
+    C3 -- "yes" --> C4["Google Sheets:<br/>mark 'Ready for Outreach'"]:::act
+    C3 -- "no" --> C5["Google Sheets:<br/>mark 'Low Priority / Nurture'"]:::act
+    C4 --> SH1
+    C5 --> SH1
+
+    SH1 --> D1[/"Trigger: status = Ready for Outreach"/]:::trig
+    D1 --> D2["Claude: draft Day-1 personalized email<br/>+ Day-4 follow-up<br/>(uses positioning language + research)"]:::ai
+    D2 --> D3["Google Sheets:<br/>save drafts, status → Drafted"]:::act
+    D3 --> SH1
+
+    SH1 --> E1[/"Schedule: daily 8am"/]:::trig
+    E1 --> E2["Google Sheets:<br/>read rows due for today's touch"]:::act
+    E2 --> E3{"Which day<br/>in sequence?"}:::branch
+    E3 -- "Day 1" --> E4a["Gmail: send email"]:::act
+    E3 -- "Day 2" --> E4b["Manual queue:<br/>IG/LinkedIn touch"]:::act
+    E3 -- "Day 4" --> E4c["Gmail: send follow-up"]:::act
+    E3 -- "Day 7" --> E4d["Manual queue:<br/>send demo"]:::act
+    E3 -- "Day 10" --> E4e["Gmail: send ROI follow-up"]:::act
+    E3 -- "Day 14" --> E4f["Gmail: close-the-loop<br/>+ move to nurture"]:::act
+    E4a & E4b & E4c & E4d & E4e & E4f --> E5["Google Sheets:<br/>update Last Contact, Next Follow-up"]:::act
+    E5 --> SH1
+
+    SH1 --> F1[/"Schedule: weekly"/]:::trig
+    F1 --> F2["Google Sheets:<br/>aggregate funnel counts"]:::act
+    F2 --> F3["Google Sheets:<br/>write to Metrics tab<br/>(response/meeting/demo/close rate, CAC)"]:::act
+</div>
+
+<h2>Workflow by workflow</h2>
+
+<h3>1 &middot; Prospect Sourcing</h3>
+<span class="pill trigger">Trigger</span> Runs weekly on a schedule.
+<div class="card">
+<ul>
+<li><strong>Google Places / Maps API node</strong> — searches "med spa" against your target city list, returns name, address, phone, website, rating, review count.</li>
+<li><strong>Google Sheets node</strong> — appends new rows to the <em>Prospects</em> tab; a lookup step checks business name against existing rows first so nothing gets duplicated.</li>
+</ul>
+<p><em>Output written to Sheet:</em> Business name, Website, Phone, Industry, Google rating/reviews, Outreach status = "New"</p>
+</div>
+
+<h3>2 &middot; Enrichment</h3>
+<span class="pill trigger">Trigger</span> Fires when a row's status is "New."
+<div class="card">
+<ul>
+<li><strong>HTTP Request nodes</strong> pull the website HTML and the Instagram profile/recent posts.</li>
+<li><strong>Claude node</strong> reads that raw content and extracts: decision-maker name (from About/Team pages), whether an online booking system exists, and signs of customer inquiry patterns (comments asking about pricing/availability/booking).</li>
+</ul>
+<p><em>Output:</em> Decision maker, Instagram/social profile, Online booking system, Customer inquiry patterns, Number of locations — status → "Enriched"</p>
+</div>
+
+<h3>3 &middot; AI Scoring</h3>
+<span class="pill trigger">Trigger</span> Fires on status = "Enriched."
+<div class="card">
+<ul>
+<li><strong>Claude node</strong> is given the doc's exact 5-criterion rubric (active social presence, inquiry volume, booking workflow, visible service pain, locations/ability to pay — 0–2 each) and returns a score plus a one-line rationale.</li>
+<li><strong>IF node</strong> branches: score ≥ 7 → "Ready for Outreach"; below → "Low Priority / Nurture."</li>
+</ul>
+<p><em>Output:</em> Prospect score, Potential AI opportunity (free text), Outreach status</p>
+</div>
+
+<h3>4 &middot; Outreach Drafting</h3>
+<span class="pill trigger">Trigger</span> Fires on status = "Ready for Outreach."
+<div class="card">
+<ul>
+<li><strong>Claude node</strong> drafts the Day 1 email and Day 4 follow-up, prompted with the doc's positioning ("we help med spas automatically respond to Instagram and website inquiries...") plus the specific opportunity found in research — so every email references something real about that business, not a generic template.</li>
+</ul>
+<p><em>Output:</em> Email draft (Day 1), follow-up draft (Day 4) saved to the Sheet — status → "Drafted." Nothing sends automatically yet; you review drafts before the sequence workflow picks them up (recommend keeping a human-approval step here at first).</p>
+</div>
+
+<h3>5 &middot; 14-Day Sequence Runner</h3>
+<span class="pill trigger">Trigger</span> Runs daily.
+<div class="card">
+<ul>
+<li>Reads every "Drafted"/"In Sequence" row, checks how many days since first contact, and fires the matching touch: Day 1 email (Gmail node), Day 2 IG/LinkedIn (queued for manual send — these channels don't have safe APIs for outbound automation), Day 4 follow-up, Day 7 demo, Day 10 ROI message, Day 14 close-the-loop.</li>
+<li>Updates Last Contact / Next Follow-up on every run; auto-moves non-responders to "Nurture" after Day 14.</li>
+</ul>
+</div>
+
+<h3>6 &middot; Metrics Rollup</h3>
+<span class="pill trigger">Trigger</span> Runs weekly.
+<div class="card">
+<ul>
+<li>Counts rows by status to compute response rate, meeting rate, demo rate, proposal rate, close rate, and (once you enter spend) CAC — written to a <em>Metrics</em> tab matching the doc's table exactly.</li>
+</ul>
+</div>
+
+<h2>Build order I'd suggest</h2>
+<ul>
+<li><strong>Phase 1:</strong> Google Sheet template (all tabs/fields) + Workflow 1 (Sourcing) + Workflow 3 (Scoring) — get a clean, scored prospect list before automating any outreach.</li>
+<li><strong>Phase 2:</strong> Workflow 2 (Enrichment) layered in once sourcing/scoring is validated on a real batch.</li>
+<li><strong>Phase 3:</strong> Workflow 4 (Drafting) with a human-approval step — you read every draft before it can send, at least for the first few weeks.</li>
+<li><strong>Phase 4:</strong> Workflow 5 (Sequence runner) once you trust the drafts, then Workflow 6 (Metrics) to close the loop.</li>
+</ul>
+
+<div class="note">Two things worth flagging early: Instagram and LinkedIn don't have safe, ToS-compliant APIs for automated outbound messaging — those touches stay a manual "queue" a human executes from a daily task list the workflow generates, rather than a bot that DMs on your behalf. And email sending at volume needs a warmed-up domain/inbox (via Gmail API, or a tool like Instantly) to avoid spam flags — worth setting up before Workflow 5 goes live.</div>
+
+</div>
+<script>
+  mermaid.initialize({
+    startOnLoad:true,
+    theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
+    securityLevel:'loose',
+    flowchart:{curve:'basis', htmlLabels:true}
+  });
+</script>
+</body>
+</html>

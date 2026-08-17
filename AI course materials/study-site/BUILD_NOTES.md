@@ -61,3 +61,7 @@ Ran the same validation as the original build script (no duplicate concept/flash
 Existing content, topic order, and the localStorage progress schema were untouched — this was a pure addition.
 
 **Not done as part of this run (by design):** Netlify redeploy. The workflow only updates the local site files; deploying is a separate manual/git step.
+
+## 2026-08-14 — Scheduled content-update check: no new material
+
+Checked the workspace folder against `content.json`'s `meta.generatedFrom` (8 source files: Eval Prompts, JHU 5_Slides_NLP, Week 6/7/8, Session 1–3). All 8 are already tracked, and none have a modification date newer than the last processing entry above. No new or changed PDFs found — no content added, site untouched.
