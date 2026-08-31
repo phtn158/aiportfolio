@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ThuWork Mark — W Plexus Behind the T</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Work+Sans:wght@400;500&display=swap');
+
+  :root{
+    --navy:#0d0f24;
+    --teal:#2fd4c0;
+    --ice:#6fc7ff;
+    --brass:#c9a15a;
+    --rust:#c15a3a;
+    --white:#ffffff;
+    --ink:#e9e7f0;
+    --muted:#8d94b8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#08091a;
+    font-family:'Work Sans', sans-serif;
+    color:var(--ink);
+    padding:48px 32px 90px;
+  }
+  header{ max-width:1100px; margin:0 auto 48px; }
+  header h1{ font-family:'Space Grotesk', sans-serif; font-size:26px; margin:0 0 8px; }
+  header p{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--muted); max-width:660px; line-height:1.6; margin:0; }
+  .grid{ max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:28px; }
+  figure{ margin:0; background:var(--navy); border-radius:10px; overflow:hidden; }
+  figure svg.icon{ width:100%; aspect-ratio:1/1; display:block; }
+  figcaption{ padding:16px 18px 18px; }
+  figcaption .num{ display:block; font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--teal); letter-spacing:0.08em; margin-bottom:4px; }
+  figcaption h3{ font-family:'Space Grotesk', sans-serif; font-size:15px; margin:0 0 6px; font-weight:600; }
+  figcaption p{ font-family:'Work Sans', sans-serif; font-size:12.5px; color:var(--muted); line-height:1.5; margin:0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ThuWork Mark — W Plexus Behind the T</h1>
+  <p>Same concept as before, W pulled in about 15–18% smaller — outer arms sit closer to the T while the peak keeps its clearance above the root node, so it still pokes up above the crossbar.</p>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+
+function mulberry32(seed){
+  return function(){
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  }
+}
+
+function el(tag, attrs){
+  const e = document.createElementNS(NS, tag);
+  for(const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+
+// Sample fuzzy plexus points along one straight segment of the W
+function sampleSegment(p1, p2, spacing, jitterPerp, jitterAlong, rng, out){
+  const dx = p2.x-p1.x, dy = p2.y-p1.y;
+  const len = Math.sqrt(dx*dx+dy*dy);
+  const ux = dx/len, uy = dy/len;
+  const nx = -uy, ny = ux;
+  const n = Math.max(3, Math.round(len/spacing));
+  for(let i=0;i<=n;i++){
+    const t = i/n;
+    const bx = p1.x + dx*t, by = p1.y + dy*t;
+    const jp = (rng()-0.5)*2*jitterPerp;
+    const ja = (rng()-0.5)*2*jitterAlong;
+    out.push({ x: bx + nx*jp + ux*ja, y: by + ny*jp + uy*ja });
+  }
+}
+
+// Build the W skeleton (5 vertices -> 4 segments) then scatter points along it
+function buildWPoints(verts, spacing, jitterPerp, jitterAlong, rng){
+  const pts = [];
+  for(let i=0;i<verts.length-1;i++){
+    sampleSegment(verts[i], verts[i+1], spacing, jitterPerp, jitterAlong, rng, pts);
+  }
+  return pts;
+}
+
+function drawMesh(g, pts, maxDist, rng, color, opacity){
+  for(let i=0;i<pts.length;i++){
+    for(let j=i+1;j<pts.length;j++){
+      const dx = pts[i].x-pts[j].x, dy = pts[i].y-pts[j].y;
+      const d = Math.sqrt(dx*dx+dy*dy);
+      if(d < maxDist){
+        const lineOp = opacity * (1 - d/maxDist) * 0.9;
+        g.appendChild(el('line',{
+          x1:pts[i].x.toFixed(1), y1:pts[i].y.toFixed(1),
+          x2:pts[j].x.toFixed(1), y2:pts[j].y.toFixed(1),
+          stroke:color, 'stroke-width':0.6, opacity:lineOp.toFixed(2)
+        }));
+      }
+    }
+  }
+  pts.forEach(p=>{
+    const rr = 0.8 + rng()*1.3;
+    g.appendChild(el('circle',{
+      cx:p.x.toFixed(1), cy:p.y.toFixed(1), r:rr.toFixed(1),
+      fill:color, opacity:(opacity*(0.9+rng()*0.5)).toFixed(2)
+    }));
+  });
+}
+
+// Flowing lines that skip a few points ahead along the path order (not by proximity)
+function drawFlowLines(g, pts, count, rng, color, opacity){
+  for(let k=0;k<count;k++){
+    const i = Math.floor(rng()*pts.length);
+    const span = 4 + Math.floor(rng()*7);
+    const j = Math.min(pts.length-1, i+span);
+    const a = pts[i], b = pts[j];
+    g.appendChild(el('line',{
+      x1:a.x.toFixed(1), y1:a.y.toFixed(1), x2:b.x.toFixed(1), y2:b.y.toFixed(1),
+      stroke:color, 'stroke-width':0.5, opacity:(opacity*0.85).toFixed(2)
+    }));
+  }
+}
+
+// The T mark — restored to the original shape: root branches into a left/right
+// crossbar, then drops and splits into two base nodes. No extra cross-connections.
+function drawMark(svg, cx, cy, scale, rootColor){
+  const filterId = 'glow'+Math.random().toString(36).slice(2,8);
+  const defs = el('defs',{});
+  const filter = el('filter',{id:filterId, x:'-80%', y:'-80%', width:'260%', height:'260%'});
+  filter.appendChild(el('feDropShadow',{dx:0, dy:0, stdDeviation:3.5, 'flood-color':'#000000', 'flood-opacity':0.6}));
+  defs.appendChild(filter);
+  svg.appendChild(defs);
+
+  const g = el('g',{transform:`translate(${cx},${cy}) scale(${scale})`, filter:`url(#${filterId})`});
+
+  // coordinates re-centered on (0,0), same structure/proportions as the approved mark
+  const root = {x:0, y:-45};
+  const leftTop = {x:-40, y:-45};
+  const rightTop = {x:40, y:-45};
+  const bend = {x:0, y:7};        // bend point only — not a node, no circle
+  const bottomLeft = {x:-25, y:45};
+  const bottomRight = {x:25, y:45};
+
+  const lines = [
+    [root, leftTop], [root, rightTop], [root, bend], [bend, bottomLeft], [bend, bottomRight]
+  ];
+  lines.forEach(([a,b])=>{
+    g.appendChild(el('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y, stroke:'var(--white)', 'stroke-width':7, 'stroke-linecap':'round'}));
+  });
+
+  [leftTop, rightTop, bottomLeft, bottomRight].forEach(p=>{
+    g.appendChild(el('circle',{cx:p.x,cy:p.y,r:15,fill:'var(--white)'}));
+  });
+  g.appendChild(el('circle',{cx:root.x,cy:root.y,r:19,fill:rootColor}));
+  svg.appendChild(g);
+}
+
+// Thin solid guide stroke along the W skeleton — ties the scattered nodes into
+// a shape the eye can follow even where dot density is low.
+function drawGuidePath(g, verts, color, opacity, width){
+  let d = `M ${verts[0].x} ${verts[0].y}`;
+  for(let i=1;i<verts.length;i++) d += ` L ${verts[i].x} ${verts[i].y}`;
+  g.appendChild(el('path',{d, fill:'none', stroke:color, 'stroke-width':width, 'stroke-linejoin':'round', 'stroke-linecap':'round', opacity}));
+}
+
+// Fixed W skeleton — slightly smaller than the previous pass: outer arms
+// pulled in for a more compact footprint, while the peak keeps the same
+// clearance above the T's root node so it still pokes up above the crossbar.
+const W_VERTS = [
+  {x:65,  y:85},
+  {x:135, y:305},
+  {x:200, y:105},
+  {x:265, y:305},
+  {x:335, y:85}
+];
+
+function buildSVG(container, opts){
+  const svg = el('svg',{viewBox:'0 0 400 400', class:'icon'});
+  svg.appendChild(el('rect',{x:0,y:0,width:400,height:400,fill:'#0d0f24'}));
+  const rng = mulberry32(opts.seed);
+
+  const g = el('g',{});
+  svg.appendChild(g);
+  if(opts.guide) drawGuidePath(g, W_VERTS, opts.color, opts.opacity*0.65, opts.guide);
+  const pts = buildWPoints(W_VERTS, opts.spacing, opts.jitterPerp, opts.jitterAlong, rng);
+  drawMesh(g, pts, opts.maxDist, rng, opts.color, opts.opacity);
+  if(opts.flowLines) drawFlowLines(g, pts, opts.flowLines, rng, opts.color, opts.opacity);
+
+  drawMark(svg, 200, 205, opts.markScale, opts.rootColor);
+  container.appendChild(svg);
+}
+
+const configs = [
+  {
+    num:'01', title:'Clear W', desc:'Smaller T, wider W, and a thin guide stroke tying the dots together — the letter reads clearly at a glance, with the peak poking up above the crossbar.',
+    opts:{ seed:4, color:'#7fd8ff', opacity:0.34, rootColor:'var(--teal)', markScale:1.4,
+      spacing:9, jitterPerp:6, jitterAlong:5, maxDist:24, flowLines:12, guide:2.5 }
+  },
+  {
+    num:'02', title:'Woven W', desc:'Same clear silhouette, denser mesh and flowing current lines along the stroke for more texture.',
+    opts:{ seed:9, color:'#8fd0ff', opacity:0.32, rootColor:'var(--ice)', markScale:1.4,
+      spacing:7, jitterPerp:9, jitterAlong:6, maxDist:26, flowLines:22, guide:2.5 }
+  },
+  {
+    num:'03', title:'Bold W', desc:'Thicker guide stroke and wider node scatter — the W has real visual weight, closer to a drawn letterform than a scatter of dots.',
+    opts:{ seed:14, color:'#7fd8ff', opacity:0.3, rootColor:'var(--teal)', markScale:1.4,
+      spacing:8, jitterPerp:13, jitterAlong:7, maxDist:28, flowLines:18, guide:3.5 }
+  },
+  {
+    num:'04', title:'No Guide Stroke', desc:'Same density and T size as 01, but without the solid guide line — pure node mesh. Useful comparison to see whether the guide stroke is needed for legibility.',
+    opts:{ seed:4, color:'#7fd8ff', opacity:0.32, rootColor:'var(--teal)', markScale:1.4,
+      spacing:8, jitterPerp:8, jitterAlong:6, maxDist:26, flowLines:14, guide:0 }
+  },
+  {
+    num:'05', title:'W — Brass', desc:'Clear-W treatment in the brass colorway for financial services / professional services pages.',
+    opts:{ seed:9, color:'#d8b06f', opacity:0.32, rootColor:'var(--brass)', markScale:1.4,
+      spacing:7, jitterPerp:9, jitterAlong:6, maxDist:26, flowLines:20, guide:2.5 }
+  },
+  {
+    num:'06', title:'W — Rust', desc:'Clear-W treatment in the rust colorway for manufacturing / energy pages.',
+    opts:{ seed:9, color:'#d98a6a', opacity:0.32, rootColor:'var(--rust)', markScale:1.4,
+      spacing:7, jitterPerp:9, jitterAlong:6, maxDist:26, flowLines:20, guide:2.5 }
+  }
+];
+
+function el2(tag){ return document.createElement(tag); }
+
+const grid = document.getElementById('grid');
+configs.forEach(cfg=>{
+  const fig = el2('figure');
+  buildSVG(fig, cfg.opts);
+  const cap = el2('figcaption');
+  cap.innerHTML = `<span class="num">${cfg.num}</span><h3>${cfg.title}</h3><p>${cfg.desc}</p>`;
+  fig.appendChild(cap);
+  grid.appendChild(fig);
+});
+</script>
+
+</body>
+</html>

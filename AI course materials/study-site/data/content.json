@@ -9,11 +9,14 @@
       "Week_6_Slides_LLM.pdf",
       "Session 1 - The Claude Ecosystem__From Answers to Workflows.pdf",
       "Session 2 - Prompt Engineering - Thinking Clearly with Claude.pdf",
-      "Session 3 - Claude Cowork & Agentic Workflows - AI That Works With You.pdf"
+      "Session 3 - Claude Cowork & Agentic Workflows - AI That Works With You.pdf",
+      "JHU_Week 13_RAG.pdf",
+      "JHU week 14_Slides.pdf",
+      "14_Slides_v14.1.pdf"
     ],
-    "totalConcepts": 165,
-    "totalFlashcards": 84,
-    "totalQuizQuestions": 58
+    "totalConcepts": 181,
+    "totalFlashcards": 92,
+    "totalQuizQuestions": 64
   },
   "modules": [
     {
@@ -102,6 +105,14 @@
       "description": "Optional deep dive — full mechanics of RNN/LSTM, attention, and the three transformer model families. Dip in whenever you want the 'why' behind the primer in Foundations.",
       "conceptCount": 15,
       "flashcardCount": 10,
+      "quizCount": 6
+    },
+    {
+      "id": "rag",
+      "title": "Retrieval-Augmented Generation (RAG)",
+      "description": "Goes deeper than the RAG entry in Task-Flow: QA (which covers the basic prompting pattern): why neither retrieval-only nor generative-only systems are enough on their own, how BERT-style retrieval and GPT-style generation combine architecturally, RAGAs for component-level evaluation, the three levers for improving a RAG pipeline, and the multimodal extension (text + images).",
+      "conceptCount": 16,
+      "flashcardCount": 8,
       "quizCount": 6
     },
     {
@@ -2555,6 +2566,236 @@
       "definition": "Behaviors that distinguish agentic execution from reactive chat assistance: no file upload needed (opens local files directly), automatic context loading (e.g. from CLAUDE.md), plan-before-act (announces the full plan before writing anything), parallel sub-agent work, cross-source synthesis (connecting insights across different files), and one-command recurrence (e.g. /schedule) that turns a one-off task into an autonomous recurring workflow.",
       "example": "In the Monthly Close Pack case study, Claude opens 5 local files, cross-references a CSV against an Excel cost overrun, and can be scheduled to rerun automatically next month.",
       "moduleId": "claude-cowork"
+    },
+    {
+      "id": "rag-two-failure-modes",
+      "term": "The Two Failure Modes RAG Fixes",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Generative-only models make things up or go stale; retrieval-only systems just dump a pile of links on you and make you do the reading.",
+      "definition": "Generative-only models: lack up-to-date information (may answer recent events with outdated or refused answers), and hallucinate (produce plausible-sounding but incorrect or unverifiable information). Retrieval-only systems: lack synthesis (return multiple relevant sources without summarizing or interpreting them cohesively), and put the burden on the user to manually review and extract insights.",
+      "example": "A generative-only model confidently misstates a recent event; a retrieval-only search engine returns five relevant articles and leaves you to read all of them.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "retrieval-only-models",
+      "term": "Retrieval-Only Models",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The pre-RAG way of finding information: rank and fetch existing documents, but never write anything new.",
+      "definition": "The era before RAG split into two separate lanes. Retrieval-only models find and rank existing content using methods like BM25, TF-IDF, and embedding-based retrieval, but cannot generate fluent new text. Generative-only models (GPT-3, GPT-3.5, GPT-4, and other LLMs) generate fluent new text but cannot pull in live external information.",
+      "example": "BM25 ranks documents by keyword overlap and term frequency, returning the most relevant existing pages instead of writing a new answer.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "bert-retrieval-oriented",
+      "term": "BERT (Retrieval-Oriented)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Reads a sentence in both directions at once, which makes it great at understanding meaning but bad at writing new sentences.",
+      "definition": "Bidirectional contextual understanding (e.g. resolving \"The bank is on the river\" using context from both sides of the ambiguous word). Strengths: document ranking, named entity recognition, question answering, retrieving relevant information. Weaknesses: cannot generate fluent responses, lacks creativity and coherence as a writer.",
+      "example": "BERT is well-suited to being the retriever half of a RAG pipeline, but not the half that drafts the final answer.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "gpt-generation-oriented",
+      "term": "GPT (Generation-Oriented)",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Writes fluent text one word after the next, but only from what it already knows, which is exactly why it hallucinates.",
+      "definition": "Unidirectional language modeling: processes text left-to-right. Strengths: highly fluent, excels in content creation. Weaknesses: lacks real-time retrieval, prone to hallucinations.",
+      "example": "GPT can write a polished paragraph about breach of contract, but without retrieval it may state an incorrect rule with total confidence.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "rag-unified-approach",
+      "term": "RAG as a Unified Approach",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "RAG is what you get when you glue BERT's \"find the right stuff\" strength to GPT's \"write it up well\" strength. Same pattern as the RAG entry in Task-Flow: QA, but here framed as which model architecture does which job.",
+      "definition": "RAG uses retrieval (BERT-like) to find relevant information and generation (GPT-like) to produce the response. Strengths: retrieves live and up-to-date data, generates coherent responses, and handles complex and context-dependent questions that neither approach handles alone.",
+      "example": "Given \"Does intent matter in a breach of contract?\", RAG retrieves current legal sources and generates an answer grounded in them, rather than a fluent but possibly wrong GPT-only guess.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "rag-pipeline-basic",
+      "term": "Basic RAG Pipeline",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Turn the question into numbers, go fetch the matching chunks of text, then hand those chunks to the LLM so it can write the answer.",
+      "definition": "Text-based query → encoding → retrieve relevant text chunks → large language model generates an answer using the retrieved chunks as context. Common use cases: document Q&A, code-based search, knowledge assistants.",
+      "example": "A user asks a knowledge assistant a product question; the pipeline encodes the query, retrieves the matching manual sections, and the LLM writes the answer from those sections.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "rag-vs-traditional-search",
+      "term": "RAG vs. Traditional Search",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Old-school search hands you a ranked list of pages and hopes the keywords line up; generative search actually understands the question and writes you an answer with sources.",
+      "definition": "Traditional search lacks context and relies on keyword-based (SEO-influenced) ranking, correcting for this mainly through search-engine algorithms. Generative search has context to improve the quality of search, avoids keyword-based SEO optimization, and is more accurate and relevant — and can provide sourcing for its answers.",
+      "example": "Searching \"Which planet in the solar system has the most moons?\" on generative search returns a direct, sourced answer instead of a list of pages to click through.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "rag-strengths",
+      "term": "RAG's Core Strengths",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "The four reasons RAG earns its place over either approach alone.",
+      "definition": "Contextual accuracy (answers grounded in retrieved context), factual grounding (reduces hallucination by citing real retrieved data), scalability (new information can be added to the retrieval source without retraining the model), and customizability (retrieval source can be swapped or scoped per use case, e.g. a company's own documents).",
+      "example": "A customer support bot stays current by updating its retrieval index with new help-center articles, with no model retraining required.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "ragas",
+      "term": "RAGAs (Retrieval-Augmented Generation Assessment)",
+      "tags": {
+        "category": [
+          "Tool"
+        ],
+        "tool": [
+          "ragas"
+        ]
+      },
+      "eliForgot": "A ready-made toolkit for grading your RAG system on two separate report cards: did it find the right stuff, and did it write a good answer from it.",
+      "definition": "An open-source framework (GitHub, Docs) that provides the necessary ingredients to evaluate a RAG pipeline at the component level, rather than only judging the final output as a whole.",
+      "example": "Running RAGAs on a support-bot pipeline surfaces separately whether the retriever pulled the right documents and whether the generator used them well.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "rag-retriever-generator-components",
+      "term": "Retriever Component vs. Generator Component",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": [
+          "ragas"
+        ]
+      },
+      "eliForgot": "One job is fetching the right context; the other job is writing a good answer from that context — and they can each fail independently.",
+      "definition": "In RAGAs' component-level view of a RAG pipeline: the Retriever Component retrieves additional context from an external database for the LLM to use in answering the query. The Generator Component generates an answer based on a prompt that has been augmented with the retrieved information.",
+      "example": "A RAG system can have a strong generator but a weak retriever (fluent answer, wrong source) — evaluating the two components separately catches that.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "rag-optimization-levers",
+      "term": "Three Levers for Improving RAG",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "If your RAG answers aren't good enough, there are three different places to intervene: what you're searching over, how you search it, or how you ask.",
+      "definition": "RAG frequently needs optimization to best meet user needs. Three primary ways to augment it: transform the data (change what's indexed/how it's chunked), transform the retrieval (change how documents are found/ranked), and transform the query (rewrite or expand the user's query before retrieval). Being aware of how users actually interact with the system reveals the best avenues for augmentation.",
+      "example": "If users' questions are vague, query transformation (rewriting the query before retrieval) may fix more errors than reindexing the data.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "multimodal-rag",
+      "term": "Multimodal RAG",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "RAG that can dig up a diagram or photo, not just paragraphs of text, so it can actually answer questions that live in a picture.",
+      "definition": "A RAG system that can access and reason over both textual and visual data, combining text and images in a unified retrieval process and generating grounded, context-rich answers. Addresses the limitation of text-only RAG: relevant information often lives in a diagram, image, or schematic. High-impact fields: manufacturing, medicine, aerospace, architecture.",
+      "example": "Retrieving both a technical diagram and its surrounding text explanation to answer a question about a specific part.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "multimodal-rag-pipeline",
+      "term": "Multimodal RAG Pipeline",
+      "tags": {
+        "category": [
+          "Technique"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Same four-step shape as text RAG, just done for pictures too: pull it out, turn it into numbers, file it away, then fetch it back.",
+      "definition": "Ingestion (extract text and images from documents) → Embedding (convert text/images to vectors) → Indexing (store in a multimodal database) → Retrieval (unified retrieval of text and images).",
+      "example": "Extracting both the paragraphs and the diagrams from a technical manual PDF, embedding each, and indexing them together for joint retrieval.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "clip-embeddings",
+      "term": "CLIP (Embedding Alignment)",
+      "tags": {
+        "category": [
+          "Tool"
+        ],
+        "tool": [
+          "CLIP"
+        ]
+      },
+      "eliForgot": "A model that tries to put pictures and captions describing them in the same neighborhood of vector space, so you can search across text and images together — though it doesn't always nail the alignment.",
+      "definition": "A model used to embed diagrams/images for multimodal retrieval, alongside sentence transformers for text. A known challenge in multimodal RAG: CLIP vectors are not always semantically consistent with their paired text embeddings, which can hurt joint retrieval accuracy.",
+      "example": "A CLIP embedding of a wiring diagram may not land as close, in vector space, to its text description as expected — an embedding-alignment issue.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "gpt-4v",
+      "term": "GPT-4V",
+      "tags": {
+        "category": [
+          "Model/Architecture"
+        ],
+        "tool": []
+      },
+      "eliForgot": "A version of GPT-4 that can look at an image and read text at the same time, so it can answer a question using both.",
+      "definition": "A multimodal LLM option that handles both text and image input, used in multimodal RAG to generate an integrated answer from retrieved text and images together.",
+      "example": "A technician asks how to reset a safety sensor; multimodal RAG retrieves both the manual text and the relevant diagram, and GPT-4V generates an answer using both.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "multimodal-rag-challenges",
+      "term": "Challenges in Multimodal RAG",
+      "tags": {
+        "category": [
+          "Concept"
+        ],
+        "tool": []
+      },
+      "eliForgot": "Adding images to RAG doesn't just add value, it adds new ways for the system to trip: mismatched embeddings, slower responses, fussier prompts, and evaluation that a script can't fully automate.",
+      "definition": "Embedding alignment issues (CLIP vectors not always semantically consistent with text embeddings), latency concerns (slower processing for images), prompting complexity (formatting and tuning needed to combine modalities), and evaluation difficulties (human-in-the-loop needed since automated text metrics don't fully capture visual grounding quality).",
+      "example": "Two teams building the same multimodal support bot both find that image-heavy queries are noticeably slower and harder to auto-evaluate than text-only ones.",
+      "moduleId": "rag"
     }
   ],
   "flashcards": [
@@ -3061,6 +3302,54 @@
       "front": "Why is 'no file upload needed' considered a marker of agentic behavior, not just a convenience?",
       "back": "It means Claude is acting on local files directly and autonomously as part of executing a task, rather than only reacting to whatever content a user manually pastes or uploads into a chat message.",
       "moduleId": "claude-cowork"
+    },
+    {
+      "id": "fc-rag-1",
+      "front": "What is RAG, in one sentence?",
+      "back": "An architecture that retrieves relevant external documents for a query, then has a generative model produce an answer grounded in that retrieved content, instead of relying only on trained-in knowledge.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "fc-rag-2",
+      "front": "What are the two separate failure modes RAG is designed to fix?",
+      "back": "Generative-only: outdated info + hallucinations. Retrieval-only: no synthesis + user has to do the reading themselves.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "fc-rag-3",
+      "front": "In the RAG = BERT + GPT framing, which model plays which role?",
+      "back": "BERT (bidirectional) plays the retriever — ranking/finding relevant text. GPT (unidirectional, left-to-right) plays the generator — writing the fluent answer.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "fc-rag-4",
+      "front": "What does RAGAs evaluate, and at what level?",
+      "back": "The RAGAs framework evaluates a RAG pipeline at the component level: the Retriever Component (did it find the right context?) and the Generator Component (did it write a good answer from that context?) separately.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "fc-rag-5",
+      "front": "What are the three primary levers for improving a RAG pipeline?",
+      "back": "Transform the data, transform the retrieval, transform the query.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "fc-rag-6",
+      "front": "What are the four stages of a multimodal RAG pipeline?",
+      "back": "Ingestion (extract text + images) → Embedding (convert to vectors) → Indexing (store in a multimodal database) → Retrieval (unified retrieval of text and images).",
+      "moduleId": "rag"
+    },
+    {
+      "id": "fc-rag-7",
+      "front": "What embedding-related challenge is specific to multimodal RAG?",
+      "back": "Embedding alignment: CLIP vectors for images aren't always semantically consistent with the paired text embeddings, which can hurt joint retrieval accuracy.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "fc-rag-8",
+      "front": "Why does multimodal RAG need human-in-the-loop evaluation more than text-only RAG?",
+      "back": "Because judging whether a retrieved diagram/image was actually the right visual grounding for the answer is harder to automate than text-based evaluation metrics.",
+      "moduleId": "rag"
     }
   ],
   "quiz": [
@@ -3817,6 +4106,84 @@
       "correctIndex": 1,
       "explanation": "CLAUDE.md holds standing project context — folder conventions, KPI targets, thresholds, and workflow rules — that Claude loads automatically each session instead of being re-briefed.",
       "moduleId": "claude-cowork"
+    },
+    {
+      "id": "q-rag-1",
+      "question": "A retrieval-only search engine and a generative-only LLM are each given the query \"What happens in a breach of contract?\" What's the key difference in their failure modes?",
+      "options": [
+        "The retrieval-only system hallucinates; the generative-only system fails to synthesize",
+        "The retrieval-only system returns unsynthesized source lists (user must read them); the generative-only system may hallucinate or be outdated",
+        "Both systems fail identically because neither can access legal documents",
+        "The retrieval-only system is always more accurate than the generative-only system"
+      ],
+      "correctIndex": 1,
+      "explanation": "Retrieval-only systems lack synthesis and place the burden on the user to review sources; generative-only models lack up-to-date info and are prone to hallucination — these are two distinct failure modes, which is exactly why RAG combines both.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "q-rag-2",
+      "question": "In the \"RAG = BERT-like retrieval + GPT-like generation\" framing, which statement is accurate?",
+      "options": [
+        "BERT is unidirectional and excels at fluent generation",
+        "GPT is bidirectional and excels at document ranking",
+        "BERT is bidirectional and strong at retrieval/ranking; GPT is unidirectional (left-to-right) and strong at fluent generation",
+        "Both BERT and GPT are equally strong at both retrieval and generation"
+      ],
+      "correctIndex": 2,
+      "explanation": "BERT's bidirectional context understanding makes it well-suited to retrieval, ranking, and QA, but it can't generate fluent responses. GPT's unidirectional, left-to-right modeling makes it fluent but prone to hallucination without retrieval.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "q-rag-3",
+      "question": "What does the RAGAs framework specifically let you evaluate that a single end-to-end \"is the final answer good?\" score does not?",
+      "options": [
+        "The exact token cost of each generation call",
+        "The Retriever and Generator components of the RAG pipeline separately, so you can tell whether retrieval or generation is the actual problem",
+        "Whether the underlying LLM was fine-tuned or prompted",
+        "The latency of the vector database only"
+      ],
+      "correctIndex": 1,
+      "explanation": "RAGAs evaluates a RAG pipeline at the component level — the Retriever Component and the Generator Component — so failures can be attributed to the right stage instead of judging only the final output.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "q-rag-4",
+      "question": "A team's RAG chatbot keeps giving good answers to well-phrased questions but poor answers to vague or ambiguous user questions. Which of the three levers for improving RAG most directly targets this problem?",
+      "options": [
+        "Transform the data",
+        "Transform the retrieval",
+        "Transform the query",
+        "Switch to a retrieval-only system"
+      ],
+      "correctIndex": 2,
+      "explanation": "Query transformation rewrites or expands the user's query before retrieval — the most direct lever when the problem traces back to how the question itself was phrased, as opposed to what's indexed or how ranking works.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "q-rag-5",
+      "question": "A technician asks a multimodal RAG system, \"How do I reset the safety sensor?\" Why might a traditional (text-only) RAG system fail here where multimodal RAG succeeds?",
+      "options": [
+        "Traditional RAG cannot process any text queries about hardware",
+        "Traditional RAG retrieves the relevant text but misses a critical diagram that the answer depends on",
+        "Multimodal RAG doesn't use an LLM at all, only image matching",
+        "Traditional RAG is always slower than multimodal RAG"
+      ],
+      "correctIndex": 1,
+      "explanation": "Traditional RAG retrieves text chunks only, so it misses information that lives in a diagram or schematic. Multimodal RAG retrieves both the text and the diagram, letting a model like GPT-4V generate an answer grounded in both.",
+      "moduleId": "rag"
+    },
+    {
+      "id": "q-rag-6",
+      "question": "Which of the following is a documented challenge specific to multimodal RAG (beyond the challenges of text-only RAG)?",
+      "options": [
+        "CLIP-based image embeddings are not always semantically consistent with paired text embeddings",
+        "LLMs cannot process any image data under any circumstances",
+        "Multimodal RAG eliminates the need for an indexing step entirely",
+        "Multimodal RAG requires no evaluation since images are self-explanatory"
+      ],
+      "correctIndex": 0,
+      "explanation": "Embedding alignment is a named challenge: CLIP vectors for images aren't always semantically consistent with text embeddings, alongside latency, prompting complexity, and the need for human-in-the-loop evaluation.",
+      "moduleId": "rag"
     }
   ]
 }
