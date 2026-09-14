@@ -93,3 +93,11 @@ Existing content, topic order, and the localStorage progress schema were untouch
 ## 2026-08-28 — Scheduled content-update check: no new material
 
 Checked the workspace folder against `content.json`'s `meta.generatedFrom` (11 source files — the original 5, the 3 Claude Ecosystem sessions, and the 3 RAG-module decks added 2026-08-26). All 11 files present in the folder are already tracked, and none have a modification date newer than the 2026-08-26 processing entry above. No new or changed PDFs found — no content added, site untouched.
+
+## 2026-09-04 — Scheduled content-update check: no new material
+
+Checked the workspace folder against `content.json`'s `meta.generatedFrom` (11 source files, unchanged since 2026-08-26). All 11 files present in the folder are already tracked, and none have a modification date newer than the 2026-08-26 processing entry. No new or changed PDFs found — no content added, site untouched.
+
+## 2026-09-11 — Scheduled content-update check: no new material
+
+Checked the workspace folder against `content.json`'s `meta.generatedFrom` (11 source files, unchanged since 2026-08-26). All 11 files present in the folder are already tracked, and none have a modification date newer than the 2026-08-26 processing entry. No new or changed PDFs found — no content added, site untouched.

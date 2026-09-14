@@ -13,3 +13,11 @@ __pycache__/
 *.env
 **/*.env
 cowork_exercise/
+.claude/
+
+# secrets found during automated portfolio scan
+**/client_secret_*.json
+**/n8n-data/
+
+# oversized file (>90MB) found during automated portfolio scan
+JHU Project 2 - AI for Research Proposal Automation /Project Files/ResearchPapers.zip
