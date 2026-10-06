@@ -1,0 +1,200 @@
+ Webcam-Signal-Triggered Support During Digital Mental Health Treatment
+1. Introduction
+Digital mental health interventions may expand access to evidence-based care, support self-management, and reduce barriers associated with limited service availability. The National Institute of Mental Health (NIMH) seeks research that increases the reach, efficiency, effectiveness, and quality of digital mental health interventions, particularly through well-established digital platforms, real-time data collection, adaptive interventions, and research beyond primary effectiveness testing (NIMH, 2024).
+The proposed study will evaluate whether webcam-based eye-tracking and facial-expression signals can be used within an established evidence-based digital mental health intervention to identify changes in a user’s current state and trigger brief behavioral support. The study will compare the signal-triggered intervention with an active digital intervention comparator in a clinical trial involving participants with clinically significant symptoms and/or functional impairment at baseline.
+The proposed work is motivated by the Brain-Gaze and Dopamine Expression Tracking (DExTra) materials, which describe a prototype integrating webcam-based eye tracking and facial-expression recognition for real-time analysis of responses to digital stimuli (Arrow Analytics, n.d.). Those materials identify potential applications in healthcare but also characterize the technology as exploratory. In particular, the validity, generalizability, privacy implications, false-positive rates, and clinical utility of inferred neurobehavioral signals remain unresolved. Accordingly, this project will not assume that webcam signals measure dopamine or any other specific neurochemical process. Instead, it will test whether the signals can be validated as useful indicators of engagement or current state within digital mental health treatment and whether signal-triggered support improves clinical and engagement outcomes.
+2. Problem Statement
+Digital mental health interventions can provide evidence-based treatment through internet and mobile platforms, but sustained engagement and continued skill use remain important challenges. The NIMH NOFO specifically identifies uptake, adherence, sustained use, and the development of real-time adaptive or just-in-time interventions as high-priority areas for research (NIMH, 2024).
+The DExTra white paper describes an integrated tool that combines webcam-based eye tracking and facial-expression recognition for real-time analysis of human responses. The prototype was initially designed to capture eye-tracking data during presentation of a media file and was being extended to capture facial images for facial-expression model development (Arrow Analytics, n.d.). The white paper proposes that these signals might eventually be used to infer dopamine-related changes, but it also describes a developmental sequence involving software development, facial-expression validation, controlled laboratory stimuli, and exploratory testing in individuals with dopamine-related conditions. These proposed applications do not establish that webcam signals validly measure dopamine or that they improve mental health treatment.
+The specific problem addressed by this study is therefore twofold:
+
+It is not yet established whether webcam-based eye-tracking and facial-expression signals can validly and reliably identify treatment-relevant changes in engagement or current state during a digital mental health intervention.
+It is not yet established whether using such signals to trigger brief behavioral support produces clinically meaningful improvements beyond an active digital intervention comparator.
+
+The study will address these problems through a clinical trial embedded in an established evidence-based digital mental health platform. The trial will evaluate signal validity, intervention target engagement, clinical outcomes, functional outcomes, and sustained engagement while addressing privacy, safety, ethical, and false-positive concerns.
+3. Objectives
+The long-term goal of this research is to determine whether privacy-conscious, webcam-enabled real-time adaptation can improve the delivery and sustained use of evidence-based digital mental health interventions.
+The objective of the proposed pilot is to validate the clinical usefulness of webcam-based eye-tracking and facial-expression signals and to test whether signal-triggered behavioral support improves treatment outcomes compared with an active digital intervention comparator.
+The study will pursue the following objectives:
+
+Characterize webcam-derived signals during digital treatment.Collect and evaluate eye-tracking and facial-expression signals during use of the digital intervention, including signal availability, data quality, missingness, temporal responsiveness, and consistency across participants and use contexts.
+
+Evaluate signal validity and generalizability.Examine whether webcam-derived signals are associated with independently assessed indicators of treatment engagement, current state, or intervention interaction. The study will not treat these signals as validated measures of dopamine unless future evidence establishes that relationship.
+
+Test a signal-triggered behavioral-support strategy.Compare an adaptive intervention condition, in which prespecified webcam-signal patterns trigger brief behavioral support, with an active digital intervention comparator that provides the established intervention without the signal-triggered support component.
+
+Assess intervention mechanisms.Test whether the signal-triggered support changes hypothesized proximal mechanisms, including treatment engagement, completion or use of intervention components, behavioral-skill practice, and continued participation, and whether changes in those mechanisms are associated with symptom and functional outcomes.
+
+Estimate clinical and functional effects.Assess between-group differences in validated measures of mental health symptoms, functional impairment, sustained skill use, and treatment engagement over the intervention and follow-up periods.
+
+Evaluate safety, privacy, acceptability, and implementation feasibility.Document participant concerns and experiences related to webcam use, facial-image collection, privacy, false-positive or false-negative triggers, burden, acceptability, and the feasibility of deploying the intervention through a digital platform.
+
+
+The final sample size, statistical power, intervention duration, follow-up duration, specific clinical population, and validated outcome instruments will require specification by the faculty PI and grants team after the existing platform and target disorder are identified.
+4. Preliminary Literature Review
+The DExTra white paper describes a proposed software tool integrating eye tracking and facial-expression recognition into a real-time analysis platform. The reported prototype was AWS-hosted and captured webcam-based eye-tracking data during presentation of a single video media file. The proposed development work included expansion to facial-image capture, facial-expression model training, and potential deployment through web-based or crowdsourcing protocols (Arrow Analytics, n.d.).
+The white paper also describes a proposed three-phase scientific program. The first phase involved development of an interface for analyzing eye-tracking and facial-expression data and possible validation using FeelPix, an open-source resource for facial-expression recognition validation. The second phase proposed use of a dopamine-stimulating computer-game protocol to collect eye-tracking and facial-expression data for machine-learning development. The third phase proposed exploratory testing in dopamine-compromised individuals and healthy controls. The stated purpose was to develop a proof of concept for detecting changing dopamine levels, although the white paper does not establish that the proposed webcam signals measure dopamine or that they are suitable for clinical diagnosis or treatment adaptation.
+The DExTra materials identify several important limitations and unresolved questions:
+
+The proposed dopamine measurement model is a prototype rather than an established clinical measure.
+Eye-tracking and facial-expression signals may be influenced by differences among individuals, recording conditions, image quality, facial movements, attention, and context.
+The relationship between inferred physiological or emotional responses and clinically meaningful behavior is not established for the proposed mental health application.
+The proposed technology raises privacy and data-governance concerns because it may collect eye, facial, and potentially identifiable video data.
+False-positive triggers could provide unnecessary or inappropriate support, whereas false negatives could fail to provide support when it is needed.
+The generalizability of findings across participants and real-world digital treatment settings remains uncertain.
+The clinical utility of the signals has not been demonstrated.
+
+These limitations support a staged, clinically grounded evaluation rather than an assumption that the signals represent dopamine or a specific brain process. The proposed study will use the technology for a narrower and testable purpose: identifying whether webcam-derived patterns can support real-time adaptation of an established digital mental health intervention.
+The NIMH NOFO provides a direct rationale for this approach. It encourages research that leverages existing evidence-based digital mental health platforms, uses real-time data collection, develops adaptive or just-in-time interventions based on current state, addresses engagement and adherence challenges, and includes research beyond a primary effectiveness trial (NIMH, 2024). It also requires specification and assessment of intervention mechanisms. The proposed study responds by treating webcam signals as candidate indicators of treatment-relevant state or engagement and by testing whether signal-triggered behavioral support changes proximal mechanisms and clinical outcomes.
+The NOFO further requires that studies enroll participants with clinically significant symptoms and/or functional impairment at baseline and use an active comparator. The proposed study will therefore need to recruit from a population meeting these requirements and compare the adaptive intervention with an active digital intervention rather than an inactive or non-treatment control. The name, evidence base, existing user base, current daily active users, infrastructure, and developer partnership for the digital platform are not provided in the supplied materials and must be identified before the concept can be developed into a complete application.
+5. Methodology
+Study design
+The proposed research will be a randomized clinical trial conducted within an established evidence-based digital mental health platform. Participants will be adults or another population selected by the faculty PI who exhibit clinically significant mental health symptoms and/or functional impairment at baseline. The target condition, eligibility criteria, recruitment source, sample size, and power analysis remain to be specified.
+Participants will be assigned to one of two conditions:
+
+Signal-triggered adaptive intervention: Participants receive the established digital mental health intervention. Webcam-based eye-tracking and facial-expression signals will be collected during specified intervention activities. Prespecified signal patterns, subject to quality checks and safety rules, will trigger brief behavioral support such as a self-management strategy, skill-practice prompt, or other intervention component supported by the underlying digital intervention.
+
+Active digital intervention comparator: Participants receive the same or an appropriately matched established digital intervention without the signal-triggered behavioral-support component. The comparator must be selected and described by the faculty PI and platform partner to ensure that it is an active digital intervention consistent with the NOFO.
+
+
+The study will test the incremental value of real-time signal-triggered support rather than the effectiveness of the underlying evidence-based digital intervention itself.
+Platform and partnership
+The project will require a partnership with the provider or developer of a well-established digital mental health platform. The NOFO expects the platform to have an evidence-based intervention, established infrastructure, a substantial existing user base, and sufficient capacity to support recruitment, remote assessment, data collection, and intervention delivery (NIMH, 2024).
+The supplied materials do not identify the platform, its intervention content, its current number of active daily users, its user demographics, its existing evidence base, or its technical and data-sharing arrangements. These details must be completed before submission. The platform should be capable of:
+
+Delivering the established digital intervention remotely;
+Administering baseline, ongoing, and follow-up assessments;
+Collecting intervention-use and engagement data;
+Integrating webcam-based eye-tracking and facial-expression data;
+Delivering time-sensitive behavioral-support prompts;
+Recording trigger events, intervention fidelity, participant responses, and adverse or unintended events; and
+Supporting data preparation for the required NIH and NIMH data-sharing processes, including submission to the NIMH Data Archive where applicable.
+
+Phase 1: Signal characterization and validation
+The first phase will characterize webcam-derived eye-tracking and facial-expression signals during use of the digital intervention. Analyses will examine:
+
+The proportion of intervention sessions in which usable webcam data are obtained;
+Signal quality and missingness;
+Variation in signal availability across participants and sessions;
+Agreement or association between signal patterns and independently measured indicators of engagement or current state;
+The frequency of potential signal-trigger events; and
+The rate of apparent false-positive and false-negative triggers based on prespecified reference measures.
+
+The purpose of this phase will be to determine whether the signals are sufficiently reliable and interpretable to support a clinical trial of adaptive support. The signals will be evaluated as candidate behavioral or engagement indicators. The analysis will not infer dopamine levels without direct evidence supporting that interpretation.
+If the platform and study procedures include facial-image collection, the protocol will need to specify image capture, retention, access, processing, and deletion procedures. Those procedures are not supplied and must be developed and reviewed by the faculty PI, institutional officials, the platform partner, and the applicable ethics and privacy authorities.
+Phase 2: Adaptive intervention development
+The second phase will specify the signal-triggering algorithm and the behavioral support delivered after a trigger. The algorithm should include:
+
+A defined observation window;
+Minimum signal-quality requirements;
+Prespecified trigger thresholds or patterns;
+Rules limiting repeated or excessive prompts;
+Procedures for handling missing, ambiguous, or low-quality data;
+A mechanism for recording whether support was delivered and used; and
+Safety rules for suppressing or escalating prompts when the system cannot reliably interpret the signal.
+
+Behavioral support will be limited to components appropriate for the established digital intervention. The study will test whether timely support improves engagement or skill use and subsequently improves symptoms or functioning. It will not assume that a signal reflects a specific emotion, neurochemical state, or clinical risk unless that interpretation is independently validated.
+User feedback and platform-use data may inform refinement of the intervention and trigger rules, consistent with the NOFO’s emphasis on rapid intervention optimization and software updates informed by research and user experience. Any changes made during the trial will need to be documented, version-controlled, and incorporated into the intervention-fidelity analysis.
+Phase 3: Randomized clinical trial
+The clinical trial will enroll participants with measurable clinically significant symptoms and/or functional impairment at baseline. After consent and baseline assessment, participants will be randomized to the signal-triggered adaptive intervention or active digital intervention comparator.
+Assessments should occur at baseline, during treatment, at the end of the intervention, and during follow-up. The exact schedule will depend on the target condition, expected treatment window, platform capabilities, and the need to assess sustained engagement and maintenance of gains.
+Primary and secondary outcomes should include:
+
+A validated measure of symptoms relevant to the selected mental health condition;
+A validated measure of functional impairment or functioning;
+Intervention engagement, such as session completion, module use, or duration of use;
+Sustained skill use or completion of assigned behavioral activities;
+Continuity of participation during the follow-up period;
+Participant-reported acceptability and burden;
+Privacy and webcam-related concerns;
+Health-services or stakeholder-relevant outcomes where feasible; and
+Adverse events, distress associated with prompts, and unintended consequences.
+
+Specific instruments and the primary endpoint are not identified in the supplied materials and must be selected and justified by the faculty PI based on the target population and condition.
+Mechanism and target-engagement analysis
+The proposed mechanism model is:
+
+Webcam-derived signals provide information about a participant’s current engagement or treatment-relevant state.
+Signal-triggered behavioral support is delivered at a time when additional support may be useful.
+Timely support increases engagement with the digital intervention and use of intervention skills.
+Increased engagement and skill use contribute to improved symptoms and functioning.
+
+This is a proposed mechanism to be tested, not an established finding. The study will assess target engagement by examining whether the adaptive condition produces changes in:
+
+Intervention-session completion and continued use;
+Completion of relevant treatment activities;
+Responses to behavioral-support prompts;
+Self-reported or platform-recorded skill practice;
+Timeliness of engagement following a trigger; and
+Sustained participation during follow-up.
+
+Analyses will compare these measures between randomized conditions and examine whether changes in the proximal mechanisms are associated with symptom and functional outcomes. Mediation or other longitudinal analyses may be considered if the sample size and measurement schedule support them. The final analysis plan must be developed with an appropriate statistician and aligned with the finalized sample size, outcome measures, and platform data structure.
+Rigor, fidelity, and feasibility
+Intervention fidelity will be assessed by documenting:
+
+Whether the correct intervention version was delivered;
+Whether webcam data were captured and processed as intended;
+Whether trigger rules were applied consistently;
+Whether behavioral support was delivered after qualifying triggers;
+Whether prompts were suppressed when data quality was inadequate;
+Whether participants received the intended comparator condition; and
+Whether software updates or algorithm changes occurred during the study.
+
+The study will predefine criteria for acceptable signal quality, intervention delivery, participant retention, and completeness of outcome assessment. Recruitment targets, enrollment rates, retention assumptions, and power calculations are not available from the supplied materials and must be developed after the platform and target population are selected.
+Privacy, safety, and ethical considerations
+The proposed research may involve collection of webcam-based eye-tracking data, facial images or facial-expression features, mental health information, intervention-use data, and potentially identifiable digital records. The DExTra materials explicitly describe the collection and analysis of webcam and facial-expression data, while the NOFO requires attention to privacy and safety or ethical considerations (Arrow Analytics, n.d.; NIMH, 2024).
+The protocol will need to address, at minimum:
+
+Clear informed consent for webcam use and facial-data collection;
+The distinction between raw images, derived features, and de-identified research data;
+Data minimization and retention procedures;
+Access controls and transmission and storage safeguards;
+Participant ability to decline webcam use or withdraw from signal collection, if scientifically feasible;
+Risks associated with inaccurate or unwanted prompts;
+Procedures for handling distress, adverse events, or clinically concerning information;
+Monitoring of false-positive and false-negative triggers;
+Participant communication about the exploratory status of the signals; and
+Data-sharing requirements, including preparation for NIMH Data Archive submission where applicable.
+
+No regulatory approvals, institutional policies, data-security capabilities, or compliance determinations are supplied. These matters must be reviewed and completed by the faculty PI and grants office before submission. The clinical-trial protocol will also require the human-subjects, clinical-trial, and data-and-safety-monitoring materials specified by the NOFO.
+Data management and sharing
+The NOFO requires a Data Management and Sharing Plan and expects funded investigators to use the NIMH Data Archive, including appropriate participant identifiers, data documentation, quality certification, and scheduled data submissions (NIMH, 2024). The project will therefore need a plan for:
+
+Standardizing webcam-derived, intervention-use, symptom, functioning, and engagement data;
+Documenting signal-processing and algorithm versions;
+Establishing data dictionaries and common data elements;
+Separating identifying information from research data;
+Preparing data for secure sharing;
+Budgeting for data submission and management; and
+Sharing positive, negative, and null findings in accordance with NIH and NIMH requirements.
+
+The specific data architecture, personnel responsibilities, and costs are not provided and must be developed during application planning.
+Proposed research activities and schedule
+
+
+
+Period
+Proposed activity
+
+
+
+Year 1
+Select and document the target population and established digital platform; confirm developer partnership; finalize the evidence-based intervention and active comparator; define outcomes, privacy procedures, signal-quality criteria, and the preliminary mechanism model.
+
+
+Year 2
+Configure webcam-based data collection; conduct signal characterization and validation; refine trigger rules and behavioral-support content; complete required protocol, ethics, safety, and data-management planning.
+
+
+Year 3
+Conduct randomized clinical-trial enrollment and intervention delivery; monitor recruitment, retention, signal quality, intervention fidelity, privacy concerns, and safety.
+
+
+Year 4
+Complete follow-up assessments; analyze target engagement, clinical outcomes, functioning, sustained engagement, and implementation-relevant outcomes; prepare data for required sharing and disseminate findings.
+
+
+The NOFO permits a maximum project period of four years, but the final schedule and duration should be determined by the faculty PI based on the selected platform, recruitment plan, sample size, and statistical power analysis.
+References
+Arrow Analytics, LLC. (n.d.). White paper for DARPA Seedling Grant: Dopamine Expression Tracking (DExTra). Supplied supporting paper.
+National Institute of Mental Health. (2024). Laboratories to Optimize Digital Health (R01 Clinical Trial Required) (Funding Opportunity Announcement PAR-25-136). Department of Health and Human Services, National Institutes of Health.

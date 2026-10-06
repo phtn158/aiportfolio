@@ -287,7 +287,7 @@ footer{padding:52px 0 64px;}
   <section id="projects" class="wrap">
     <div class="section-head reveal">
       <h2>Projects</h2>
-      <span class="eyebrow">13 projects</span>
+      <span class="eyebrow">14 projects</span>
     </div>
 
     <div class="project-grid reveal">
@@ -314,10 +314,10 @@ footer{padding:52px 0 64px;}
 
       <div class="project-card" onclick="goTo('finance-coach')">
         <div class="project-card-top">
-          <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
+          <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · School project → portfolio product</span></div>
           <h3>Personal Finance Coach &amp; Spending Analyzer</h3>
-          <p class="project-card-desc">LLM-based transaction categorization, spending analytics, anomaly detection, and a conversational coach that predicts days until a user hits their spending limit.</p>
-          <p class="project-card-tools">Tools: Python · LLM API · Regression model</p>
+          <p class="project-card-desc">Course prototype being rebuilt as a ThuWork portfolio product: turns a raw bank-statement CSV into LLM-categorized spending, a days-to-limit forecast, ranked savings scenarios, and a grounded coach — now with a full PRD and privacy/security requirements.</p>
+          <p class="project-card-tools">Tools: Python · Streamlit · pandas · Plotly · scikit-learn · LLM API</p>
         </div>
         <div class="project-card-bottom link-out"><span>View project →</span></div>
       </div>
@@ -386,17 +386,17 @@ footer{padding:52px 0 64px;}
         <div class="project-card-top">
           <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · Personal project</span></div>
           <h3>ThuWork Digital Solutions — Marketing Website</h3>
-          <p class="project-card-desc">Multi-page marketing site (Home, AI Packages, Case Studies, About, Contact) for ThuWork's AI-as-a-Service consulting brand — built, then critiqued and revised page-by-page, with a sourced market-intelligence stats section and supporting sales collateral.</p>
-          <p class="project-card-tools">Tools: HTML/CSS/JavaScript (client-side routed SPA) · Custom SVG brand mark</p>
+          <p class="project-card-desc">Multi-page marketing site for ThuWork's AI-as-a-Service brand — five packages plus à la carte pricing for a 13-module Business Suite, a live booking widget backed by n8n, real URL routing and SEO metadata on Netlify, and a structured site review driving fixes.</p>
+          <p class="project-card-tools">Tools: HTML/CSS/JavaScript (pushState-routed SPA) · Netlify · n8n webhooks · Custom SVG brand mark</p>
         </div>
         <div class="project-card-bottom link-out"><span>View project →</span></div>
       </div>
 
       <div class="project-card" onclick="goTo('research-proposal-automation')">
         <div class="project-card-top">
-          <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · School project</span></div>
+          <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
           <h3>AI for Research Proposal Automation</h3>
-          <p class="project-card-desc">RAG pipeline that reads a federal funding announcement (NOFO), retrieves and ranks relevant papers from an internal research archive, generates funding-aligned proposal ideas, and drafts + rubric-scores a first concept note.</p>
+          <p class="project-card-desc">RAG pipeline that reads a federal funding announcement (NOFO), retrieves and ranks relevant papers from an internal research archive, generates funding-aligned proposal ideas, and drafts + rubric-scores a first concept note — now run end-to-end against an NIMH digital mental health NOFO.</p>
           <p class="project-card-tools">Tools: Python · LangChain · Chroma (vector store) · OpenAI (LLM + embeddings)</p>
         </div>
         <div class="project-card-bottom link-out"><span>View project →</span></div>
@@ -418,6 +418,16 @@ footer{padding:52px 0 64px;}
           <h3>AI-Powered Business Management Suite ("Owner's Assistant")</h3>
           <p class="project-card-desc">PRD for a suite of independent AI agents — communications, scheduling, CRM, marketing, finance, ops, and an orchestrating "AI Chief of Staff" — meant to run a small business's admin so the owner doesn't have to, dogfooded first on ThuWork and Kskinluxe.</p>
           <p class="project-card-tools"><em>Tools: Claude Agent SDK · n8n · Supabase (planned)</em></p>
+        </div>
+        <div class="project-card-bottom link-out"><span>View project →</span></div>
+      </div>
+
+      <div class="project-card" onclick="goTo('booking-system')">
+        <div class="project-card-top">
+          <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · Personal project</span></div>
+          <h3>Booking &amp; Scheduling System (n8n)</h3>
+          <p class="project-card-desc">ThuWork's "Scheduling &amp; Bookings" module built for real: a site booking widget backed by self-hosted n8n workflows for live availability, calendar invites, confirmation emails, and lead logging — structured to clone for paying clients.</p>
+          <p class="project-card-tools">Tools: n8n · Google Calendar / Gmail / Sheets · Docker (Postgres + Caddy) · Hetzner VPS · JavaScript</p>
         </div>
         <div class="project-card-bottom link-out"><span>View project →</span></div>
       </div>
@@ -636,14 +646,16 @@ footer{padding:52px 0 64px;}
   <section class="proj-hero wrap-narrow">
     <button class="back-link">← All projects</button>
     <div class="proj-meta-row" style="margin-top:22px;">
-      <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
+      <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · School project → portfolio product</span></div>
       <span class="proj-timeframe">[Add: dates]</span>
     </div>
     <h1 class="proj-title">Personal Finance Coach &amp; Spending Analyzer</h1>
-    <p class="proj-sub">A Python-based finance coach for a fictional fintech (ClearLedger Inc.) that auto-categorizes transactions with an LLM, predicts days-to-spending-limit, and coaches users toward better spending decisions conversationally.</p>
-    <p class="proj-stack"><strong>Tools:</strong> Python · LLM API (few-shot transaction categorization) · Regression model (spend prediction) · Interactive dashboard · Conversational AI coach</p>
+    <p class="proj-sub">Started as a JHU case study for a fictional fintech (ClearLedger Inc.); now being repositioned as a ThuWork product demonstration — a finance coach that turns a messy bank-statement CSV into categorized spending, a days-to-limit forecast, ranked optional savings scenarios, and a coach that answers follow-ups using only the user's own analyzed data.</p>
+    <p class="proj-stack"><strong>Tools:</strong> Python · Streamlit · pandas · Plotly · scikit-learn (regression forecast) · LLM API (few-shot categorization, with rules fallback) · Streamlit Community Cloud (proposed hosting)</p>
     <div class="resource-row">
-      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/JHU%20Project%201%20-%20FinanceCoach_HandsOnProject_Claude/PROJECT_SPEC.md" target="_blank" rel="noopener">📄 Spec</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/JHU%20Project%201%20-%20FinanceCoach_HandsOnProject_Claude/Docs/PRD.md" target="_blank" rel="noopener">📄 PRD</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/JHU%20Project%201%20-%20FinanceCoach_HandsOnProject_Claude/Docs/PROJECT_SPEC.md" target="_blank" rel="noopener">📄 Spec</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/JHU%20Project%201%20-%20FinanceCoach_HandsOnProject_Claude/Docs/PRIVACY_AND_SECURITY_REQUIREMENTS.md" target="_blank" rel="noopener">🔒 Privacy &amp; security requirements</a>
       <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/tree/master/JHU%20Project%201%20-%20FinanceCoach_HandsOnProject_Claude" target="_blank" rel="noopener">💻 Repo</a>
       <span class="resource-chip disabled">+ Add demo</span>
     </div>
@@ -661,14 +673,19 @@ footer{padding:52px 0 64px;}
       </div>
     </div>
     <div class="proj-block">
-      <h2>What It Does</h2>
+      <h2>What It Does <span class="wip-tag">— v2 PRD stage, rebuild in progress</span></h2>
       <ul>
         <li>Ingests a bank-statement CSV and categorizes every transaction with an LLM — no manual tagging required</li>
         <li>Renders an interactive spending dashboard (category breakdown, spend trend, anomaly markers, limit burn-down)</li>
         <li>Predicts days remaining before the user hits their discretionary spending limit, via a regression model trained on their own transaction history</li>
         <li>Surfaces ranked, category-level suggestions for extending that runway (e.g. "cutting dining 20% adds 2 days")</li>
         <li>Answers follow-up questions through a multi-turn conversational coach grounded in the actual prediction and spend data</li>
+        <li>v2 additions in the PRD: unusual-charge alerts, a subscription/cancellation shortlist, and per-persona synthetic demo datasets (early-career professional, variable-income freelancer, household budgeter)</li>
       </ul>
+    </div>
+    <div class="proj-block">
+      <h2>Repositioning as a Portfolio Product</h2>
+      <p>The v2 rewrite (PRD Draft v2, Oct 2026) reframes the project for two audiences — ThuWork agency prospects and AI product hiring managers — and adds the guardrails a shareable demo needs: every category, forecast, and coach answer shows its basis and uncertainty; forecasts use chronological backtesting against a simple baseline; the public demo runs only on approved synthetic data; card data (PAN/CVV) is never loaded into the coach; and API keys live in the host's secret manager, never the repo. A separate privacy &amp; security requirements doc covers data classification, LLM-provider rules, retention, and a release checklist.</p>
     </div>
     <div class="proj-block">
       <h2>Outcome</h2>
@@ -997,10 +1014,10 @@ footer{padding:52px 0 64px;}
     <p class="proj-sub">A go-to-market plan and n8n automation workflow design for ThuWork Digital Solutions' AI-as-a-Service offering — targeting small businesses with packaged AI automation rather than generic "AI consulting" — now scoped into a PRD for a semi-automated outreach system for the med spa vertical.</p>
     <p class="proj-stack"><strong>Tools:</strong> n8n (workflow design + local instance) · Market research</p>
     <div class="resource-row">
-      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solutions/ClientOutReach/AIaaS_Small_Business_Client_Outreach_Plan.docx" target="_blank" rel="noopener">📄 Outreach plan</a>
-      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solutions/ClientOutReach/Client_Outreach_Automation_PRD.docx" target="_blank" rel="noopener">📄 Automation PRD</a>
-      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solutions/ClientOutReach/n8n_workflow_design.html" target="_blank" rel="noopener">📝 Workflow design</a>
-      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solutions/AI-AS-A-SERVICE%20Market%20Research%202026.pdf" target="_blank" rel="noopener">📄 Market research</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ClientOutReach/AIaaS_Small_Business_Client_Outreach_Plan.docx" target="_blank" rel="noopener">📄 Outreach plan</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ClientOutReach/Client_Outreach_Automation_PRD.docx" target="_blank" rel="noopener">📄 Automation PRD</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ClientOutReach/n8n_workflow_design.html" target="_blank" rel="noopener">📝 Workflow design</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/29c16bd/ThuWork%20Digital%20Solutions/AI-AS-A-SERVICE%20Market%20Research%202026.pdf" target="_blank" rel="noopener">📄 Market research</a>
     </div>
   </section>
   <section class="proj-body wrap-narrow">
@@ -1103,14 +1120,14 @@ footer{padding:52px 0 64px;}
       <span class="proj-timeframe">[Add: dates]</span>
     </div>
     <h1 class="proj-title">ThuWork Digital Solutions — Marketing Website</h1>
-    <p class="proj-sub">A multi-page marketing site (Home, AI Packages, Case Studies, About Us, Contact) for ThuWork's AI-as-a-Service consulting brand, built as a client-side-routed single-page app and then critiqued and revised section-by-section against a "would a small-business owner actually believe/want this" bar.</p>
-    <p class="proj-stack"><strong>Tools:</strong> HTML/CSS/JavaScript (client-side routed SPA) · Custom SVG brand mark generator</p>
+    <p class="proj-sub">A multi-page marketing site (Home, AI Packages, Case Studies, About Us, Contact, Privacy) for ThuWork's AI-as-a-Service consulting brand, built as a single-page app and then critiqued and revised section-by-section against a "would a small-business owner actually believe/want this" bar. The source now lives in its own (private) repo.</p>
+    <p class="proj-stack"><strong>Tools:</strong> HTML/CSS/JavaScript (pushState-routed SPA) · Netlify (hosting + <code>_redirects</code>) · n8n webhooks (booking) · Custom SVG brand mark generator</p>
     <div class="resource-row">
-      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solutions/ThuWork%20Website/index.html" target="_blank" rel="noopener">💻 Site source</a>
-      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solutions/ThuWork%20Website/PROJECT_SPEC.md" target="_blank" rel="noopener">📄 Critique &amp; revision log</a>
-      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solutions/ThuWork%20Digital%20Solutions%20One-Pager%20Design.png" target="_blank" rel="noopener">🖼️ One-pager design</a>
-      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solutions/Slideshow%20Presentation.pdf" target="_blank" rel="noopener">📊 Slideshow deck</a>
-      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solutions/ThuWork%20Google%20Form%20Image.png" target="_blank" rel="noopener">🖼️ Lead-capture form</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/29c16bd/ThuWork%20Digital%20Solutions/ThuWork%20Website/index.html" target="_blank" rel="noopener">💻 Site source (earlier snapshot)</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/29c16bd/ThuWork%20Digital%20Solutions/ThuWork%20Website/PROJECT_SPEC.md" target="_blank" rel="noopener">📄 Critique &amp; revision log (earlier snapshot)</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/29c16bd/ThuWork%20Digital%20Solutions/ThuWork%20Digital%20Solutions%20One-Pager%20Design.png" target="_blank" rel="noopener">🖼️ One-pager design</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/29c16bd/ThuWork%20Digital%20Solutions/Slideshow%20Presentation.pdf" target="_blank" rel="noopener">📊 Slideshow deck</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/29c16bd/ThuWork%20Digital%20Solutions/ThuWork%20Google%20Form%20Image.png" target="_blank" rel="noopener">🖼️ Lead-capture form</a>
     </div>
   </section>
   <section class="proj-body wrap-narrow">
@@ -1128,21 +1145,24 @@ footer{padding:52px 0 64px;}
     <div class="proj-block">
       <h2>What It Does</h2>
       <ul>
-        <li>Five-page client-side-routed site: Home, AI Packages, Case Studies, About Us, Contact</li>
+        <li>Multi-page site with real URL paths (<code>/packages</code>, <code>/about</code>, <code>/case-studies</code>, <code>/contact</code>, <code>/privacy</code>) via <code>history.pushState</code> + Netlify <code>_redirects</code>, with per-page titles, meta descriptions, and Open Graph/Twitter tags</li>
+        <li>"Find your starting point": five self-selection cards on the homepage that deep-link to the matching package</li>
+        <li>Packages &amp; Pricing: five tiers (Business Launch, Essential, Growth, Scale, Complete Business Suite), a free discovery call, and à la carte "starting at" pricing for all 13 Business Suite modules, derived from estimated build hours plus real third-party costs</li>
+        <li>Contact page booking widget (date + live time-slot picker) wired to a self-hosted n8n backend — see the Booking System project</li>
         <li>Home page market-intelligence section with sourced small-business AI adoption stats (U.S. Chamber of Commerce, Salesforce)</li>
         <li>Four-capability breakdown (Process Automation, Intelligent Assistants, Predictive Analytics, Automated Follow-Ups) with a "see it in practice" manual-vs-automated walkthrough</li>
-        <li>"The System" section: a diagram showing the four capabilities coordinated by a single AI Chief of Staff orchestrator rather than sold as four separate tools</li>
+        <li>"The System" section: a diagram (Owner → AI Chief of Staff → Front Office / Back Office / Insights &amp; Strategy) showing the 13 modules coordinated by one orchestrator rather than sold as separate tools</li>
         <li>Custom SVG "plexus" brand mark generated by a standalone logo tool (<code>thuwork-logo.html</code>)</li>
         <li>Supporting sales collateral: a one-pager (with and without visuals), a slideshow deck, and a lead-capture Google Form</li>
       </ul>
     </div>
     <div class="proj-block">
       <h2>Outcome So Far</h2>
-      <p>First draft built and critiqued page-by-page; the highest-priority issue (an enterprise-vertical "Industry Applications" section that contradicted the small-business positioning) was resolved by commenting it out as intentional phase-2 content rather than deleting or rewriting it.</p>
+      <p>First draft built and critiqued page-by-page; the highest-priority issue (an enterprise-vertical "Industry Applications" section that contradicted the small-business positioning) was resolved by commenting it out as intentional phase-2 content rather than deleting or rewriting it. A follow-up structured review (<code>WEBSITE_REVIEW.md</code>) graded the site across content &amp; trust, navigation, performance, SEO, security, compliance, and accessibility; fixes shipped so far include real contact details, real-path routing, removing an ~880KB inline base64 image, per-page SEO metadata, a real booking-webhook secret, and a draft privacy policy.</p>
     </div>
     <div class="proj-block">
       <h2>What's Next</h2>
-      <div class="fillin">[Add: cut/rewrite the "What's Different" section, reconcile the 3-step vs. 4-step process description, deploy the site publicly]</div>
+      <div class="fillin">[Add: publish the privacy policy page, finish accessibility (ARIA/navigation announcements), verify routing on the live Netlify deploy, add server-side abuse protection for the booking form]</div>
     </div>
   </section>
   <footer class="wrap">
@@ -1159,17 +1179,20 @@ footer{padding:52px 0 64px;}
   <section class="proj-hero wrap-narrow">
     <button class="back-link">← All projects</button>
     <div class="proj-meta-row" style="margin-top:22px;">
-      <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · School project</span></div>
+      <div class="status-row"><span class="status-dot completed"></span><span class="status-text">Completed · School project</span></div>
       <span class="proj-timeframe">[Add: dates]</span>
     </div>
     <h1 class="proj-title">AI for Research Proposal Automation</h1>
     <p class="proj-sub">Case-study brief: a mid-sized research university's grants office spends 110–140 hours per federal funding announcement (NOFO) searching a 3,000-document internal archive and drafting an initial concept note. This pipeline automates the search-and-first-draft step with retrieval-augmented generation.</p>
-    <p class="proj-stack"><strong>Tools:</strong> Python · LangChain · Chroma (vector store) · OpenAI (LLM + embeddings) · tiktoken</p>
+    <p class="proj-stack"><strong>Tools:</strong> Python · LangChain · Chroma (vector store) · OpenAI (LLM + text-embedding-3-small embeddings) · tiktoken</p>
     <div class="resource-row">
       <span class="resource-chip disabled">+ Add spec</span>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/JHU%20Project%202%20-%20AI%20for%20Research%20Proposal%20Automation%20/Project_2_Learner_FullCode_Completion.ipynb" target="_blank" rel="noopener">💻 Completed notebook</a>
       <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/JHU%20Project%202%20-%20AI%20for%20Research%20Proposal%20Automation%20/Project_2_Learner_FullCode.ipynb" target="_blank" rel="noopener">💻 Notebook (full code)</a>
       <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/JHU%20Project%202%20-%20AI%20for%20Research%20Proposal%20Automation%20/Project_2_Learner_LowCode.ipynb" target="_blank" rel="noopener">💻 Notebook (low code)</a>
       <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/JHU%20Project%202%20-%20AI%20for%20Research%20Proposal%20Automation%20/Project%20Files/NOFO.pdf" target="_blank" rel="noopener">📄 Sample NOFO</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/JHU%20Project%202%20-%20AI%20for%20Research%20Proposal%20Automation%20/Research%20Plan%20Content" target="_blank" rel="noopener">📝 Generated concept note</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/JHU%20Project%202%20-%20AI%20for%20Research%20Proposal%20Automation%20/evaluation%20output" target="_blank" rel="noopener">📊 Rubric evaluation</a>
     </div>
   </section>
   <section class="proj-body wrap-narrow">
@@ -1181,11 +1204,11 @@ footer{padding:52px 0 64px;}
       <h2>My Role &amp; Approach</h2>
       <div class="approach-grid">
         <div class="approach-card"><span class="approach-label">Product thinking</span><p>Framed as a JHU coursework case study modeled on a fictional research university (MSRU), scoped to the highest-leverage manual step — connecting a new funding opportunity to relevant prior internal work — rather than automating grant-writing end to end.</p></div>
-        <div class="approach-card"><span class="approach-label">Build approach</span><p>Extracts the funding topic from the NOFO, embeds and retrieves the most relevant prior papers from a Chroma vector store, ranks them by retrieved-chunk frequency, summarizes the top papers, generates five funding-aligned research ideas grounded in that evidence, drafts a first concept note against the supplied proposal template, and scores the draft with an LLM-based rubric (scientific quality, NOFO alignment, feasibility, factual accuracy).</p></div>
+        <div class="approach-card"><span class="approach-label">Build approach</span><p>Extracts the funding topic from the NOFO, embeds and retrieves the most relevant prior papers from a Chroma vector store, ranks them by retrieved-chunk frequency, summarizes the top papers, generates five funding-aligned research ideas grounded in that evidence, drafts a first concept note against the supplied proposal template, and scores the draft with an LLM-as-judge rubric modeled on NIH review criteria (Innovation, Significance, Approach, Investigator Expertise — each scored 1–5 with justification, strengths, weaknesses, and recommendations).</p></div>
       </div>
     </div>
     <div class="proj-block">
-      <h2>What It Does <span class="wip-tag">— coursework template, not yet run</span></h2>
+      <h2>What It Does</h2>
       <ul>
         <li>Extracts the funding topic and requirements from an input NOFO PDF</li>
         <li>Chunks and embeds the internal paper archive into a Chroma vector store</li>
@@ -1196,12 +1219,12 @@ footer{padding:52px 0 64px;}
       </ul>
     </div>
     <div class="proj-block">
-      <h2>Outcome So Far</h2>
-      <div class="fillin">[Add: results once the notebook's fill-in sections are completed and run end-to-end]</div>
+      <h2>Outcome</h2>
+      <p>Completed the notebook and ran it end-to-end against an NIMH digital mental health NOFO. The pipeline produced a concept note — <em>"Webcam-Signal-Triggered Support During Digital Mental Health Treatment"</em> — grounded in the retrieved archive papers, which the rubric scored Innovation 4/5, Significance 4/5, Approach 2/5, and Investigator Expertise 1/5. The low scores are an honest signal rather than a failure: the judge flagged that the draft leaves the platform, target population, trigger algorithm, and team unspecified — exactly the details a human grant writer still has to supply on top of the AI first draft.</p>
     </div>
     <div class="proj-block">
-      <h2>What's Next</h2>
-      <div class="fillin">[Add: complete the remaining notebook prompts, run against the sample research archive, record rubric scores]</div>
+      <h2>What I'd Do Differently</h2>
+      <div class="fillin">[Add: one or two honest reflections — e.g. feeding investigator/team info into the drafting step to lift the Approach and Expertise scores]</div>
     </div>
   </section>
   <footer class="wrap">
@@ -1225,7 +1248,7 @@ footer{padding:52px 0 64px;}
     <p class="proj-sub">A PRD for a suite of AI agents that acts as a small business owner's assistant — handling communications, scheduling, finance, marketing, operations, and reporting so the owner doesn't context-switch across disconnected tools. Scoped to be built internally first (dogfooded on ThuWork Digital Solutions and Kskinluxe), and doubles as a portfolio vehicle for agent orchestration and RAG work.</p>
     <p class="proj-stack"><strong>Tools:</strong> Claude API / Claude Agent SDK · n8n (agent orchestration) · Supabase (Postgres + pgvector) · Next.js on Netlify <em>(planned stack)</em></p>
     <div class="resource-row">
-      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/ThuWork%20Digital%20Solutions/business-suite-prd.md" target="_blank" rel="noopener">📄 PRD</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/29c16bd/ThuWork%20Digital%20Solutions/business-suite-prd.md" target="_blank" rel="noopener">📄 PRD</a>
       <span class="resource-chip disabled">+ Add build</span>
     </div>
   </section>
@@ -1257,6 +1280,64 @@ footer{padding:52px 0 64px;}
     <div class="proj-block">
       <h2>What's Next</h2>
       <div class="fillin">[Add: decide whether to rebuild the outreach agent from scratch or evolve the existing scheduled-task version; finalize agent-scheduling infra (Netlify-native vs. n8n vs. Trigger.dev/Inngest); begin Phase 1 build]</div>
+    </div>
+  </section>
+  <footer class="wrap">
+    <div class="footer-grid">
+      <div class="footer-left"><p class="eyebrow">Get in touch</p><h2>Want to talk through this project? Reach out.</h2></div>
+      <div class="footer-links"><a href="#" onclick="openEmailModal(); return false;">phtn.pro@gmail.com</a><a href="https://linkedin.com/in/tiffanyphamnguyen" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+    </div>
+    <div class="footer-bottom">Tiffany Pham Nguyen — Austin, TX</div>
+  </footer>
+</div>
+
+<!-- ============ PROJECT: BOOKING & SCHEDULING SYSTEM ============ -->
+<div id="view-booking-system" class="view">
+  <section class="proj-hero wrap-narrow">
+    <button class="back-link">← All projects</button>
+    <div class="proj-meta-row" style="margin-top:22px;">
+      <div class="status-row"><span class="status-dot wip"></span><span class="status-text">In progress · Personal project</span></div>
+      <span class="proj-timeframe">[Add: dates]</span>
+    </div>
+    <h1 class="proj-title">Booking &amp; Scheduling System (n8n)</h1>
+    <p class="proj-sub">The ThuWork website had no working way to book a call — just a front-end-only form and a mailto link. Rather than bolt on a third-party widget, this builds ThuWork's own advertised "Scheduling &amp; Bookings" module once, runs it live on ThuWork's site, and structures it so it can be cloned and rebranded for clients.</p>
+    <p class="proj-stack"><strong>Tools:</strong> n8n (self-hosted) · Google Calendar, Gmail &amp; Sheets · Docker Compose (n8n + Postgres 16 + Caddy 2 / Let's Encrypt) · Hetzner Cloud VPS · Vanilla JavaScript (fetch + AbortController)</p>
+    <div class="resource-row">
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/Bookingsystem/BOOKING_SYSTEM_PLAN.md" target="_blank" rel="noopener">📄 Build plan &amp; issue log</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/blob/master/Bookingsystem/BOOKING_TESTING.md" target="_blank" rel="noopener">✅ Testing log</a>
+      <a class="resource-chip" href="https://github.com/phtn158/aiportfolio/tree/master/Bookingsystem/n8n-infra" target="_blank" rel="noopener">💻 Infra config</a>
+      <span class="resource-chip disabled">+ Add demo</span>
+    </div>
+  </section>
+  <section class="proj-body wrap-narrow">
+    <div class="proj-block">
+      <h2>The Problem</h2>
+      <p>"Scheduling &amp; Bookings" is one of ThuWork's advertised Business Suite modules ("a booking page that syncs your calendar and follows up automatically on no-shows"), yet ThuWork's own site couldn't take a booking. The goal was to build the real module, dogfood it on ThuWork first, and make it a product that's cheap to clone per client — not a one-off integration.</p>
+    </div>
+    <div class="proj-block">
+      <h2>My Role &amp; Approach</h2>
+      <div class="approach-grid">
+        <div class="approach-card"><span class="approach-label">Product thinking</span><p>Chose a hybrid architecture: a booking widget styled to match the existing site, talking to a self-hosted n8n instance that owns all backend logic — consistent with n8n already being ThuWork's standard automation layer. Every workflow is parameterized through one top-of-workflow Config node so cloning for a client is "edit one node," and Google Sheets was picked for lead logging because a non-technical client can read it. Flagged openly that no-show detection is inferred (a calendar can't tell you whether a call happened) rather than overpromising — the same limitation Calendly has.</p></div>
+        <div class="approach-card"><span class="approach-label">Build approach</span><p>Replaced the mock contact form with a native date input and a time-slot dropdown populated live from n8n (the server is the single source of truth for availability), with timeout, loading, success, and mailto-fallback states. Built three n8n workflows — Availability Check, Booking Intake (shared-secret header check, defensive re-check of the slot, calendar event with the client as attendee, confirmation email, Sheet row), and Reminder + No-show Follow-up on a polling schedule rather than fragile multi-day Wait nodes. Then stood up production n8n from scratch on a Hetzner VPS behind Caddy with automatic HTTPS, and logged every gotcha hit along the way as a resale runbook.</p></div>
+      </div>
+    </div>
+    <div class="proj-block">
+      <h2>What It Does</h2>
+      <ul>
+        <li>Shows only genuinely open half-hour slots for a chosen date, computed from Google Calendar free/busy against configured business hours</li>
+        <li>Books the slot: creates a calendar event with the client invited, sends a confirmation email, and logs the lead to a Google Sheet</li>
+        <li>Rejects unauthorized requests (401) and double-bookings of the same slot (409)</li>
+        <li>Sends reminders and no-show follow-ups on a schedule, tracked via Sheet status columns</li>
+        <li>Runs in production at a dedicated n8n subdomain on a Dockerized n8n + Postgres + Caddy stack</li>
+      </ul>
+    </div>
+    <div class="proj-block">
+      <h2>Outcome So Far</h2>
+      <p>Availability and Booking Intake workflows pass all tests (slot filtering, auth rejection, successful booking, double-booking guard), and the full production loop — website widget → production n8n → Google Calendar / Gmail / Sheets — has been verified end-to-end. The Reminder + No-show workflow is built and debugged on local n8n but not yet given a final pass or migrated to production.</p>
+    </div>
+    <div class="proj-block">
+      <h2>What's Next</h2>
+      <div class="fillin">[Add: migrate the Reminder + No-show workflow to production, scope webhook CORS down from wildcard to the live domain, deploy the updated site to Netlify, export the workflows as version-controlled client templates]</div>
     </div>
   </section>
   <footer class="wrap">

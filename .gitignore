@@ -21,3 +21,16 @@ cowork_exercise/
 
 # oversized file (>90MB) found during automated portfolio scan
 JHU Project 2 - AI for Research Proposal Automation /Project Files/ResearchPapers.zip
+
+# secrets found during automated portfolio scan (2026-10-05)
+JHU Project 2 - AI for Research Proposal Automation /config.json
+
+# oversized file (>90MB) found during automated portfolio scan (2026-10-05)
+AI course materials/Week 11 Lecture Slides.pdf
+
+# raw financial data (cards.csv holds PAN/CVV) — per the project's own privacy requirements, kept local only
+JHU Project 1 - FinanceCoach_HandsOnProject_Claude/Data/Raw/
+JHU Project 1 - FinanceCoach_HandsOnProject_Claude/Data/Processed/
+
+# separate (private) git repo — tracked in its own GitHub repo, not as an embedded repo here
+ThuWork Website/

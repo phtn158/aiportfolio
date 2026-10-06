@@ -101,3 +101,39 @@ Checked the workspace folder against `content.json`'s `meta.generatedFrom` (11 s
 ## 2026-09-11 — Scheduled content-update check: no new material
 
 Checked the workspace folder against `content.json`'s `meta.generatedFrom` (11 source files, unchanged since 2026-08-26). All 11 files present in the folder are already tracked, and none have a modification date newer than the 2026-08-26 processing entry. No new or changed PDFs found — no content added, site untouched.
+
+## 2026-10-05 — Scheduled content-update run: Secure & Responsible Gen AI (Weeks 11–12) + Agents & LangGraph (Week 13)
+
+**New source files found in the workspace folder, not present in `meta.generatedFrom`:**
+- `Week 11 Lecture Slides.pdf` (2026-09-18). "Secure and Responsible Gen AI": human-baseline vs. risk-based adoption (kidney-transplant decision study, loss framing), the F.A.I.R. S.T. ethics principles, bias feedback loops (predictive policing, medical algorithms), integrity/explainability, competence vs. hallucination, OWASP LLM Top 10 risks mapped to the CIA triad, GDPR and China's PIPL, mitigation at model/system/application level, and RAI monitoring.
+- `week12 -  SecureAndResponsibleGenAISolution/Week 12 AGAAI Post MLS.docx.pdf` (2026-09-19). Hands-on handbook: building a guarded legal-aid case-status assistant (three data buckets, grounded reasoning prompt, input screening, output masking + work-product deny-list, Llama Guard moderation, leak-count and paired fairness evaluation) via the generate → review → refine AI-assisted coding loop.
+- `week13 - buildingSingleAgentSystem/AGAAI Week 13 Slides 1.pdf` and `AGAAI Week 13 Slides 2.pdf` (2026-09-24). Agentic AI intro, history of "agents", agents vs. workflows, agentic frameworks, single vs. multi-agent systems, the AI Email Assistant pipeline, and LangGraph (State/Nodes/Edges/StateGraph, the five components, the four design patterns).
+
+First time new material arrived in **subfolders** rather than the folder root. The scan now walks subfolders. The two Week 14 RAG decks (`14_Slides_v14.1.pdf`, `JHU week 14_Slides.pdf`) also moved into a `week14/` subfolder, but their modification dates are unchanged (2026-08-20) and they're already tracked by filename, so they weren't reprocessed.
+
+Extracted all four PDFs with `pdftotext -layout` (2,902 lines raw; per-page copyright/watermark footers and personal-licence stamps were stripped and never copied into content). The Week 11 deck is largely image-based, so a few sections (e.g., Fairness/Robustness detail slides) had little extractable text. Content was authored only from what the text layer supports. The companion notebooks (`Basic_Graph.ipynb`, `LangGraph_Design_Patterns.ipynb`) were read only to make the LangGraph code-reference snippets match the course's actual API usage (`StateGraph`, `add_conditional_edges`, `bind_tools`, `ToolNode`, `tools_condition`, `add_messages`). They aren't tracked as content sources. The other lab files (`.ipynb`, `.json`, `.csv`) were not processed.
+
+**Two new modules**, inserted after `rag` and before `claude-cowork`:
+- **`responsible-ai` — "Secure & Responsible Gen AI"**: 30 dictionary entries, 12 flashcards, 8 quiz questions.
+- **`agents-langgraph` — "Agents & LangGraph: Building Single-Agent Systems"**: 22 dictionary entries, 10 flashcards, 8 quiz questions.
+
+Placement reasoning: both are cross-cutting reference material (like `rag`), not task-flow modules, so they go after the reviewed task-flow sequence. Responsible AI comes first (Weeks 11–12 precede Week 13). Agents & LangGraph sits directly before `claude-cowork` because Cowork's agentic loop is the product-level version of the same ideas.
+
+**Deduplication / cross-references** (no existing entries edited):
+- `competence-vs-hallucination` points to the existing `hallucination-types` (QA) instead of repeating that taxonomy.
+- `jailbreaking` / `prompt-injection` go deeper than the one-line mention in `adversarial-testing` (Eval Rigor) and reference it.
+- `agentic-ai` references `what-makes-work-agentic` (Claude Cowork). `agent-pattern` is framed as the graph form of the existing `react-prompting`. `reasoning-traces` builds on `chain-of-thought`. `langgraph-messages` / `langgraph-tools` reuse the existing `langchain` tool tag.
+
+**Formula / code reference panel:** 9 new entries. GDPR max-fine formula, leak-rate / over-refusal metric, input-gate logic, and LangGraph snippets for State, edges, StateGraph build/compile, tool binding + `tools_condition`, the `add_messages` reducer, and checkpointer memory. Snippets are single-line because `.concept-formula` doesn't preserve line breaks.
+
+**New tool tags:** `langgraph`, `detoxify`, `llm-guard` (plus existing `spacy`, `langchain`). Second use of the `Tool` category (`langgraph`).
+
+**Quiz note:** quiz options aren't shuffled at render time, so correct answers in the 16 new questions were placed evenly across positions 0–3 (4 each). That avoids a guessable pattern.
+
+Ran the build validation: no duplicate module/concept/flashcard/quiz IDs, every `correctIndex` in range, every `moduleId` resolves, module counts match content, and every pre-existing entry is byte-identical and in its original order. Also ran the jsdom smoke test (real app modules against a real DOM). Home renders 15 module cards. Both new module, quiz and flashcard views render. The formulas page shows the new snippets. Search finds "llama guard", "tools_condition", "owasp", "gdpr", "reducer" (and "kappa" still works). A pre-seeded `studySiteProgress_v1` save kept its flashcard/quiz history.
+
+**Updated totals: 233 dictionary entries, 114 flashcards, 80 quiz questions across 15 modules.**
+
+Existing content, topic order, and the localStorage progress schema were untouched. This was a pure addition.
+
+**Not done as part of this run (by design):** Netlify redeploy.

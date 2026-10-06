@@ -1,0 +1,330 @@
+{
+  "26-04412": {
+    "client_name": "Maria Delgado",
+    "case_type": "Eviction defense",
+    "case_status": "Answer filed; awaiting hearing",
+    "date_opened": "2026-08-28",
+    "docket_number": "JP26-0044117",
+    "opposing_party": "Ridgemont Property Management LLC",
+    "next_hearing_date": "2026-09-24",
+    "assigned_attorney": "Priya Nair",
+    "filed_items": [
+      "Answer to eviction petition (filed 2026-09-02)",
+      "Jury demand (filed 2026-09-02)"
+    ],
+    "documents_owed": [
+      "Rent payment receipts for June-August 2026",
+      "Copy of lease addendum signed 2025-11"
+    ],
+    "date_of_birth": "1989-03-11",
+    "home_address": "2417 Fulton St, Apt 3B, Houston, TX 77009",
+    "phone": "(713) 555-0148",
+    "email": "m.delgado89@example.com",
+    "immigration_status": "N/A",
+    "alien_registration_number": "N/A",
+    "internal_work_product": {
+      "case_strength_assessment": "Strong. Landlord served a 3-day notice but never provided the statutory written notice of default required under the lease; likely defective service.",
+      "litigation_strategy_notes": "Move to dismiss on defective notice first. Hold the habitability counterclaim in reserve; photo evidence is thin and could muddy a clean procedural win.",
+      "credibility_assessment": "Client is reliable and organized but tends to volunteer damaging detail; prep her to answer only what is asked at the hearing.",
+      "enforcement_exposure_flag": {
+        "exposed": false,
+        "note": "N/A"
+      }
+    }
+  },
+  "26-03876": {
+    "client_name": "James Whitfield",
+    "case_type": "Eviction defense",
+    "case_status": "Hearing held; awaiting judgment",
+    "date_opened": "2026-08-05",
+    "docket_number": "EV-26-118203",
+    "opposing_party": "Beacon Ridge Apartments LP",
+    "next_hearing_date": "N/A (judgment pending)",
+    "assigned_attorney": "Marcus Lee",
+    "filed_items": [
+      "Answer (filed 2026-08-11)",
+      "Motion for continuance (granted 2026-08-19)",
+      "Post-hearing brief (filed 2026-09-04)"
+    ],
+    "documents_owed": [
+      "None outstanding"
+    ],
+    "date_of_birth": "1976-08-30",
+    "home_address": "808 Beacon Ave, Dallas, TX 75215",
+    "phone": "(214) 555-0192",
+    "email": "jwhitfield76@example.com",
+    "immigration_status": "N/A",
+    "alien_registration_number": "N/A",
+    "internal_work_product": {
+      "case_strength_assessment": "Weak-to-moderate. Nonpayment is undisputed; best realistic outcome is a payment plan, not dismissal.",
+      "litigation_strategy_notes": "Judge Alvarez tends to grant reasonable payment plans on first nonpayment. Push for 60-day cure, not dismissal. Do not let client testify about the job loss at length; it invites a hardship line the landlord will exploit.",
+      "credibility_assessment": "Client understated his back-rent balance in intake by roughly two months; verify ledger independently before relying on his figures.",
+      "enforcement_exposure_flag": {
+        "exposed": false,
+        "note": "N/A"
+      }
+    }
+  },
+  "26-05120": {
+    "client_name": "Latoya Jackson",
+    "case_type": "Public benefits appeal (SNAP termination)",
+    "case_status": "Appeal filed; fair hearing scheduled",
+    "date_opened": "2026-08-30",
+    "docket_number": "LA-DCFS-FH-2026-30112",
+    "opposing_party": "Louisiana Dept. of Children & Family Services",
+    "next_hearing_date": "2026-10-08",
+    "assigned_attorney": "Priya Nair",
+    "filed_items": [
+      "Request for fair hearing (filed 2026-09-01)",
+      "Request for continued benefits pending appeal (granted)"
+    ],
+    "documents_owed": [
+      "Last two pay stubs (Aug 2026)",
+      "Signed authorization for release of agency file"
+    ],
+    "date_of_birth": "1992-12-05",
+    "home_address": "1533 Camp St, New Orleans, LA 70130",
+    "phone": "(504) 555-0177",
+    "email": "latoya.j92@example.com",
+    "immigration_status": "N/A",
+    "alien_registration_number": "N/A",
+    "internal_work_product": {
+      "case_strength_assessment": "Strong. Termination was based on a reported income figure the agency never verified and that appears to double-count a one-time bonus.",
+      "litigation_strategy_notes": "Lead with the agency's failure to send adequate written notice of the specific reason for termination. Subpoena the caseworker's income calculation worksheet.",
+      "credibility_assessment": "Fully credible; documentation is clean.",
+      "enforcement_exposure_flag": {
+        "exposed": false,
+        "note": "N/A"
+      }
+    }
+  },
+  "26-04988": {
+    "client_name": "Minh Nguyen",
+    "case_type": "Family immigration (adjustment of status)",
+    "case_status": "I-485 filed; biometrics completed; awaiting interview notice",
+    "date_opened": "2026-04-15",
+    "docket_number": "MSC2690148213",
+    "opposing_party": "U.S. Citizenship & Immigration Services (adjudicating agency)",
+    "next_hearing_date": "N/A (USCIS interview not yet scheduled)",
+    "assigned_attorney": "Sofia Reyes",
+    "filed_items": [
+      "Form I-485 (filed 2026-07-15)",
+      "Form I-130 (approved 2026-05-02)",
+      "Biometrics appointment (completed 2026-08-20)"
+    ],
+    "documents_owed": [
+      "Updated employment letter",
+      "Translated birth certificate"
+    ],
+    "date_of_birth": "1994-06-18",
+    "home_address": "6120 Bellaire Blvd, Apt 12, Houston, TX 77081",
+    "phone": "(832) 555-0130",
+    "email": "minh.nguyen94@example.com",
+    "immigration_status": "Adjustment of status pending (I-485)",
+    "alien_registration_number": "A216-745-908",
+    "internal_work_product": {
+      "case_strength_assessment": "Solid. Marriage is bona fide and well-documented; primary risk is the prior visa overstay, which is forgiven for immediate relatives.",
+      "litigation_strategy_notes": "At interview, be ready to address the 14-month overstay proactively. Bona fide marriage evidence is strong; lead with the joint lease and shared accounts.",
+      "credibility_assessment": "Credible. Minor date inconsistencies in the timeline are consistent with memory, not deception.",
+      "enforcement_exposure_flag": {
+        "exposed": false,
+        "note": "Prior overstay noted; not in removal proceedings. Low exposure but do not discuss overstay externally."
+      }
+    }
+  },
+  "26-05233": {
+    "client_name": "Robert Kowalski",
+    "case_type": "Eviction defense",
+    "case_status": "Intake complete; answer being prepared",
+    "date_opened": "2026-09-06",
+    "docket_number": "SC-26-004471",
+    "opposing_party": "Cherry Lane Rentals",
+    "next_hearing_date": "2026-09-30",
+    "assigned_attorney": "Marcus Lee",
+    "filed_items": [
+      "Notice of appearance (filed 2026-09-08)"
+    ],
+    "documents_owed": [
+      "Copy of eviction notice as posted on door",
+      "Bank statements showing rent transfers"
+    ],
+    "date_of_birth": "1968-01-22",
+    "home_address": "44 Cherry Ln, Tulsa, OK 74103",
+    "phone": "(918) 555-0166",
+    "email": "rkowalski68@example.com",
+    "immigration_status": "N/A",
+    "alien_registration_number": "N/A",
+    "internal_work_product": {
+      "case_strength_assessment": "Moderate. Retaliation defense is plausible; eviction followed a code-enforcement complaint client filed against the landlord.",
+      "litigation_strategy_notes": "Pull the code-enforcement complaint date to establish the retaliation timeline. If within 6 months, the presumption helps us. Client's temper is a liability; keep him off the stand if possible.",
+      "credibility_assessment": "Client is combative and prone to exaggeration about the landlord's conduct; corroborate every factual claim before pleading it.",
+      "enforcement_exposure_flag": {
+        "exposed": false,
+        "note": "N/A"
+      }
+    }
+  },
+  "26-04701": {
+    "client_name": "Aisha Mohammed",
+    "case_type": "Public benefits appeal (Medicaid denial)",
+    "case_status": "Appeal filed; awaiting fair hearing date",
+    "date_opened": "2026-08-26",
+    "docket_number": "LA-LDH-FH-2026-21188",
+    "opposing_party": "Louisiana Dept. of Health",
+    "next_hearing_date": "N/A (hearing date not yet assigned)",
+    "assigned_attorney": "Sofia Reyes",
+    "filed_items": [
+      "Request for fair hearing (filed 2026-08-28)"
+    ],
+    "documents_owed": [
+      "Denial notice from agency",
+      "Proof of household size (birth certificates for two dependents)"
+    ],
+    "date_of_birth": "1985-09-14",
+    "home_address": "927 Magazine St, Apt 5, Baton Rouge, LA 70802",
+    "phone": "(225) 555-0119",
+    "email": "aisha.m85@example.com",
+    "immigration_status": "N/A",
+    "alien_registration_number": "N/A",
+    "internal_work_product": {
+      "case_strength_assessment": "Strong on the merits. Denial appears to rest on an outdated income threshold; the agency applied last year's figure.",
+      "litigation_strategy_notes": "File a records request for the eligibility worksheet. Argue misapplication of the current federal poverty guideline. Straightforward if the worksheet confirms the error.",
+      "credibility_assessment": "Fully credible and well-prepared.",
+      "enforcement_exposure_flag": {
+        "exposed": false,
+        "note": "N/A"
+      }
+    }
+  },
+  "26-05012": {
+    "client_name": "Carlos Mendoza",
+    "case_type": "Family immigration (U-visa)",
+    "case_status": "I-918 petition filed; awaiting adjudication",
+    "date_opened": "2026-06-05",
+    "docket_number": "IOE0918442310",
+    "opposing_party": "U.S. Dept. of Homeland Security",
+    "next_hearing_date": "N/A (USCIS adjudication pending)",
+    "assigned_attorney": "Sofia Reyes",
+    "filed_items": [
+      "Form I-918 (filed 2026-06-30)",
+      "Law enforcement certification I-918B (obtained 2026-06-12)"
+    ],
+    "documents_owed": [
+      "Personal declaration (final signed version)",
+      "Medical records supporting harm suffered"
+    ],
+    "date_of_birth": "1990-11-02",
+    "home_address": "3719 W Commerce St, San Antonio, TX 78207",
+    "phone": "(210) 555-0154",
+    "email": "c.mendoza90@example.com",
+    "immigration_status": "U-visa petition pending (I-918)",
+    "alien_registration_number": "A208-331-476",
+    "internal_work_product": {
+      "case_strength_assessment": "Qualifying crime and certification are solid. The serious complication is the prior in-absentia removal order.",
+      "litigation_strategy_notes": "Do NOT surface the prior removal order to the client casually; handle deferred action and any motion to reopen carefully with supervising attorney. Coordinate timing so the U-visa filing is the shield.",
+      "credibility_assessment": "Credible and consistent. Trauma-related memory gaps are expected and do not undermine reliability.",
+      "enforcement_exposure_flag": {
+        "exposed": true,
+        "note": "HIGH EXPOSURE. In-absentia removal order from 2015. Any contact that reveals whereabouts could trigger enforcement. Internal handling only."
+      }
+    }
+  },
+  "26-04555": {
+    "client_name": "Dorothy Freeman",
+    "case_type": "Public benefits appeal (SSI disability)",
+    "case_status": "Reconsideration denied; hearing before ALJ requested",
+    "date_opened": "2026-07-30",
+    "docket_number": "AR-OHO-2026-556210",
+    "opposing_party": "Social Security Administration",
+    "next_hearing_date": "2026-11-13",
+    "assigned_attorney": "Marcus Lee",
+    "filed_items": [
+      "Request for hearing by ALJ (filed 2026-08-05)",
+      "Updated medical records submitted (2026-09-01)"
+    ],
+    "documents_owed": [
+      "Treating physician's functional capacity statement",
+      "Recent specialist visit summary"
+    ],
+    "date_of_birth": "1959-04-27",
+    "home_address": "215 Oak Grove Rd, Little Rock, AR 72204",
+    "phone": "(501) 555-0183",
+    "email": "d.freeman59@example.com",
+    "immigration_status": "N/A",
+    "alien_registration_number": "N/A",
+    "internal_work_product": {
+      "case_strength_assessment": "Moderate. Medical evidence supports limitations but the treating-physician statement is missing and is the linchpin.",
+      "litigation_strategy_notes": "Chase the RFC form before the hearing; without it the ALJ leans on the agency consultant. Prepare client for questions about daily activities; she tends to overstate what she can do out of pride.",
+      "credibility_assessment": "Sympathetic and honest but minimizes her own symptoms, which hurts the claim; coach on accurate self-report.",
+      "enforcement_exposure_flag": {
+        "exposed": false,
+        "note": "N/A"
+      }
+    }
+  },
+  "26-05301": {
+    "client_name": "Priya Sharma",
+    "case_type": "Family immigration (naturalization)",
+    "case_status": "N-400 filed; awaiting interview",
+    "date_opened": "2026-07-20",
+    "docket_number": "NBC2690337415",
+    "opposing_party": "U.S. Citizenship & Immigration Services",
+    "next_hearing_date": "N/A (naturalization interview not yet scheduled)",
+    "assigned_attorney": "Priya Nair",
+    "filed_items": [
+      "Form N-400 (filed 2026-07-22)"
+    ],
+    "documents_owed": [
+      "Certified disposition for 2019 arrest",
+      "Updated tax transcripts"
+    ],
+    "date_of_birth": "1988-07-09",
+    "home_address": "1140 Guadalupe St, Apt 7, Austin, TX 78701",
+    "phone": "(512) 555-0125",
+    "email": "priya.sharma88@example.com",
+    "immigration_status": "Lawful permanent resident (applying for naturalization)",
+    "alien_registration_number": "A199-620-543",
+    "internal_work_product": {
+      "case_strength_assessment": "Strong. Eligible on residence and good moral character; only wrinkle is a 2019 disorderly-conduct arrest, charges dismissed.",
+      "litigation_strategy_notes": "Obtain certified court disposition before the interview. Disclose the arrest proactively on the form; concealment is the only thing that turns this into a problem.",
+      "credibility_assessment": "Credible. Initially forgot to mention the arrest, not evasive; volunteered it once reminded of the disclosure duty.",
+      "enforcement_exposure_flag": {
+        "exposed": false,
+        "note": "LPR in good standing; negligible exposure. Arrest is disclosable, not disqualifying."
+      }
+    }
+  },
+  "26-04890": {
+    "client_name": "Tanya Bell",
+    "case_type": "Eviction defense",
+    "case_status": "Settlement discussions; move-out date being negotiated",
+    "date_opened": "2026-09-03",
+    "docket_number": "26-CV-EV-04471",
+    "opposing_party": "Texas Ave Holdings LLC",
+    "next_hearing_date": "2026-10-02",
+    "assigned_attorney": "Priya Nair",
+    "filed_items": [
+      "Answer (filed 2026-09-05)",
+      "Motion to seal eviction record (filed 2026-09-07)"
+    ],
+    "documents_owed": [
+      "Proof of new housing arrangement",
+      "Security deposit records"
+    ],
+    "date_of_birth": "1997-02-16",
+    "home_address": "630 Texas Ave, Apt 2A, Shreveport, LA 71101",
+    "phone": "(318) 555-0171",
+    "email": "tanya.bell97@example.com",
+    "immigration_status": "N/A",
+    "alien_registration_number": "N/A",
+    "internal_work_product": {
+      "case_strength_assessment": "Weak on the merits but strong leverage for a favorable settlement and a sealed record.",
+      "litigation_strategy_notes": "Trade a voluntary move-out for dismissal with the record sealed; the sealed record matters more to her future housing than fighting a losing case. Landlord's counsel is motivated to avoid trial cost.",
+      "credibility_assessment": "Reliable; realistic about her situation.",
+      "enforcement_exposure_flag": {
+        "exposed": false,
+        "note": "N/A"
+      }
+    }
+  }
+}
